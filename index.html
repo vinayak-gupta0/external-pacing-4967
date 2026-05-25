@@ -33,7 +33,6 @@
     overflow-x: hidden;
   }
 
-  /* ── HERO ── */
   .hero {
     min-height: 100vh;
     background: linear-gradient(160deg, #0a1520 0%, #152437 40%, #1a3a5c 70%, #1e3f6a 100%);
@@ -81,9 +80,7 @@
     animation: fadeUp 0.8s ease forwards 0.4s;
   }
 
-  .hero-title span {
-    color: var(--sky-light);
-  }
+  .hero-title span { color: var(--sky-light); }
 
   .hero-subtitle {
     font-family: 'Barlow Condensed', sans-serif;
@@ -139,27 +136,11 @@
     display: inline-block;
   }
 
-  .btn-primary {
-    background: var(--sky);
-    border-color: var(--sky);
-    color: var(--navy);
-  }
-  .btn-primary:hover {
-    background: var(--sky-light);
-    border-color: var(--sky-light);
-  }
+  .btn-primary { background: var(--sky); border-color: var(--sky); color: var(--navy); }
+  .btn-primary:hover { background: var(--sky-light); border-color: var(--sky-light); }
+  .btn-outline { background: transparent; border-color: rgba(91,159,212,0.5); color: var(--sky-light); }
+  .btn-outline:hover { border-color: var(--sky); background: rgba(91,159,212,0.08); }
 
-  .btn-outline {
-    background: transparent;
-    border-color: rgba(91,159,212,0.5);
-    color: var(--sky-light);
-  }
-  .btn-outline:hover {
-    border-color: var(--sky);
-    background: rgba(91,159,212,0.08);
-  }
-
-  /* ── SCROLL HINT ── */
   .scroll-hint {
     position: absolute;
     bottom: 2rem;
@@ -184,15 +165,9 @@
     animation: scrollPulse 2s ease-in-out infinite;
   }
 
-  /* ── SECTION BASE ── */
-  section {
-    padding: 5rem 2rem;
-  }
+  section { padding: 5rem 2rem; }
 
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  .container { max-width: 1100px; margin: 0 auto; }
 
   .section-label {
     font-family: 'Barlow Condensed', sans-serif;
@@ -213,21 +188,7 @@
     margin-bottom: 1.5rem;
   }
 
-  /* ── PURPLE BORDER BAR ── */
-  .accent-bar {
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(to bottom, var(--purple-accent), var(--sky));
-    position: absolute;
-    left: 0;
-    top: 0;
-    border-radius: 2px;
-  }
-
-  /* ── RESOURCES GRID ── */
-  .resources {
-    background: var(--navy-mid);
-  }
+  .resources { background: var(--navy-mid); }
 
   .resources-grid {
     display: grid;
@@ -259,20 +220,10 @@
     transition: transform 0.3s ease;
   }
 
-  .resource-card:hover {
-    border-color: rgba(91,159,212,0.4);
-    transform: translateY(-3px);
-  }
+  .resource-card:hover { border-color: rgba(91,159,212,0.4); transform: translateY(-3px); }
+  .resource-card:hover::before { transform: scaleX(1); }
 
-  .resource-card:hover::before {
-    transform: scaleX(1);
-  }
-
-  .resource-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    display: block;
-  }
+  .resource-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
 
   .resource-card-title {
     font-family: 'Barlow Condensed', sans-serif;
@@ -284,11 +235,7 @@
     margin-bottom: 0.5rem;
   }
 
-  .resource-card-desc {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
+  .resource-card-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
 
   .resource-tag {
     display: inline-block;
@@ -302,85 +249,7 @@
     padding: 0.2rem 0.6rem;
   }
 
-  /* ── FIGURES SECTION ── */
-  .figures {
-    background: var(--navy);
-  }
-
-  .figures-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-
-  .figure-card {
-    background: var(--navy-light);
-    border: 1px solid rgba(91,159,212,0.15);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .figure-img-placeholder {
-    height: 200px;
-    background: linear-gradient(135deg, var(--steel), var(--navy-mid));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .figure-img-placeholder::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(91,159,212,0.03) 10px,
-      rgba(91,159,212,0.03) 20px
-    );
-  }
-
-  .figure-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--sky);
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .figure-caption {
-    padding: 1rem 1.25rem;
-    border-top: 1px solid rgba(91,159,212,0.1);
-  }
-
-  .figure-caption-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--white);
-    margin-bottom: 0.25rem;
-  }
-
-  .figure-caption-text {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-
-  /* ── INTERACTIVE FEM VIEWER ── */
-  .fem-viewer {
-    background: var(--navy-mid);
-    padding: 5rem 2rem;
-  }
+  .fem-viewer { background: var(--navy-mid); padding: 5rem 2rem; }
 
   .fem-container {
     background: var(--navy-light);
@@ -409,37 +278,13 @@
     transition: all 0.2s;
   }
 
-  .fem-tab.active {
-    background: var(--navy-light);
-    color: var(--sky);
-    border-bottom: 2px solid var(--sky);
-  }
+  .fem-tab.active { background: var(--navy-light); color: var(--sky); border-bottom: 2px solid var(--sky); }
+  .fem-tab:hover:not(.active) { color: var(--white-dim); background: rgba(91,159,212,0.05); }
 
-  .fem-tab:hover:not(.active) {
-    color: var(--white-dim);
-    background: rgba(91,159,212,0.05);
-  }
+  .fem-panel { padding: 2rem; display: none; }
+  .fem-panel.active { display: block; }
 
-  .fem-panel {
-    padding: 2rem;
-    display: none;
-  }
-
-  .fem-panel.active {
-    display: block;
-  }
-
-  /* canvas heatmap */
-  .heatmap-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    align-items: start;
-  }
-
-  .heatmap-box {
-    position: relative;
-  }
+  .heatmap-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
 
   .heatmap-title {
     font-family: 'Barlow Condensed', sans-serif;
@@ -451,38 +296,12 @@
     text-align: center;
   }
 
-  canvas.heatmap {
-    width: 100%;
-    height: auto;
-    display: block;
-    border: 1px solid rgba(91,159,212,0.15);
-  }
+  canvas.heatmap { width: 100%; height: auto; display: block; border: 1px solid rgba(91,159,212,0.15); }
 
-  .colorbar {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.25rem;
-    margin-top: 0.5rem;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-  }
+  .colorbar { display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; margin-top: 0.5rem; }
+  .colorbar-gradient { width: 100%; height: 8px; border-radius: 2px; }
+  .colorbar-labels { width: 100%; display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-muted); }
 
-  .colorbar-gradient {
-    width: 100%;
-    height: 8px;
-    border-radius: 2px;
-  }
-
-  .colorbar-labels {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.68rem;
-    color: var(--text-muted);
-  }
-
-  /* pareto scatter */
   .pareto-info {
     margin-top: 1rem;
     font-size: 0.82rem;
@@ -492,25 +311,9 @@
     padding-left: 1rem;
   }
 
-  /* back pad chart */
-  .chart-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
+  .team { background: var(--navy-light); padding: 4rem 2rem; }
 
-  /* ── TEAM ── */
-  .team {
-    background: var(--navy-light);
-    padding: 4rem 2rem;
-  }
-
-  .team-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2rem;
-  }
+  .team-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
 
   .team-chip {
     font-family: 'Barlow Condensed', sans-serif;
@@ -522,7 +325,6 @@
     background: rgba(91,159,212,0.05);
   }
 
-  /* ── FOOTER ── */
   footer {
     background: #080f18;
     padding: 2rem;
@@ -533,11 +335,8 @@
     border-top: 1px solid rgba(91,159,212,0.1);
   }
 
-  footer span {
-    color: var(--sky);
-  }
+  footer span { color: var(--sky); }
 
-  /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -548,28 +347,23 @@
     50% { opacity: 1; transform: scaleY(1.15); }
   }
 
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   .reveal {
     opacity: 0;
     transform: translateY(24px);
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
-    .heatmap-wrap, .chart-row {
-      grid-template-columns: 1fr;
-    }
+    .heatmap-wrap { grid-template-columns: 1fr; }
     .fem-tab { font-size: 0.68rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- ══════════════ HERO ══════════════ -->
 <section class="hero">
   <p class="hero-eyebrow">Imperial College London · Bioengineering · Group 4967</p>
   <h1 class="hero-title">External<br><span>Pacing</span></h1>
@@ -578,7 +372,7 @@
   <div class="hero-divider"></div>
   <div class="hero-cta">
     <a href="#resources" class="btn btn-primary">View Resources</a>
-    <a href="#figures" class="btn btn-outline">Explore Figures</a>
+    <a href="#figures" class="btn btn-outline">View Figures</a>
   </div>
   <div class="scroll-hint">
     <div class="scroll-hint-line"></div>
@@ -586,7 +380,7 @@
   </div>
 </section>
 
-<!-- ══════════════ RESOURCES ══════════════ -->
+<!-- RESOURCES -->
 <section class="resources" id="resources">
   <div class="container">
     <p class="section-label reveal">Downloads &amp; References</p>
@@ -594,7 +388,6 @@
     <p class="reveal" style="color: var(--text-muted); max-width: 520px; font-size: 0.95rem;">
       Full technical documentation, source code, CAD files, and references for the perforated impedance-gradient pacing pad project.
     </p>
-
     <div class="resources-grid">
       <a href="Final_Report_4697.pdf" class="resource-card reveal" target="_blank">
         <span class="resource-icon">📄</span>
@@ -602,21 +395,18 @@
         <div class="resource-card-desc">Complete technical report including FEM methodology, NSGA-II optimisation, and results.</div>
         <span class="resource-tag">PDF · 18 pages</span>
       </a>
-
       <a href="https://github.com/" class="resource-card reveal" target="_blank">
         <span class="resource-icon">💻</span>
         <div class="resource-card-title">Source Code</div>
         <div class="resource-card-desc">MATLAB scripts for NSGA-II optimisation, ring electrode simulation, and back pad sweep.</div>
         <span class="resource-tag">MATLAB</span>
       </a>
-
       <a href="#cad-viewer" class="resource-card reveal">
         <span class="resource-icon">🔩</span>
         <div class="resource-card-title">CAD Model</div>
         <div class="resource-card-desc">Interactive 3D viewer of the perforated 100 mm anterior electrode and full pad assembly.</div>
         <span class="resource-tag">3D Viewer + Download</span>
       </a>
-
       <a href="#references" class="resource-card reveal">
         <span class="resource-icon">📚</span>
         <div class="resource-card-title">References</div>
@@ -627,15 +417,14 @@
   </div>
 </section>
 
-<!-- ══════════════ INTERACTIVE FIGURES ══════════════ -->
+<!-- FIGURES -->
 <section class="fem-viewer" id="figures">
   <div class="container">
     <p class="section-label reveal">Computational Modelling</p>
-    <h2 class="section-title reveal">Interactive<br>Figures</h2>
+    <h2 class="section-title reveal">Figures</h2>
     <p class="reveal" style="color: var(--text-muted); max-width: 560px; font-size: 0.95rem;">
-      Reconstructed visualisations of key modelling results. Select a figure to explore.
+      Key modelling results from the report. Select a figure to view.
     </p>
-
     <div class="fem-container reveal">
       <div class="fem-controls">
         <button class="fem-tab active" onclick="showTab('heatmap')">Current Density Maps</button>
@@ -643,10 +432,10 @@
         <button class="fem-tab" onclick="showTab('backpad')">Back Pad Sweep</button>
       </div>
 
-      <!-- TAB 1: Heatmap -->
+      <!-- TAB 1 -->
       <div class="fem-panel active" id="tab-heatmap">
         <div class="heatmap-wrap">
-          <div class="heatmap-box">
+          <div>
             <div class="heatmap-title">Standard Solid Electrode</div>
             <canvas class="heatmap" id="canvas-solid" width="260" height="130"></canvas>
             <div class="colorbar">
@@ -654,7 +443,7 @@
               <div class="colorbar-labels"><span>0</span><span>10</span><span>20 A/m²</span></div>
             </div>
           </div>
-          <div class="heatmap-box">
+          <div>
             <div class="heatmap-title">Perforated Prototype Design</div>
             <canvas class="heatmap" id="canvas-perf" width="260" height="130"></canvas>
             <div class="colorbar">
@@ -668,7 +457,7 @@
         </p>
       </div>
 
-      <!-- TAB 2: Pareto -->
+      <!-- TAB 2 -->
       <div class="fem-panel" id="tab-pareto">
         <canvas id="canvas-pareto" width="700" height="300" style="width:100%; border:1px solid rgba(91,159,212,0.1);"></canvas>
         <div class="pareto-info">
@@ -676,7 +465,7 @@
         </div>
       </div>
 
-      <!-- TAB 3: Back Pad -->
+      <!-- TAB 3 -->
       <div class="fem-panel" id="tab-backpad">
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:1.5rem;">
           <div>
@@ -700,47 +489,7 @@
   </div>
 </section>
 
-<!-- ══════════════ STATIC FIGURES ══════════════ -->
-<section class="figures" id="morefigures">
-  <div class="container">
-    <p class="section-label reveal">Report Figures</p>
-    <h2 class="section-title reveal">Additional<br>Results</h2>
-
-    <div class="figures-grid">
-      <div class="figure-card reveal">
-        <div class="figure-img-placeholder">
-          <span class="figure-label">Figure 3 — Perforation Pattern</span>
-        </div>
-        <div class="figure-caption">
-          <div class="figure-caption-title">Concentric-Ring Design</div>
-          <div class="figure-caption-text">8 rings, 100–275 holes per ring, 0.4 mm diameter. Total 1,500 perforations across Ag/AgCl Mylar layer.</div>
-        </div>
-      </div>
-
-      <div class="figure-card reveal">
-        <div class="figure-img-placeholder">
-          <span class="figure-label">Figure 7 — Decision Space</span>
-        </div>
-        <div class="figure-caption">
-          <div class="figure-caption-title">Parameter Sensitivity</div>
-          <div class="figure-caption-text">Pareto-optimal solutions cluster at hole radius 1.5–2.5 mm, low r<sub>perf</sub> &lt; 10 mm, and 15–25 holes per side.</div>
-        </div>
-      </div>
-
-      <div class="figure-card reveal">
-        <div class="figure-img-placeholder">
-          <span class="figure-label">Figure 4 — Pad Assembly</span>
-        </div>
-        <div class="figure-caption">
-          <div class="figure-caption-title">Exploded Pad Diagram</div>
-          <div class="figure-caption-text">8-layer assembly: insulating plate, eyelet, backing, Ag/AgCl Mylar, ring wire, washer, PEDOT:PSS hydrogel, release film.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ CAD VIEWER ══════════════ -->
+<!-- CAD VIEWER -->
 <section id="cad-viewer" style="background: var(--navy-mid); padding: 5rem 2rem;">
   <div class="container">
     <p class="section-label reveal">Design</p>
@@ -748,13 +497,12 @@
     <p class="reveal" style="color: var(--text-muted); max-width: 560px; font-size: 0.95rem; margin-bottom: 2rem;">
       Interactive 3D model of the pacing pad. Click and drag to rotate, scroll to zoom.
     </p>
-
     <div class="reveal" style="background: var(--navy-light); border: 1px solid rgba(91,159,212,0.2); overflow: hidden;">
-      <div id="cad-toolbar" style="display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem; background: rgba(91,159,212,0.06); border-bottom: 1px solid rgba(91,159,212,0.12);">
-        <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sky);">Pacing Pad — Fusion 360 · 3MF</span>
-        <a href="Pacing_pad_design.3mf" download="Pacing_pad_design.3mf" style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sky-light); text-decoration: none; border: 1px solid rgba(91,159,212,0.3); padding: 0.25rem 0.75rem; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--sky)'" onmouseout="this.style.borderColor='rgba(91,159,212,0.3)'">↓ Download 3MF</a>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:0.6rem 1rem; background:rgba(91,159,212,0.06); border-bottom:1px solid rgba(91,159,212,0.12);">
+        <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--sky);">Pacing Pad — Fusion 360 · 3MF</span>
+        <a href="Pacing_pad_design.3mf" download="Pacing_pad_design.3mf" style="font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--sky-light); text-decoration:none; border:1px solid rgba(91,159,212,0.3); padding:0.25rem 0.75rem; transition:all 0.2s;" onmouseover="this.style.borderColor='var(--sky)'" onmouseout="this.style.borderColor='rgba(91,159,212,0.3)'">↓ Download 3MF</a>
       </div>
-      <div id="cad-canvas-wrap" style="position: relative; width: 100%; height: 520px; background: #0d1b2e;">
+      <div id="cad-canvas-wrap" style="position:relative; width:100%; height:520px; background:#0d1b2e;">
         <canvas id="cad-canvas" style="width:100%; height:100%; display:block; cursor:grab;"></canvas>
         <div id="cad-loading" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; background:#0d1b2e;">
           <div id="cad-spinner" style="width:36px; height:36px; border:2px solid rgba(91,159,212,0.15); border-top-color:var(--sky); border-radius:50%; animation:spin 0.9s linear infinite;"></div>
@@ -766,17 +514,11 @@
   </div>
 </section>
 
-<style>
-@keyframes spin { to { transform: rotate(360deg); } }
-</style>
-
-<!-- Three.js + fflate (replaces fragile hand-rolled ZIP parser) -->
+<!-- Three.js + 3MF loader -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
 <script>
 (function() {
-
   function setStatus(msg) {
     const el = document.getElementById('cad-status');
     if (el) el.textContent = msg;
@@ -785,226 +527,154 @@
   async function load3MF(url) {
     setStatus('Fetching 3MF…');
     const resp = await fetch(url);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const raw = new Uint8Array(await resp.arrayBuffer());
+    if (raw.length < 100) throw new Error('File too small — check upload');
+    if (!(raw[0]===0x50 && raw[1]===0x4B)) throw new Error('Not a valid ZIP/3MF file');
 
-    if (!resp.ok) {
-      throw new Error('HTTP ' + resp.status + ' fetching ' + url + ' — file is probably not at this path on the server.');
-    }
+    function u16(o){ return raw[o]|raw[o+1]<<8; }
+    function u32(o){ return (raw[o]|raw[o+1]<<8|raw[o+2]<<16|(raw[o+3]<<24))>>>0; }
+    function u64(o){ return u32(o+4)*4294967296+u32(o); }
 
-    const buf = new Uint8Array(await resp.arrayBuffer());
-
-    /* Diagnose: if we got a tiny response or it doesn't start with PK\x03\x04 (ZIP magic),
-       the server isn't actually serving the .3mf file. */
-    if (buf.length < 100) {
-      const text = new TextDecoder().decode(buf);
-      console.error('Server returned ' + buf.length + ' bytes instead of the 3MF file. Body:', text);
-      throw new Error('Server returned only ' + buf.length + ' bytes — not the 3MF file. Check that Pacing_pad_design.3mf is uploaded next to index.html. See console for the response body.');
+    let offset = 0;
+    while (offset < raw.length - 4) {
+      if (raw[offset]===0x50&&raw[offset+1]===0x4B&&raw[offset+2]===0x03&&raw[offset+3]===0x04) {
+        const comp  = u16(offset+8);
+        let   csz   = u32(offset+18);
+        let   usz   = u32(offset+22);
+        const fnLen = u16(offset+26);
+        const exLen = u16(offset+28);
+        const fn    = new TextDecoder().decode(raw.slice(offset+30, offset+30+fnLen));
+        const exOff = offset+30+fnLen;
+        const dataOff = exOff+exLen;
+        if (csz===0xFFFFFFFF||usz===0xFFFFFFFF) {
+          let p=exOff;
+          while(p<exOff+exLen-3){
+            const tag=u16(p),esz=u16(p+2);
+            if(tag===0x0001&&esz>=16){usz=u64(p+4);csz=u64(p+12);break;}
+            p+=4+esz;
+          }
+        }
+        if (fn.toLowerCase().endsWith('.model')) {
+          setStatus('Decompressing ' + (usz/1024/1024).toFixed(1) + ' MB…');
+          const compressed = raw.slice(dataOff, dataOff+csz);
+          const ds = new DecompressionStream('deflate-raw');
+          const writer = ds.writable.getWriter();
+          const reader = ds.readable.getReader();
+          writer.write(compressed); writer.close();
+          const chunks = [];
+          while(true){const{done,value}=await reader.read();if(done)break;chunks.push(value);}
+          const out = new Uint8Array(chunks.reduce((s,c)=>s+c.length,0));
+          let pos=0; for(const c of chunks){out.set(c,pos);pos+=c.length;}
+          return new TextDecoder().decode(out);
+        }
+        offset = dataOff+csz;
+      } else { offset++; }
     }
-    if (!(buf[0] === 0x50 && buf[1] === 0x4B)) {
-      const preview = new TextDecoder().decode(buf.slice(0, 200));
-      console.error('Response is not a ZIP. First 200 bytes:', preview);
-      throw new Error('Server returned non-ZIP data (likely an HTML error page). Check that the .3mf file exists at this URL and that the host serves it correctly. See console for details.');
-    }
-
-    setStatus('Unpacking ' + (buf.length / 1024 / 1024).toFixed(1) + ' MB…');
-    let files;
-    try {
-      files = fflate.unzipSync(buf);
-    } catch (e) {
-      throw new Error('ZIP decode failed: ' + e.message + ' (file may be corrupted in transit)');
-    }
-    for (const name in files) {
-      if (name.toLowerCase().endsWith('.model')) {
-        return fflate.strFromU8(files[name]);
-      }
-    }
-    throw new Error('No .model entry in 3MF');
+    throw new Error('No .model found in 3MF');
   }
 
-  /* Fast streaming regex parser — avoids DOMParser blowup on large 3MF files.
-     Returns { objects: {id -> {verts: Float32Array, idxs: Array}}, items: [{objectid, transform?}] } */
   function parseModel(xml) {
     setStatus('Parsing geometry…');
     const objects = {};
     const objRegex = /<object\s+id="(\d+)"[^>]*>([\s\S]*?)<\/object>/g;
     const vertRegex = /<vertex\s+x="([-\d.eE]+)"\s+y="([-\d.eE]+)"\s+z="([-\d.eE]+)"/g;
     const triRegex  = /<triangle\s+v1="(\d+)"\s+v2="(\d+)"\s+v3="(\d+)"/g;
-
     let m;
-    while ((m = objRegex.exec(xml)) !== null) {
-      const id = m[1];
-      const body = m[2];
-      const verts = [];
-      const idxs  = [];
-      vertRegex.lastIndex = 0;
+    while((m=objRegex.exec(xml))!==null){
+      const id=m[1],body=m[2],verts=[],idxs=[];
+      vertRegex.lastIndex=0;
       let v;
-      while ((v = vertRegex.exec(body)) !== null) {
-        verts.push(+v[1], +v[2], +v[3]);
-      }
-      triRegex.lastIndex = 0;
-      while ((v = triRegex.exec(body)) !== null) {
-        idxs.push(+v[1], +v[2], +v[3]);
-      }
-      if (verts.length && idxs.length) {
-        objects[id] = { verts: new Float32Array(verts), idxs };
-      }
+      while((v=vertRegex.exec(body))!==null) verts.push(+v[1],+v[2],+v[3]);
+      triRegex.lastIndex=0;
+      while((v=triRegex.exec(body))!==null) idxs.push(+v[1],+v[2],+v[3]);
+      if(verts.length&&idxs.length) objects[id]={verts:new Float32Array(verts),idxs};
     }
-
-    /* Parse <build>/<item> instances and any transform matrices */
-    const items = [];
-    const itemRegex = /<item\s+([^/]*?)\/>/g;
-    while ((m = itemRegex.exec(xml)) !== null) {
-      const attrs = m[1];
-      const idMatch = attrs.match(/objectid="(\d+)"/);
-      const tfMatch = attrs.match(/transform="([^"]+)"/);
-      if (idMatch) {
-        const item = { objectid: idMatch[1] };
-        if (tfMatch) item.transform = tfMatch[1].trim().split(/\s+/).map(Number);
-        items.push(item);
-      }
+    const items=[];
+    const itemRegex=/<item\s+([^/]*?)\/>/g;
+    while((m=itemRegex.exec(xml))!==null){
+      const attrs=m[1],idM=attrs.match(/objectid="(\d+)"/),tfM=attrs.match(/transform="([^"]+)"/);
+      if(idM){const it={objectid:idM[1]};if(tfM)it.transform=tfM[1].trim().split(/\s+/).map(Number);items.push(it);}
     }
-
-    return { objects, items };
+    return{objects,items};
   }
 
-  function buildScene({ objects, items }) {
+  function buildScene({objects,items}){
     setStatus('Building scene…');
-    const canvas = document.getElementById('cad-canvas');
-    const wrap   = document.getElementById('cad-canvas-wrap');
-    canvas.width  = wrap.clientWidth;
-    canvas.height = wrap.clientHeight;
-
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setSize(wrap.clientWidth, wrap.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x0d1b2e, 1);
-
-    const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, wrap.clientWidth / wrap.clientHeight, 0.01, 100000);
-
-    /* Per-part colour palette matching the page theme */
-    const palette = [0x8fc4e8, 0xa07fcb, 0xe8c96a, 0xc2dff0, 0x5b9fd4, 0xedcec3, 0xcbcbcb, 0xf6f6f3, 0x7b5ea7, 0x737373];
-
-    const group = new THREE.Group();
-    const renderList = items.length > 0
-      ? items.map(it => ({ obj: objects[it.objectid], transform: it.transform }))
-      : Object.values(objects).map(o => ({ obj: o }));
-
-    const bbox = new THREE.Box3();
-    bbox.makeEmpty();
-    let partIdx = 0;
-
-    renderList.forEach(({ obj, transform }) => {
-      if (!obj) return;
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(obj.verts, 3));
-      geo.setIndex(obj.idxs);
-      geo.computeVertexNormals();
-
-      const mat = new THREE.MeshPhongMaterial({
-        color: palette[partIdx % palette.length],
-        specular: 0x2a4a6b,
-        shininess: 50,
-        side: THREE.DoubleSide,
-        flatShading: false
-      });
-      const mesh = new THREE.Mesh(geo, mat);
-
-      /* 3MF transforms are row-major 4x3 (12 floats): a b c d e f g h i j k l
-         representing the affine matrix [[a d g j],[b e h k],[c f i l],[0 0 0 1]] */
-      if (transform && transform.length === 12) {
-        const t = transform;
-        const m4 = new THREE.Matrix4().set(
-          t[0], t[3], t[6], t[9],
-          t[1], t[4], t[7], t[10],
-          t[2], t[5], t[8], t[11],
-          0,    0,    0,    1
-        );
-        mesh.applyMatrix4(m4);
+    const canvas=document.getElementById('cad-canvas');
+    const wrap=document.getElementById('cad-canvas-wrap');
+    canvas.width=wrap.clientWidth; canvas.height=wrap.clientHeight;
+    const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+    renderer.setSize(wrap.clientWidth,wrap.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    renderer.setClearColor(0x0d1b2e,1);
+    const scene=new THREE.Scene();
+    const camera=new THREE.PerspectiveCamera(45,wrap.clientWidth/wrap.clientHeight,0.01,100000);
+    const palette=[0x8fc4e8,0xa07fcb,0xe8c96a,0xc2dff0,0x5b9fd4,0xedcec3,0xcbcbcb,0xf6f6f3,0x7b5ea7,0x737373];
+    const group=new THREE.Group();
+    const renderList=items.length>0
+      ?items.map(it=>({obj:objects[it.objectid],transform:it.transform}))
+      :Object.values(objects).map(o=>({obj:o}));
+    const bbox=new THREE.Box3(); bbox.makeEmpty();
+    let partIdx=0;
+    renderList.forEach(({obj,transform})=>{
+      if(!obj)return;
+      const geo=new THREE.BufferGeometry();
+      geo.setAttribute('position',new THREE.BufferAttribute(obj.verts,3));
+      geo.setIndex(obj.idxs); geo.computeVertexNormals();
+      const mat=new THREE.MeshPhongMaterial({color:palette[partIdx%palette.length],specular:0x2a4a6b,shininess:50,side:THREE.DoubleSide});
+      const mesh=new THREE.Mesh(geo,mat);
+      if(transform&&transform.length===12){
+        const t=transform;
+        mesh.applyMatrix4(new THREE.Matrix4().set(t[0],t[3],t[6],t[9],t[1],t[4],t[7],t[10],t[2],t[5],t[8],t[11],0,0,0,1));
       }
-
-      group.add(mesh);
-      mesh.updateMatrixWorld(true);
-      geo.computeBoundingBox();
-      bbox.union(geo.boundingBox.clone().applyMatrix4(mesh.matrixWorld));
+      group.add(mesh); mesh.updateMatrixWorld(true);
+      geo.computeBoundingBox(); bbox.union(geo.boundingBox.clone().applyMatrix4(mesh.matrixWorld));
       partIdx++;
     });
-
-    /* Centre the model at the origin */
-    const centre = new THREE.Vector3();
-    bbox.getCenter(centre);
-    group.position.sub(centre);
-    scene.add(group);
-
-    /* Frame the camera to fit */
-    const size = new THREE.Vector3();
-    bbox.getSize(size);
-    const span = Math.max(size.x, size.y, size.z);
-    camera.position.set(span * 0.8, span * 0.6, span * 1.4);
-    camera.lookAt(0, 0, 0);
-
-    /* Lighting */
-    scene.add(new THREE.AmbientLight(0xffffff, 0.45));
-    const key = new THREE.DirectionalLight(0xc8e0f4, 0.95);
-    key.position.set(1, 2, 1); scene.add(key);
-    const fill = new THREE.DirectionalLight(0x7b5ea7, 0.4);
-    fill.position.set(-1, -0.5, -1); scene.add(fill);
-    const rim = new THREE.DirectionalLight(0xffffff, 0.2);
-    rim.position.set(0, -1, 0.5); scene.add(rim);
-
-    /* Orbit controls */
-    const controls = new THREE.OrbitControls(camera, canvas);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.08;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.7;
-    controls.minDistance = span * 0.3;
-    controls.maxDistance = span * 5;
-    canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
-
-    window.addEventListener('resize', () => {
-      const w = wrap.clientWidth, h = wrap.clientHeight;
-      renderer.setSize(w, h);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
+    const centre=new THREE.Vector3(); bbox.getCenter(centre);
+    group.position.sub(centre); scene.add(group);
+    const size=new THREE.Vector3(); bbox.getSize(size);
+    const span=Math.max(size.x,size.y,size.z);
+    camera.position.set(span*0.8,span*0.6,span*1.4); camera.lookAt(0,0,0);
+    scene.add(new THREE.AmbientLight(0xffffff,0.45));
+    const key=new THREE.DirectionalLight(0xc8e0f4,0.95); key.position.set(1,2,1); scene.add(key);
+    const fill=new THREE.DirectionalLight(0x7b5ea7,0.4); fill.position.set(-1,-0.5,-1); scene.add(fill);
+    const controls=new THREE.OrbitControls(camera,canvas);
+    controls.enableDamping=true; controls.dampingFactor=0.08;
+    controls.autoRotate=true; controls.autoRotateSpeed=0.7;
+    canvas.addEventListener('pointerdown',()=>{controls.autoRotate=false;});
+    window.addEventListener('resize',()=>{
+      const w=wrap.clientWidth,h=wrap.clientHeight;
+      renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix();
     });
-
-    function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    }
+    function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
     animate();
   }
 
-  async function init() {
-    try {
-      const xml = await load3MF('Pacing_pad_design.3mf');
-      /* Yield to the event loop so the status text updates before the parse blocks the thread */
-      await new Promise(r => setTimeout(r, 0));
-      const data = parseModel(xml);
-      if (!Object.keys(data.objects).length) throw new Error('No mesh data found');
+  async function init(){
+    try{
+      const xml=await load3MF('Pacing_pad_design.3mf');
+      await new Promise(r=>setTimeout(r,0));
+      const data=parseModel(xml);
+      if(!Object.keys(data.objects).length)throw new Error('No mesh data found');
       buildScene(data);
-      document.getElementById('cad-loading').style.display = 'none';
-      const hint = document.getElementById('cad-hint');
-      if (hint) hint.style.display = 'block';
-    } catch (e) {
-      console.error('CAD viewer error:', e);
-      setStatus('Could not load model: ' + e.message);
-      const sp = document.getElementById('cad-spinner');
-      if (sp) sp.style.display = 'none';
+      document.getElementById('cad-loading').style.display='none';
+      document.getElementById('cad-hint').style.display='block';
+    }catch(e){
+      console.error('CAD viewer error:',e);
+      setStatus('Could not load model: '+e.message);
+      document.getElementById('cad-spinner').style.display='none';
     }
   }
 
-  /* Kick off when section scrolls into view */
-  const section = document.getElementById('cad-viewer');
-  const io = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) { io.disconnect(); init(); }
-  }, { threshold: 0.1 });
+  const section=document.getElementById('cad-viewer');
+  const io=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){io.disconnect();init();}},{threshold:0.1});
   io.observe(section);
 })();
 </script>
 
-<!-- ══════════════ TEAM ══════════════ -->
+<!-- TEAM -->
 <section class="team">
   <div class="container">
     <p class="section-label reveal">Group 4967 · LABRATS 2.0</p>
@@ -1022,7 +692,7 @@
   </div>
 </section>
 
-<!-- ══════════════ REFERENCES ══════════════ -->
+<!-- REFERENCES -->
 <section id="references" style="background: var(--navy); padding: 5rem 2rem; border-top: 1px solid rgba(91,159,212,0.1);">
   <div class="container">
     <p class="section-label reveal">Bibliography</p>
@@ -1057,13 +727,12 @@
   </div>
 </section>
 
-<!-- ══════════════ FOOTER ══════════════ -->
+<!-- FOOTER -->
 <footer>
-  <p>Group 4967 &nbsp;·&nbsp; <span>External Pacing Pad Design</span> &nbsp;·&nbsp; Imperial College London &nbsp;·&nbsp; April 2026</p>
+  <p>Group 4967 &nbsp;·&nbsp; <span>External Pacing Pad Design</span> &nbsp;·&nbsp; Imperial College London</p>
 </footer>
 
 <script>
-/* ── TAB SWITCHING ── */
 function showTab(id) {
   document.querySelectorAll('.fem-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.fem-tab').forEach(t => t.classList.remove('active'));
@@ -1073,313 +742,148 @@ function showTab(id) {
   if (id === 'backpad') drawBackPad();
 }
 
-/* ── COLOUR MAPPING ── */
 function jetColor(t) {
   t = Math.max(0, Math.min(1, t));
   let r, g, b;
-  if (t < 0.125) { r = 0; g = 0; b = 0.5 + t * 4; }
-  else if (t < 0.375) { r = 0; g = (t - 0.125) * 4; b = 1; }
-  else if (t < 0.625) { r = (t - 0.375) * 4; g = 1; b = 1 - (t - 0.375) * 4; }
-  else if (t < 0.875) { r = 1; g = 1 - (t - 0.625) * 4; b = 0; }
-  else { r = 1 - (t - 0.875) * 4; g = 0; b = 0; }
+  if (t < 0.125)      { r=0; g=0; b=0.5+t*4; }
+  else if (t < 0.375) { r=0; g=(t-0.125)*4; b=1; }
+  else if (t < 0.625) { r=(t-0.375)*4; g=1; b=1-(t-0.375)*4; }
+  else if (t < 0.875) { r=1; g=1-(t-0.625)*4; b=0; }
+  else                { r=1-(t-0.875)*4; g=0; b=0; }
   return [Math.round(r*255), Math.round(g*255), Math.round(b*255)];
 }
 
-/* ── DRAW HEATMAPS ── */
 function drawHeatmap(canvasId, perforated) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
   const img = ctx.createImageData(W, H);
-
-  const padL = 0.2 * W, padR = 0.8 * W;
-  const elecT = 0, elecB = 0.05 * H;
-  const heartCX = 0.5 * W, heartCZ = 0.38 * H, heartR = 0.18 * H;
-
-  // ring perforation centres (relative to pad centre)
-  const ringRadii = [0.03, 0.0325, 0.035, 0.0375, 0.04, 0.0425, 0.045, 0.0475];
-  const padHalf = 0.05;
-  const perfCentres = [];
-  ringRadii.forEach(r => {
-    perfCentres.push(0.5 - r / padHalf * 0.3);
-    perfCentres.push(0.5 + r / padHalf * 0.3);
-  });
-
-  for (let row = 0; row < H; row++) {
-    for (let col = 0; col < W; col++) {
-      const xn = col / W, zn = row / H;
-      let J = 0;
-
-      const dx = col - heartCX, dz = row - heartCZ;
-      const inHeart = dx*dx + dz*dz < heartR*heartR;
-
+  const padL=0.2*W, padR=0.8*W, elecB=0.05*H;
+  const heartCX=0.5*W, heartCZ=0.38*H, heartR=0.18*H;
+  const ringRadii=[0.03,0.0325,0.035,0.0375,0.04,0.0425,0.045,0.0475];
+  const perfCentres=[];
+  ringRadii.forEach(r=>{perfCentres.push(0.5-r/0.05*0.3,0.5+r/0.05*0.3);});
+  for (let row=0;row<H;row++) {
+    for (let col=0;col<W;col++) {
+      const xn=col/W, zn=row/H;
+      let J=0;
+      const dx=col-heartCX, dz=row-heartCZ;
+      const inHeart=dx*dx+dz*dz<heartR*heartR;
       if (!inHeart) {
-        const inPad = col >= padL && col <= padR && row <= elecB;
-        const distFromEdgeL = col - padL;
-        const distFromEdgeR = padR - col;
-        const edgeDist = Math.min(distFromEdgeL, distFromEdgeR);
-        const edgeWidth = padR - padL;
-
-        // base current from a diffusion model
-        const depth = Math.max(0.01, zn);
-        const edgeFactor = Math.exp(-edgeDist / (edgeWidth * 0.08));
-        J = (2.5 + 8.5 * edgeFactor) / Math.sqrt(depth * 6);
-
-        // perforated: reduce edge effect, add small perforation dips
+        const edgeDist=Math.min(col-padL,padR-col);
+        const depth=Math.max(0.01,zn);
+        const edgeFactor=Math.exp(-edgeDist/((padR-padL)*0.08));
+        J=(2.5+8.5*edgeFactor)/Math.sqrt(depth*6);
         if (perforated) {
-          const reduction = 1 - 0.35 * edgeFactor;
-          J *= reduction;
-          if (row < elecB * 3) {
-            perfCentres.forEach(pc => {
-              const pDist = Math.abs(xn - pc);
-              if (pDist < 0.012) J *= (0.5 + pDist / 0.012 * 0.5);
-            });
-          }
+          J*=(1-0.35*edgeFactor);
+          if(row<elecB*3){perfCentres.forEach(pc=>{const pd=Math.abs(xn-pc);if(pd<0.012)J*=(0.5+pd/0.012*0.5);});}
         }
-
-        J = Math.max(0, Math.min(20, J));
+        J=Math.max(0,Math.min(20,J));
       }
-
-      const t = J / 20;
-      const [r, g, b] = inHeart ? [255, 255, 255] : jetColor(t);
-      const i = (row * W + col) * 4;
-      img.data[i] = r; img.data[i+1] = g; img.data[i+2] = b; img.data[i+3] = 255;
+      const t=J/20;
+      const [r,g,b]=inHeart?[255,255,255]:jetColor(t);
+      const i=(row*W+col)*4;
+      img.data[i]=r;img.data[i+1]=g;img.data[i+2]=b;img.data[i+3]=255;
     }
   }
-  ctx.putImageData(img, 0, 0);
-
-  // heart outline
-  ctx.beginPath();
-  ctx.ellipse(heartCX, heartCZ, heartR * 0.7, heartR, 0, 0, Math.PI * 2);
-  ctx.strokeStyle = 'rgba(255,255,255,0.6)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-
-  // electrode marker
-  ctx.fillStyle = 'rgba(255,255,255,0.15)';
-  ctx.fillRect(padL, 0, padR - padL, elecB);
+  ctx.putImageData(img,0,0);
+  ctx.beginPath();ctx.ellipse(heartCX,heartCZ,heartR*0.7,heartR,0,0,Math.PI*2);
+  ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1;ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(padL,0,padR-padL,elecB);
 }
 
 function drawColorbar(canvasId) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width;
-  for (let x = 0; x < W; x++) {
-    const [r, g, b] = jetColor(x / W);
-    ctx.fillStyle = `rgb(${r},${g},${b})`;
-    ctx.fillRect(x, 0, 1, canvas.height);
-  }
+  const canvas=document.getElementById(canvasId);if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  for(let x=0;x<canvas.width;x++){const[r,g,b]=jetColor(x/canvas.width);ctx.fillStyle=`rgb(${r},${g},${b})`;ctx.fillRect(x,0,1,canvas.height);}
 }
 
-/* ── DRAW PARETO ── */
 function drawPareto() {
-  const canvas = document.getElementById('canvas-pareto');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0, 0, W, H);
-
-  // background
-  ctx.fillStyle = '#152437';
-  ctx.fillRect(0, 0, W, H);
-
-  // axes config
-  const ml = 60, mr = 30, mt = 30, mb = 40;
-  const pw = W - ml - mr, ph = H - mt - mb;
-  const Kmin = 2.28, Kmax = 2.72;
-  const Jmin = 34.5, Jmax = 36.5;
-
-  function tx(K) { return ml + (K - Kmin) / (Kmax - Kmin) * pw; }
-  function ty(J) { return mt + ph - (J - Jmin) / (Jmax - Jmin) * ph; }
-
-  // grid
-  ctx.strokeStyle = 'rgba(91,159,212,0.08)';
-  ctx.lineWidth = 0.5;
-  for (let i = 0; i <= 4; i++) {
-    const x = ml + i / 4 * pw;
-    ctx.beginPath(); ctx.moveTo(x, mt); ctx.lineTo(x, mt + ph); ctx.stroke();
-    const y = mt + i / 4 * ph;
-    ctx.beginPath(); ctx.moveTo(ml, y); ctx.lineTo(ml + pw, y); ctx.stroke();
-  }
-
-  // axes
-  ctx.strokeStyle = 'rgba(91,159,212,0.3)';
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(ml, mt); ctx.lineTo(ml, mt + ph); ctx.lineTo(ml + pw, mt + ph); ctx.stroke();
-
-  // axis labels
-  ctx.fillStyle = '#7fa3c0';
-  ctx.font = '11px Barlow, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('K (non-uniformity ratio)', ml + pw / 2, H - 6);
-  ctx.save(); ctx.translate(14, mt + ph / 2); ctx.rotate(-Math.PI / 2);
-  ctx.fillText('Peak |J| (A/m²)', 0, 0); ctx.restore();
-
-  // tick labels
-  ctx.font = '10px Barlow, sans-serif';
-  [2.3, 2.4, 2.5, 2.6, 2.7].forEach(K => {
-    ctx.fillText(K.toFixed(1), tx(K), mt + ph + 14);
-  });
-  ctx.textAlign = 'right';
-  [34.6, 35.0, 35.4, 35.8, 36.2].forEach(J => {
-    ctx.fillText(J.toFixed(1), ml - 5, ty(J) + 3);
-  });
-
-  // scatter — all designs
-  const rng = (seed) => { let x = Math.sin(seed) * 10000; return x - Math.floor(x); };
-  ctx.fillStyle = 'rgba(176,196,220,0.25)';
-  for (let i = 0; i < 400; i++) {
-    const K = Kmin + rng(i * 7.3 + 1) * (Kmax - Kmin);
-    const J = Jmin + rng(i * 3.1 + 2) * (Jmax - Jmin);
-    ctx.beginPath(); ctx.arc(tx(K), ty(J), 2, 0, Math.PI * 2); ctx.fill();
-  }
-
-  // Pareto front (approximate)
-  const pareto = [
-    [2.33, 35.44], [2.36, 35.30], [2.38, 35.20], [2.40, 35.19],
-    [2.44, 35.05], [2.48, 34.95], [2.52, 34.80], [2.56, 34.70], [2.60, 34.62]
-  ];
-  ctx.strokeStyle = '#f0f4f8';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  pareto.forEach(([K, J], i) => {
-    i === 0 ? ctx.moveTo(tx(K), ty(J)) : ctx.lineTo(tx(K), ty(J));
-  });
-  ctx.stroke();
-
-  ctx.fillStyle = '#f0f4f8';
-  pareto.forEach(([K, J]) => {
-    ctx.beginPath(); ctx.arc(tx(K), ty(J), 3.5, 0, Math.PI * 2); ctx.fill();
-  });
-
-  // Key solutions
-  const pts = [
-    { K: 2.33, J: 35.44, label: 'Best K', color: '#4ade80' },
-    { K: 2.40, J: 35.19, label: 'Knee', color: '#60a5fa' },
-    { K: 2.60, J: 34.62, label: 'Best |J|', color: '#f87171' },
-    { K: 2.56, J: 35.14, label: 'Solid', color: '#e8c96a', shape: 'x' },
-  ];
-
-  pts.forEach(pt => {
-    const x = tx(pt.K), y = ty(pt.J);
-    ctx.fillStyle = pt.color;
-    ctx.strokeStyle = pt.color;
-    if (pt.shape === 'x') {
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(x - 6, y - 6); ctx.lineTo(x + 6, y + 6);
-      ctx.moveTo(x + 6, y - 6); ctx.lineTo(x - 6, y + 6); ctx.stroke();
-    } else {
-      ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill();
-    }
-    ctx.font = '10px Barlow Condensed, sans-serif';
-    ctx.fillStyle = pt.color;
-    ctx.textAlign = 'left';
-    ctx.fillText(pt.label, x + 9, y + 3);
+  const canvas=document.getElementById('canvas-pareto');if(!canvas)return;
+  const ctx=canvas.getContext('2d');const W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);ctx.fillStyle='#152437';ctx.fillRect(0,0,W,H);
+  const ml=60,mr=30,mt=30,mb=40,pw=W-ml-mr,ph=H-mt-mb;
+  const Kmin=2.28,Kmax=2.72,Jmin=34.5,Jmax=36.5;
+  function tx(K){return ml+(K-Kmin)/(Kmax-Kmin)*pw;}
+  function ty(J){return mt+ph-(J-Jmin)/(Jmax-Jmin)*ph;}
+  ctx.strokeStyle='rgba(91,159,212,0.08)';ctx.lineWidth=0.5;
+  for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(ml+i/4*pw,mt);ctx.lineTo(ml+i/4*pw,mt+ph);ctx.stroke();ctx.beginPath();ctx.moveTo(ml,mt+i/4*ph);ctx.lineTo(ml+pw,mt+i/4*ph);ctx.stroke();}
+  ctx.strokeStyle='rgba(91,159,212,0.3)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(ml,mt);ctx.lineTo(ml,mt+ph);ctx.lineTo(ml+pw,mt+ph);ctx.stroke();
+  ctx.fillStyle='#7fa3c0';ctx.font='11px Barlow, sans-serif';ctx.textAlign='center';
+  ctx.fillText('K (non-uniformity ratio)',ml+pw/2,H-6);
+  ctx.save();ctx.translate(14,mt+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Peak |J| (A/m²)',0,0);ctx.restore();
+  ctx.font='10px Barlow, sans-serif';
+  [2.3,2.4,2.5,2.6,2.7].forEach(K=>ctx.fillText(K.toFixed(1),tx(K),mt+ph+14));
+  ctx.textAlign='right';
+  [34.6,35.0,35.4,35.8,36.2].forEach(J=>ctx.fillText(J.toFixed(1),ml-5,ty(J)+3));
+  const rng=s=>{let x=Math.sin(s)*10000;return x-Math.floor(x);};
+  ctx.fillStyle='rgba(176,196,220,0.25)';
+  for(let i=0;i<400;i++){ctx.beginPath();ctx.arc(tx(Kmin+rng(i*7.3+1)*(Kmax-Kmin)),ty(Jmin+rng(i*3.1+2)*(Jmax-Jmin)),2,0,Math.PI*2);ctx.fill();}
+  const pareto=[[2.33,35.44],[2.36,35.30],[2.38,35.20],[2.40,35.19],[2.44,35.05],[2.48,34.95],[2.52,34.80],[2.56,34.70],[2.60,34.62]];
+  ctx.strokeStyle='#f0f4f8';ctx.lineWidth=1.5;ctx.beginPath();
+  pareto.forEach(([K,J],i)=>i===0?ctx.moveTo(tx(K),ty(J)):ctx.lineTo(tx(K),ty(J)));ctx.stroke();
+  ctx.fillStyle='#f0f4f8';pareto.forEach(([K,J])=>{ctx.beginPath();ctx.arc(tx(K),ty(J),3.5,0,Math.PI*2);ctx.fill();});
+  [{K:2.33,J:35.44,label:'Best K',color:'#4ade80'},{K:2.40,J:35.19,label:'Knee',color:'#60a5fa'},{K:2.60,J:34.62,label:'Best |J|',color:'#f87171'},{K:2.56,J:35.14,label:'Solid',color:'#e8c96a',shape:'x'}]
+  .forEach(pt=>{
+    const x=tx(pt.K),y=ty(pt.J);ctx.fillStyle=pt.color;ctx.strokeStyle=pt.color;
+    if(pt.shape==='x'){ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-6,y-6);ctx.lineTo(x+6,y+6);ctx.moveTo(x+6,y-6);ctx.lineTo(x-6,y+6);ctx.stroke();}
+    else{ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();}
+    ctx.font='10px Barlow Condensed, sans-serif';ctx.fillStyle=pt.color;ctx.textAlign='left';ctx.fillText(pt.label,x+9,y+3);
   });
 }
 
-/* ── DRAW BACK PAD ── */
 function drawBackPad() {
-  const padW = [60, 80, 100, 120, 140, 160, 200, 240];
-  const Kvals  = [6.38, 7.82, 6.93, 6.18, 6.13, 6.55, 6.75, 7.02];
-  const Jh     = [7.42, 7.86, 8.25, 8.55, 8.80, 9.00, 9.28, 9.47];
-  const Jedge  = [3.37, 3.24, 3.14, 2.90, 2.88, 2.85, 2.90, 2.58];
-
-  function drawLineChart(canvasId, xs, ys, yLabel, accentColor, minY, maxY, highlightMin) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const W = canvas.width, H = canvas.height;
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#152437'; ctx.fillRect(0, 0, W, H);
-
-    const ml = 48, mr = 16, mt = 18, mb = 36;
-    const pw = W - ml - mr, ph = H - mt - mb;
-    const range = maxY - minY;
-    function tx(x) { return ml + (x - xs[0]) / (xs[xs.length-1] - xs[0]) * pw; }
-    function ty(y) { return mt + ph - (y - minY) / range * ph; }
-
-    // grid lines
-    ctx.strokeStyle = 'rgba(91,159,212,0.08)'; ctx.lineWidth = 0.5;
-    for (let i = 0; i <= 4; i++) {
-      const yg = mt + i / 4 * ph;
-      ctx.beginPath(); ctx.moveTo(ml, yg); ctx.lineTo(ml + pw, yg); ctx.stroke();
-    }
-
-    // axes
-    ctx.strokeStyle = 'rgba(91,159,212,0.25)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(ml, mt); ctx.lineTo(ml, mt + ph); ctx.lineTo(ml + pw, mt + ph); ctx.stroke();
-
-    // filled area under line
-    ctx.beginPath();
-    xs.forEach((x, i) => { i === 0 ? ctx.moveTo(tx(x), ty(ys[i])) : ctx.lineTo(tx(x), ty(ys[i])); });
-    ctx.lineTo(tx(xs[xs.length-1]), mt + ph);
-    ctx.lineTo(tx(xs[0]), mt + ph);
-    ctx.closePath();
-    ctx.fillStyle = accentColor + '18';
-    ctx.fill();
-
-    // line
-    ctx.strokeStyle = accentColor; ctx.lineWidth = 2;
-    ctx.beginPath();
-    xs.forEach((x, i) => { i === 0 ? ctx.moveTo(tx(x), ty(ys[i])) : ctx.lineTo(tx(x), ty(ys[i])); });
-    ctx.stroke();
-
-    // dots
-    xs.forEach((x, i) => {
-      const isHighlight = highlightMin && ys[i] === Math.min(...ys);
-      ctx.beginPath(); ctx.arc(tx(x), ty(ys[i]), isHighlight ? 5 : 3.5, 0, Math.PI * 2);
-      ctx.fillStyle = isHighlight ? '#ffffff' : accentColor;
-      ctx.fill();
-      if (isHighlight) {
-        ctx.strokeStyle = accentColor; ctx.lineWidth = 1.5;
-        ctx.stroke();
-      }
+  const padW=[60,80,100,120,140,160,200,240];
+  const Kvals=[6.38,7.82,6.93,6.18,6.13,6.55,6.75,7.02];
+  const Jh=[7.42,7.86,8.25,8.55,8.80,9.00,9.28,9.47];
+  const Jedge=[3.37,3.24,3.14,2.90,2.88,2.85,2.90,2.58];
+  function drawLineChart(canvasId,xs,ys,accentColor,minY,maxY,highlightMin){
+    const canvas=document.getElementById(canvasId);if(!canvas)return;
+    const ctx=canvas.getContext('2d');const W=canvas.width,H=canvas.height;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#152437';ctx.fillRect(0,0,W,H);
+    const ml=48,mr=16,mt=18,mb=36,pw=W-ml-mr,ph=H-mt-mb,range=maxY-minY;
+    function tx(x){return ml+(x-xs[0])/(xs[xs.length-1]-xs[0])*pw;}
+    function ty(y){return mt+ph-(y-minY)/range*ph;}
+    ctx.strokeStyle='rgba(91,159,212,0.08)';ctx.lineWidth=0.5;
+    for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(ml,mt+i/4*ph);ctx.lineTo(ml+pw,mt+i/4*ph);ctx.stroke();}
+    ctx.strokeStyle='rgba(91,159,212,0.25)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(ml,mt);ctx.lineTo(ml,mt+ph);ctx.lineTo(ml+pw,mt+ph);ctx.stroke();
+    ctx.beginPath();xs.forEach((x,i)=>i===0?ctx.moveTo(tx(x),ty(ys[i])):ctx.lineTo(tx(x),ty(ys[i])));
+    ctx.lineTo(tx(xs[xs.length-1]),mt+ph);ctx.lineTo(tx(xs[0]),mt+ph);ctx.closePath();
+    ctx.fillStyle=accentColor+'18';ctx.fill();
+    ctx.strokeStyle=accentColor;ctx.lineWidth=2;ctx.beginPath();
+    xs.forEach((x,i)=>i===0?ctx.moveTo(tx(x),ty(ys[i])):ctx.lineTo(tx(x),ty(ys[i])));ctx.stroke();
+    xs.forEach((x,i)=>{
+      const isH=highlightMin&&ys[i]===Math.min(...ys);
+      ctx.beginPath();ctx.arc(tx(x),ty(ys[i]),isH?5:3.5,0,Math.PI*2);
+      ctx.fillStyle=isH?'#ffffff':accentColor;ctx.fill();
+      if(isH){ctx.strokeStyle=accentColor;ctx.lineWidth=1.5;ctx.stroke();}
     });
-
-    // x axis tick labels
-    ctx.fillStyle = '#7fa3c0'; ctx.font = '9px Barlow, sans-serif'; ctx.textAlign = 'center';
-    [60, 100, 140, 200, 240].forEach(x => {
-      ctx.fillText(x, tx(x), mt + ph + 14);
-    });
-    ctx.fillText('Back pad (mm)', ml + pw / 2, H - 3);
-
-    // y axis tick labels
-    ctx.textAlign = 'right';
-    const step = range / 4;
-    for (let i = 0; i <= 4; i++) {
-      const v = minY + i * step;
-      ctx.fillText(v.toFixed(1), ml - 4, ty(v) + 3);
-    }
+    ctx.fillStyle='#7fa3c0';ctx.font='9px Barlow, sans-serif';ctx.textAlign='center';
+    [60,100,140,200,240].forEach(x=>ctx.fillText(x,tx(x),mt+ph+14));
+    ctx.fillText('Back pad (mm)',ml+pw/2,H-3);
+    ctx.textAlign='right';
+    for(let i=0;i<=4;i++){const v=minY+i*(range/4);ctx.fillText(v.toFixed(1),ml-4,ty(v)+3);}
   }
-
-  drawLineChart('canvas-kplot',  padW, Kvals, 'K',         '#8fc4e8', 5.8, 8.2,  true);
-  drawLineChart('canvas-jheart', padW, Jh,    '|J| A/m²',  '#a07fcb', 7.0, 9.8,  false);
-  drawLineChart('canvas-jedge',  padW, Jedge, '|J| A/m²',  '#e8c96a', 2.4, 3.6,  false);
+  drawLineChart('canvas-kplot',padW,Kvals,'#8fc4e8',5.8,8.2,true);
+  drawLineChart('canvas-jheart',padW,Jh,'#a07fcb',7.0,9.8,false);
+  drawLineChart('canvas-jedge',padW,Jedge,'#e8c96a',2.4,3.6,false);
 }
 
-/* ── SCROLL REVEAL ── */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-/* ── INIT ── */
-window.addEventListener('load', () => {
-  drawHeatmap('canvas-solid', false);
-  drawHeatmap('canvas-perf', true);
+window.addEventListener('load',()=>{
+  drawHeatmap('canvas-solid',false);
+  drawHeatmap('canvas-perf',true);
   drawColorbar('cbar-solid');
   drawColorbar('cbar-perf');
 });
 
-/* ── SMOOTH SCROLL ── */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-  });
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
 });
 </script>
 </body>
