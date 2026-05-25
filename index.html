@@ -776,18 +776,18 @@
 <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
 <script>
 (function() {
- 
+
   function setStatus(msg) {
     const el = document.getElementById('cad-status');
     if (el) el.textContent = msg;
   }
- 
+
   async function load3MF(url) {
     setStatus('Fetching 3MF…');
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const buf = new Uint8Array(await resp.arrayBuffer());
- 
+
     setStatus('Unpacking ' + (buf.length / 1024 / 1024).toFixed(1) + ' MB…');
     /* fflate handles ZIP / ZIP64 / large files / deflate-raw correctly */
     const files = fflate.unzipSync(buf);
@@ -798,7 +798,7 @@
     }
     throw new Error('No .model entry in 3MF');
   }
- 
+
   /* Fast streaming regex parser — avoids DOMParser blowup on large 3MF files.
      Returns { objects: {id -> {verts: Float32Array, idxs: Array}}, items: [{objectid, transform?}] } */
   function parseModel(xml) {
@@ -807,7 +807,7 @@
     const objRegex = /<object\s+id="(\d+)"[^>]*>([\s\S]*?)<\/object>/g;
     const vertRegex = /<vertex\s+x="([-\d.eE]+)"\s+y="([-\d.eE]+)"\s+z="([-\d.eE]+)"/g;
     const triRegex  = /<triangle\s+v1="(\d+)"\s+v2="(\d+)"\s+v3="(\d+)"/g;
- 
+
     let m;
     while ((m = objRegex.exec(xml)) !== null) {
       const id = m[1];
@@ -827,7 +827,7 @@
         objects[id] = { verts: new Float32Array(verts), idxs };
       }
     }
- 
+
     /* Parse <build>/<item> instances and any transform matrices */
     const items = [];
     const itemRegex = /<item\s+([^/]*?)\/>/g;
@@ -841,44 +841,44 @@
         items.push(item);
       }
     }
- 
+
     return { objects, items };
   }
- 
+
   function buildScene({ objects, items }) {
     setStatus('Building scene…');
     const canvas = document.getElementById('cad-canvas');
     const wrap   = document.getElementById('cad-canvas-wrap');
     canvas.width  = wrap.clientWidth;
     canvas.height = wrap.clientHeight;
- 
+
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setSize(wrap.clientWidth, wrap.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x0d1b2e, 1);
- 
+
     const scene  = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, wrap.clientWidth / wrap.clientHeight, 0.01, 100000);
- 
+
     /* Per-part colour palette matching the page theme */
     const palette = [0x8fc4e8, 0xa07fcb, 0xe8c96a, 0xc2dff0, 0x5b9fd4, 0xedcec3, 0xcbcbcb, 0xf6f6f3, 0x7b5ea7, 0x737373];
- 
+
     const group = new THREE.Group();
     const renderList = items.length > 0
       ? items.map(it => ({ obj: objects[it.objectid], transform: it.transform }))
       : Object.values(objects).map(o => ({ obj: o }));
- 
+
     const bbox = new THREE.Box3();
     bbox.makeEmpty();
     let partIdx = 0;
- 
+
     renderList.forEach(({ obj, transform }) => {
       if (!obj) return;
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.BufferAttribute(obj.verts, 3));
       geo.setIndex(obj.idxs);
       geo.computeVertexNormals();
- 
+
       const mat = new THREE.MeshPhongMaterial({
         color: palette[partIdx % palette.length],
         specular: 0x2a4a6b,
@@ -887,7 +887,7 @@
         flatShading: false
       });
       const mesh = new THREE.Mesh(geo, mat);
- 
+
       /* 3MF transforms are row-major 4x3 (12 floats): a b c d e f g h i j k l
          representing the affine matrix [[a d g j],[b e h k],[c f i l],[0 0 0 1]] */
       if (transform && transform.length === 12) {
@@ -900,27 +900,27 @@
         );
         mesh.applyMatrix4(m4);
       }
- 
+
       group.add(mesh);
       mesh.updateMatrixWorld(true);
       geo.computeBoundingBox();
       bbox.union(geo.boundingBox.clone().applyMatrix4(mesh.matrixWorld));
       partIdx++;
     });
- 
+
     /* Centre the model at the origin */
     const centre = new THREE.Vector3();
     bbox.getCenter(centre);
     group.position.sub(centre);
     scene.add(group);
- 
+
     /* Frame the camera to fit */
     const size = new THREE.Vector3();
     bbox.getSize(size);
     const span = Math.max(size.x, size.y, size.z);
     camera.position.set(span * 0.8, span * 0.6, span * 1.4);
     camera.lookAt(0, 0, 0);
- 
+
     /* Lighting */
     scene.add(new THREE.AmbientLight(0xffffff, 0.45));
     const key = new THREE.DirectionalLight(0xc8e0f4, 0.95);
@@ -929,7 +929,7 @@
     fill.position.set(-1, -0.5, -1); scene.add(fill);
     const rim = new THREE.DirectionalLight(0xffffff, 0.2);
     rim.position.set(0, -1, 0.5); scene.add(rim);
- 
+
     /* Orbit controls */
     const controls = new THREE.OrbitControls(camera, canvas);
     controls.enableDamping = true;
@@ -939,14 +939,14 @@
     controls.minDistance = span * 0.3;
     controls.maxDistance = span * 5;
     canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
- 
+
     window.addEventListener('resize', () => {
       const w = wrap.clientWidth, h = wrap.clientHeight;
       renderer.setSize(w, h);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
     });
- 
+
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
@@ -954,7 +954,7 @@
     }
     animate();
   }
- 
+
   async function init() {
     try {
       const xml = await load3MF('Pacing_pad_design.3mf');
@@ -973,7 +973,7 @@
       if (sp) sp.style.display = 'none';
     }
   }
- 
+
   /* Kick off when section scrolls into view */
   const section = document.getElementById('cad-viewer');
   const io = new IntersectionObserver(entries => {
