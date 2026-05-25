@@ -770,30 +770,77 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 
-<!-- Three.js + fflate (ZIP/deflate) + 3MF loader -->
+<!-- Three.js + 3MF loader -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
 <script>
 (function() {
 
   async function load3MF(url) {
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('Fetch failed: ' + resp.status);
-    const buf = new Uint8Array(await resp.arrayBuffer());
+    const raw = new Uint8Array(await resp.arrayBuffer());
 
-    return new Promise((resolve, reject) => {
-      fflate.unzip(buf, (err, files) => {
-        if (err) return reject(new Error('Unzip failed: ' + err.message));
-        const dec = new TextDecoder();
-        for (const name in files) {
-          if (name.toLowerCase().endsWith('.model')) {
-            return resolve(dec.decode(files[name]));
+    function u16(o) { return raw[o] | raw[o+1]<<8; }
+    function u32(o) { return (raw[o] | raw[o+1]<<8 | raw[o+2]<<16 | (raw[o+3]<<24)>>>0); }
+    function u64(o) {
+      const lo = u32(o), hi = u32(o+4);
+      return hi * 4294967296 + lo;
+    }
+
+    let offset = 0;
+    while (offset < raw.length - 4) {
+      if (raw[offset]===0x50 && raw[offset+1]===0x4B &&
+          raw[offset+2]===0x03 && raw[offset+3]===0x04) {
+
+        const comp  = u16(offset + 8);
+        let   csz   = u32(offset + 18);
+        let   usz   = u32(offset + 22);
+        const fnLen = u16(offset + 26);
+        const exLen = u16(offset + 28);
+        const fn    = new TextDecoder().decode(raw.slice(offset+30, offset+30+fnLen));
+        const exOff = offset + 30 + fnLen;
+        const dataOff = exOff + exLen;
+
+        /* ZIP64: if sizes are 0xFFFFFFFF read from extra field */
+        if (csz === 0xFFFFFFFF || usz === 0xFFFFFFFF) {
+          let p = exOff;
+          while (p < exOff + exLen - 3) {
+            const tag  = u16(p);
+            const esz  = u16(p + 2);
+            if (tag === 0x0001 && esz >= 16) {
+              usz = u64(p + 4);
+              csz = u64(p + 12);
+              break;
+            }
+            p += 4 + esz;
           }
         }
-        reject(new Error('No .model found in 3MF'));
-      });
-    });
+
+        if (fn.toLowerCase().endsWith('.model')) {
+          const compressed = raw.slice(dataOff, dataOff + csz);
+          /* inflate using DecompressionStream (raw deflate, wbits=-15) */
+          const ds = new DecompressionStream('deflate-raw');
+          const writer = ds.writable.getWriter();
+          const reader = ds.readable.getReader();
+          writer.write(compressed);
+          writer.close();
+          const chunks = [];
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+          }
+          const out = new Uint8Array(chunks.reduce((s,c)=>s+c.length,0));
+          let pos = 0;
+          for (const c of chunks) { out.set(c, pos); pos += c.length; }
+          return new TextDecoder().decode(out);
+        }
+
+        offset = dataOff + csz;
+      } else { offset++; }
+    }
+    throw new Error('No .model found in 3MF');
   }
 
   function parseModel(xml) {
