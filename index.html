@@ -770,72 +770,36 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 
-<!-- Three.js + 3MF loader -->
+<!-- Three.js + fflate (ZIP/deflate) + 3MF loader -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
 <script>
 (function() {
-  /* ── parse 3MF (ZIP containing 3D/3dmodel.model XML) ── */
+
   async function load3MF(url) {
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('Fetch failed: ' + resp.status);
-    const buf = await resp.arrayBuffer();
+    const buf = new Uint8Array(await resp.arrayBuffer());
 
-    /* minimal ZIP parser — find the .model entry */
-    const bytes = new Uint8Array(buf);
-    function u16(o){ return bytes[o] | bytes[o+1]<<8; }
-    function u32(o){ return bytes[o] | bytes[o+1]<<8 | bytes[o+2]<<16 | bytes[o+3]<<24; }
-    const dec = new TextDecoder();
-
-    let offset = 0;
-    let modelXML = null;
-    while (offset < bytes.length - 4) {
-      if (bytes[offset]===0x50 && bytes[offset+1]===0x4B &&
-          bytes[offset+2]===0x03 && bytes[offset+3]===0x04) {
-        const comp   = u16(offset+8);
-        const cSize  = u32(offset+18);
-        const uSize  = u32(offset+22);
-        const fnLen  = u16(offset+26);
-        const exLen  = u16(offset+28);
-        const fn     = dec.decode(bytes.slice(offset+30, offset+30+fnLen));
-        const dataOff = offset + 30 + fnLen + exLen;
-        if (fn.toLowerCase().endsWith('.model')) {
-          let xmlBytes;
-          if (comp === 0) {
-            xmlBytes = bytes.slice(dataOff, dataOff + uSize);
-          } else if (comp === 8) {
-            const { DecompressionStream } = window;
-            if (DecompressionStream) {
-              const ds = new DecompressionStream('deflate-raw');
-              const writer = ds.writable.getWriter();
-              const reader = ds.readable.getReader();
-              writer.write(bytes.slice(dataOff, dataOff + cSize));
-              writer.close();
-              const chunks = [];
-              while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-                chunks.push(value);
-              }
-              const total = chunks.reduce((s,c)=>s+c.length,0);
-              xmlBytes = new Uint8Array(total);
-              let pos=0; chunks.forEach(c=>{xmlBytes.set(c,pos);pos+=c.length;});
-            }
+    return new Promise((resolve, reject) => {
+      fflate.unzip(buf, (err, files) => {
+        if (err) return reject(new Error('Unzip failed: ' + err.message));
+        const dec = new TextDecoder();
+        for (const name in files) {
+          if (name.toLowerCase().endsWith('.model')) {
+            return resolve(dec.decode(files[name]));
           }
-          if (xmlBytes) { modelXML = dec.decode(xmlBytes); break; }
         }
-        offset = dataOff + cSize;
-      } else { offset++; }
-    }
-    if (!modelXML) throw new Error('No .model found in 3MF');
-    return modelXML;
+        reject(new Error('No .model found in 3MF'));
+      });
+    });
   }
 
   function parseModel(xml) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(xml, 'application/xml');
     const geometries = [];
-
     doc.querySelectorAll('mesh').forEach(mesh => {
       const verts = [], idxs = [];
       mesh.querySelectorAll('vertices > vertex').forEach(v => {
