@@ -785,12 +785,33 @@
   async function load3MF(url) {
     setStatus('Fetching 3MF…');
     const resp = await fetch(url);
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+
+    if (!resp.ok) {
+      throw new Error('HTTP ' + resp.status + ' fetching ' + url + ' — file is probably not at this path on the server.');
+    }
+
     const buf = new Uint8Array(await resp.arrayBuffer());
 
+    /* Diagnose: if we got a tiny response or it doesn't start with PK\x03\x04 (ZIP magic),
+       the server isn't actually serving the .3mf file. */
+    if (buf.length < 100) {
+      const text = new TextDecoder().decode(buf);
+      console.error('Server returned ' + buf.length + ' bytes instead of the 3MF file. Body:', text);
+      throw new Error('Server returned only ' + buf.length + ' bytes — not the 3MF file. Check that Pacing_pad_design.3mf is uploaded next to index.html. See console for the response body.');
+    }
+    if (!(buf[0] === 0x50 && buf[1] === 0x4B)) {
+      const preview = new TextDecoder().decode(buf.slice(0, 200));
+      console.error('Response is not a ZIP. First 200 bytes:', preview);
+      throw new Error('Server returned non-ZIP data (likely an HTML error page). Check that the .3mf file exists at this URL and that the host serves it correctly. See console for details.');
+    }
+
     setStatus('Unpacking ' + (buf.length / 1024 / 1024).toFixed(1) + ' MB…');
-    /* fflate handles ZIP / ZIP64 / large files / deflate-raw correctly */
-    const files = fflate.unzipSync(buf);
+    let files;
+    try {
+      files = fflate.unzipSync(buf);
+    } catch (e) {
+      throw new Error('ZIP decode failed: ' + e.message + ' (file may be corrupted in transit)');
+    }
     for (const name in files) {
       if (name.toLowerCase().endsWith('.model')) {
         return fflate.strFromU8(files[name]);
