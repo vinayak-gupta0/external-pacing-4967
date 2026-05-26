@@ -1109,19 +1109,30 @@
     renderer.setClearColor(0x0d1b2e,1);
     const scene=new THREE.Scene();
     const camera=new THREE.PerspectiveCamera(45,wrap.clientWidth/wrap.clientHeight,0.01,100000);
+
+    /* Build mesh list with metadata. Each item knows its part identity so we can toggle layers. */
     const palette=[0x8fc4e8,0xa07fcb,0xe8c96a,0xc2dff0,0x5b9fd4,0xedcec3,0xcbcbcb,0xf6f6f3,0x7b5ea7,0x737373];
     const group=new THREE.Group();
     const renderList=items.length>0
-      ?items.map(it=>({obj:objects[it.objectid],transform:it.transform}))
-      :Object.values(objects).map(o=>({obj:o}));
+      ?items.map(it=>({obj:objects[it.objectid],transform:it.transform,objectid:it.objectid}))
+      :Object.entries(objects).map(([id,o])=>({obj:o,objectid:id}));
+
+    const meshes=[]; /* {mesh, objectid, triCount} */
     const bbox=new THREE.Box3(); bbox.makeEmpty();
     let partIdx=0;
-    renderList.forEach(({obj,transform})=>{
+
+    renderList.forEach(({obj,transform,objectid})=>{
       if(!obj)return;
       const geo=new THREE.BufferGeometry();
       geo.setAttribute('position',new THREE.BufferAttribute(obj.verts,3));
       geo.setIndex(obj.idxs); geo.computeVertexNormals();
-      const mat=new THREE.MeshPhongMaterial({color:palette[partIdx%palette.length],specular:0x2a4a6b,shininess:50,side:THREE.DoubleSide});
+      const triCount=obj.idxs.length/3;
+      const mat=new THREE.MeshPhongMaterial({
+        color:palette[partIdx%palette.length],
+        specular:0x2a4a6b, shininess:50,
+        side:THREE.DoubleSide,
+        transparent:false, opacity:1
+      });
       const mesh=new THREE.Mesh(geo,mat);
       if(transform&&transform.length===12){
         const t=transform;
@@ -1129,20 +1140,99 @@
       }
       group.add(mesh); mesh.updateMatrixWorld(true);
       geo.computeBoundingBox(); bbox.union(geo.boundingBox.clone().applyMatrix4(mesh.matrixWorld));
+      meshes.push({mesh, objectid, triCount});
       partIdx++;
     });
+
+    /* The perforated layer is the part with by far the most triangles (~150k vs <3k for everything else).
+       Auto-detect it so this works regardless of object id ordering. */
+    let perforatedMesh=null, maxTri=0;
+    meshes.forEach(m=>{ if(m.triCount>maxTri){maxTri=m.triCount; perforatedMesh=m.mesh;} });
+
     const centre=new THREE.Vector3(); bbox.getCenter(centre);
     group.position.sub(centre); scene.add(group);
     const size=new THREE.Vector3(); bbox.getSize(size);
     const span=Math.max(size.x,size.y,size.z);
     camera.position.set(span*0.8,span*0.6,span*1.4); camera.lookAt(0,0,0);
-    scene.add(new THREE.AmbientLight(0xffffff,0.45));
+
+    scene.add(new THREE.AmbientLight(0xffffff,0.5));
     const key=new THREE.DirectionalLight(0xc8e0f4,0.95); key.position.set(1,2,1); scene.add(key);
     const fill=new THREE.DirectionalLight(0x7b5ea7,0.4); fill.position.set(-1,-0.5,-1); scene.add(fill);
+    const back=new THREE.DirectionalLight(0xffffff,0.3); back.position.set(0,-1,-1); scene.add(back);
+
     const controls=new THREE.OrbitControls(camera,canvas);
     controls.enableDamping=true; controls.dampingFactor=0.08;
-    controls.autoRotate=true; controls.autoRotateSpeed=0.7;
+    controls.autoRotate=true; controls.autoRotateSpeed=0.5;
     canvas.addEventListener('pointerdown',()=>{controls.autoRotate=false;});
+
+    /* Build view-mode toggle UI */
+    const ui=document.createElement('div');
+    ui.style.cssText='position:absolute; top:1rem; left:1rem; background:rgba(13,27,46,0.85); backdrop-filter:blur(6px); border:1px solid rgba(91,159,212,0.25); padding:0.5rem; display:flex; flex-direction:column; gap:0.3rem; z-index:5; font-family:\'Barlow Condensed\',sans-serif; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;';
+    const modes=[
+      {id:'assembly', label:'Full Assembly'},
+      {id:'perforated', label:'Perforated Layer Only'},
+      {id:'exploded', label:'Exploded View'}
+    ];
+    const buttons={};
+    modes.forEach(m=>{
+      const b=document.createElement('button');
+      b.textContent=m.label;
+      b.style.cssText='background:transparent; border:1px solid rgba(91,159,212,0.2); color:#8fc4e8; padding:0.4rem 0.8rem; cursor:pointer; font:inherit; letter-spacing:inherit; text-transform:inherit; transition:all 0.2s;';
+      b.onmouseover=()=>{ if(b.dataset.active!=='true') b.style.borderColor='rgba(91,159,212,0.5)'; };
+      b.onmouseout=()=>{ if(b.dataset.active!=='true') b.style.borderColor='rgba(91,159,212,0.2)'; };
+      b.onclick=()=>setMode(m.id);
+      buttons[m.id]=b;
+      ui.appendChild(b);
+    });
+    wrap.appendChild(ui);
+
+    /* Store original positions so we can return to assembly view from exploded */
+    const originalPositions=meshes.map(m=>({mesh:m.mesh, pos:m.mesh.position.clone()}));
+
+    function setMode(mode){
+      Object.keys(buttons).forEach(k=>{
+        buttons[k].dataset.active = (k===mode) ? 'true' : 'false';
+        buttons[k].style.background = (k===mode) ? 'rgba(91,159,212,0.15)' : 'transparent';
+        buttons[k].style.borderColor = (k===mode) ? '#5b9fd4' : 'rgba(91,159,212,0.2)';
+        buttons[k].style.color = (k===mode) ? '#ffffff' : '#8fc4e8';
+      });
+
+      /* Reset positions */
+      originalPositions.forEach(({mesh,pos})=>mesh.position.copy(pos));
+
+      if(mode==='assembly'){
+        meshes.forEach(m=>{ m.mesh.visible=true; m.mesh.material.transparent=false; m.mesh.material.opacity=1; m.mesh.material.needsUpdate=true; });
+      } else if(mode==='perforated'){
+        /* Hide everything except the perforated layer */
+        meshes.forEach(m=>{ m.mesh.visible = (m.mesh===perforatedMesh); });
+        if(perforatedMesh){
+          perforatedMesh.material.transparent=false;
+          perforatedMesh.material.opacity=1;
+          perforatedMesh.material.needsUpdate=true;
+        }
+      } else if(mode==='exploded'){
+        /* Spread layers along Z (the thin axis). Object 11 stays at origin; others offset proportional to original z. */
+        const sortedByZ = meshes.slice().sort((a,b)=>{
+          const az=originalPositions.find(p=>p.mesh===a.mesh).pos.z + (a.mesh.geometry.boundingBox?(a.mesh.geometry.boundingBox.min.z+a.mesh.geometry.boundingBox.max.z)/2:0);
+          const bz=originalPositions.find(p=>p.mesh===b.mesh).pos.z + (b.mesh.geometry.boundingBox?(b.mesh.geometry.boundingBox.min.z+b.mesh.geometry.boundingBox.max.z)/2:0);
+          return az-bz;
+        });
+        const explodeSpacing=span*0.08;
+        sortedByZ.forEach((m,i)=>{
+          m.mesh.visible=true;
+          m.mesh.material.transparent=true;
+          m.mesh.material.opacity=0.92;
+          m.mesh.material.needsUpdate=true;
+          /* offset along Z axis */
+          const offset = (i - sortedByZ.length/2) * explodeSpacing;
+          const orig=originalPositions.find(p=>p.mesh===m.mesh).pos;
+          m.mesh.position.set(orig.x, orig.y, orig.z + offset);
+        });
+      }
+    }
+
+    setMode('assembly');
+
     window.addEventListener('resize',()=>{
       const w=wrap.clientWidth,h=wrap.clientHeight;
       renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix();
