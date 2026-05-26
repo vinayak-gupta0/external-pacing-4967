@@ -7,620 +7,127 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0d1b2e;
-    --navy-mid: #152437;
-    --navy-light: #1e3350;
-    --steel: #2a4a6b;
-    --sky: #5b9fd4;
-    --sky-light: #8fc4e8;
-    --sky-pale: #c2dff0;
-    --purple-accent: #7b5ea7;
-    --purple-light: #a07fcb;
-    --gold: #e8c96a;
-    --white: #f0f4f8;
-    --white-dim: #b8cfe0;
-    --text-muted: #7fa3c0;
+    --navy:#0d1b2e;--navy-mid:#152437;--navy-light:#1e3350;--steel:#2a4a6b;
+    --sky:#5b9fd4;--sky-light:#8fc4e8;--sky-pale:#c2dff0;
+    --purple-accent:#7b5ea7;--purple-light:#a07fcb;--gold:#e8c96a;
+    --white:#f0f4f8;--white-dim:#b8cfe0;--text-muted:#7fa3c0;
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'Barlow', sans-serif;
-    font-weight: 300;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  .hero {
-    min-height: 100vh;
-    background: linear-gradient(160deg, #0a1520 0%, #152437 40%, #1a3a5c 70%, #1e3f6a 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 4rem 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(91,159,212,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 80% 70%, rgba(123,94,167,0.1) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  .hero-eyebrow {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--sky);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.2s;
-  }
-
-  .hero-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(3.5rem, 10vw, 7rem);
-    font-weight: 800;
-    line-height: 0.9;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    color: var(--white);
-    margin-bottom: 0.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.4s;
-  }
-
-  .hero-title span { color: var(--sky-light); }
-
-  .hero-subtitle {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1rem, 3vw, 1.5rem);
-    font-weight: 400;
-    color: var(--gold);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.6s;
-    font-style: italic;
-  }
-
-  .hero-meta {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.8s;
-  }
-
-  .hero-divider {
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--purple-accent), var(--sky));
-    margin: 0 auto 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 1s;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 1.2s;
-  }
-
-  .btn {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 0.75rem 2rem;
-    border: 1px solid;
-    text-decoration: none;
-    transition: all 0.25s ease;
-    cursor: pointer;
-    display: inline-block;
-  }
-
-  .btn-primary { background: var(--sky); border-color: var(--sky); color: var(--navy); }
-  .btn-primary:hover { background: var(--sky-light); border-color: var(--sky-light); }
-  .btn-outline { background: transparent; border-color: rgba(91,159,212,0.5); color: var(--sky-light); }
-  .btn-outline:hover { border-color: var(--sky); background: rgba(91,159,212,0.08); }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-muted);
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 1.6s;
-  }
-
-  .scroll-hint-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--sky), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-
-  section { padding: 5rem 2rem; }
-
-  .container { max-width: 1100px; margin: 0 auto; }
-
-  .section-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--sky);
-    margin-bottom: 0.5rem;
-  }
-
-  .section-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--white);
-    line-height: 1;
-    margin-bottom: 1.5rem;
-  }
-
-  .resources { background: var(--navy-mid); }
-
-  .resources-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-
-  .resource-card {
-    background: var(--navy-light);
-    border: 1px solid rgba(91,159,212,0.15);
-    padding: 2rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: block;
-    color: inherit;
-  }
-
-  .resource-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--purple-accent), var(--sky));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-
-  .resource-card:hover { border-color: rgba(91,159,212,0.4); transform: translateY(-3px); }
-  .resource-card:hover::before { transform: scaleX(1); }
-
-  .resource-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
-
-  .resource-card-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--white);
-    margin-bottom: 0.5rem;
-  }
-
-  .resource-card-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
-
-  .resource-tag {
-    display: inline-block;
-    margin-top: 1rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--sky);
-    border: 1px solid rgba(91,159,212,0.3);
-    padding: 0.2rem 0.6rem;
-  }
-
-  .fem-viewer { background: var(--navy-mid); padding: 5rem 2rem; }
-
-  .fem-container {
-    background: var(--navy-light);
-    border: 1px solid rgba(91,159,212,0.2);
-    margin-top: 3rem;
-    overflow: hidden;
-  }
-
-  .fem-controls {
-    display: flex;
-    gap: 1px;
-    background: rgba(91,159,212,0.1);
-  }
-
-  .fem-tab {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .fem-tab.active { background: var(--navy-light); color: var(--sky); border-bottom: 2px solid var(--sky); }
-  .fem-tab:hover:not(.active) { color: var(--white-dim); background: rgba(91,159,212,0.05); }
-
-  .fem-panel { padding: 2rem; display: none; }
-  .fem-panel.active { display: block; }
-
-  .heatmap-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
-
-  .heatmap-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--sky-light);
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
-
-  canvas.heatmap { width: 100%; height: auto; display: block; border: 1px solid rgba(91,159,212,0.15); }
-
-  .colorbar { display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; margin-top: 0.5rem; }
-  .colorbar-gradient { width: 100%; height: 8px; border-radius: 2px; }
-  .colorbar-labels { width: 100%; display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-muted); }
-
-  .pareto-info {
-    margin-top: 1rem;
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    border-left: 2px solid rgba(123,94,167,0.5);
-    padding-left: 1rem;
-  }
-
-  .team { background: var(--navy-light); padding: 4rem 2rem; }
-
-  .team-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
-
-  .team-chip {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    padding: 0.4rem 1rem;
-    border: 1px solid rgba(91,159,212,0.25);
-    color: var(--white-dim);
-    background: rgba(91,159,212,0.05);
-  }
-
-  footer {
-    background: #080f18;
-    padding: 2rem;
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    letter-spacing: 0.08em;
-    border-top: 1px solid rgba(91,159,212,0.1);
-  }
-
-  footer span { color: var(--sky); }
-
-  /* === METHODOLOGY / CONCEPTS === */
-  .methodology { background: var(--navy); }
-
-  .concept-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.25rem;
-    margin-top: 3rem;
-  }
-
-  @media (min-width: 760px) {
-    .concept-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .concept-card {
-    background: var(--navy-light);
-    border: 1px solid rgba(91,159,212,0.18);
-    padding: 1.75rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s ease, transform 0.3s ease;
-  }
-
-  .concept-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--purple-accent), var(--sky));
-    opacity: 0.5;
-  }
-
-  .concept-card:hover { border-color: rgba(91,159,212,0.45); transform: translateY(-2px); }
-
-  .concept-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-  }
-
-  .concept-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--white);
-    margin-bottom: 0.85rem;
-    line-height: 1.1;
-  }
-
-  .concept-equation {
-    background: rgba(13,27,46,0.55);
-    border-left: 2px solid var(--sky);
-    padding: 0.7rem 0.9rem;
-    margin: 0.85rem 0;
-    font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
-    font-size: 1rem;
-    color: var(--sky-light);
-    letter-spacing: 0.01em;
-  }
-
-  .concept-body {
-    font-size: 0.88rem;
-    color: var(--white-dim);
-    line-height: 1.65;
-  }
-
-  .concept-body strong { color: var(--white); font-weight: 500; }
-
-  .concept-list {
-    list-style: none;
-    margin-top: 0.6rem;
-  }
-
-  .concept-list li {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    padding: 0.25rem 0 0.25rem 1rem;
-    position: relative;
-    line-height: 1.5;
-  }
-
-  .concept-list li::before {
-    content: '▸';
-    position: absolute;
-    left: 0;
-    color: var(--sky);
-    font-size: 0.7rem;
-    top: 0.4rem;
-  }
-
-  .concept-list li strong { color: var(--sky-light); font-weight: 500; }
-
-  /* Wider feature card spanning multiple columns */
-  .concept-feature {
-    grid-column: 1 / -1;
-    background: linear-gradient(135deg, var(--navy-light) 0%, rgba(30,51,80,0.6) 100%);
-    border: 1px solid rgba(123,94,167,0.25);
-    padding: 2rem;
-    position: relative;
-  }
-
-  .concept-feature::before {
-    background: linear-gradient(90deg, var(--gold), var(--sky), var(--purple-accent));
-    opacity: 0.7;
-  }
-
-  .strategy-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-    margin-top: 1.25rem;
-  }
-
-  .strategy-item {
-    background: rgba(13,27,46,0.45);
-    border: 1px solid rgba(91,159,212,0.15);
-    padding: 1.1rem 1rem;
-    border-radius: 2px;
-  }
-
-  .strategy-item-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--sky-light);
-    margin-bottom: 0.5rem;
-  }
-
-  .strategy-item-desc {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    line-height: 1.55;
-  }
-
-  .strategy-item-tag {
-    display: inline-block;
-    margin-top: 0.6rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    padding: 0.15rem 0.5rem;
-    border: 1px solid rgba(232,201,106,0.3);
-  }
-
-  .selected-tag {
-    color: var(--sky);
-    border-color: rgba(91,159,212,0.5);
-    background: rgba(91,159,212,0.08);
-  }
-
-  /* Results metrics row */
-  .metrics-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1rem;
-    margin-top: 2.5rem;
-  }
-
-  .metric-block {
-    background: var(--navy-light);
-    border: 1px solid rgba(91,159,212,0.18);
-    padding: 1.5rem 1.25rem;
-    text-align: left;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .metric-block::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; bottom: 0;
-    width: 3px;
-    background: var(--sky);
-  }
-
-  .metric-block.highlight::before { background: var(--gold); }
-  .metric-block.win::before { background: #4ade80; }
-
-  .metric-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.4rem;
-  }
-
-  .metric-value {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.85rem;
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1;
-    margin-bottom: 0.35rem;
-  }
-
-  .metric-value .unit {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    font-weight: 400;
-    margin-left: 0.25rem;
-  }
-
-  .metric-delta {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    color: #4ade80;
-  }
-
-  .metric-delta.neutral { color: var(--text-muted); }
-  .metric-delta.warn { color: #f87171; }
-
-  /* NSGA-II algorithm flow */
-  .nsga-flow {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 0.75rem;
-    margin: 1.5rem 0 0.5rem;
-  }
-
-  .nsga-step {
-    background: rgba(13,27,46,0.5);
-    border: 1px solid rgba(91,159,212,0.15);
-    padding: 0.85rem 0.9rem;
-    position: relative;
-  }
-
-  .nsga-step-num {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    color: var(--purple-light);
-    margin-bottom: 0.35rem;
-  }
-
-  .nsga-step-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: var(--white);
-    margin-bottom: 0.3rem;
-    line-height: 1.15;
-  }
-
-  .nsga-step-body { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.15); }
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  @media (max-width: 600px) {
-    .heatmap-wrap { grid-template-columns: 1fr; }
-    .fem-tab { font-size: 0.68rem; }
-  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--navy);color:var(--white);font-family:'Barlow',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;}
+
+  /* HERO */
+  .hero{min-height:100vh;background:linear-gradient(160deg,#0a1520 0%,#152437 40%,#1a3a5c 70%,#1e3f6a 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:4rem 2rem;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 30%,rgba(91,159,212,.08) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 80% 70%,rgba(123,94,167,.1) 0%,transparent 50%);pointer-events:none;}
+  .hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;letter-spacing:.25em;text-transform:uppercase;color:var(--sky);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s ease forwards .2s;}
+  .hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(3.5rem,10vw,7rem);font-weight:800;line-height:.9;text-transform:uppercase;letter-spacing:.02em;color:var(--white);margin-bottom:.5rem;opacity:0;animation:fadeUp .8s ease forwards .4s;}
+  .hero-title span{color:var(--sky-light);}
+  .hero-subtitle{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1rem,3vw,1.5rem);font-weight:400;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2rem;opacity:0;animation:fadeUp .8s ease forwards .6s;font-style:italic;}
+  .hero-meta{font-size:.9rem;color:var(--text-muted);letter-spacing:.1em;margin-bottom:3rem;opacity:0;animation:fadeUp .8s ease forwards .8s;}
+  .hero-divider{width:60px;height:2px;background:linear-gradient(90deg,var(--purple-accent),var(--sky));margin:0 auto 3rem;opacity:0;animation:fadeUp .8s ease forwards 1s;}
+  .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeUp .8s ease forwards 1.2s;}
+  .btn{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding:.75rem 2rem;border:1px solid;text-decoration:none;transition:all .25s ease;cursor:pointer;display:inline-block;}
+  .btn-primary{background:var(--sky);border-color:var(--sky);color:var(--navy);}
+  .btn-primary:hover{background:var(--sky-light);border-color:var(--sky-light);}
+  .btn-outline{background:transparent;border-color:rgba(91,159,212,.5);color:var(--sky-light);}
+  .btn-outline:hover{border-color:var(--sky);background:rgba(91,159,212,.08);}
+  .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--text-muted);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;opacity:0;animation:fadeUp .8s ease forwards 1.6s;}
+  .scroll-hint-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--sky),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+
+  /* SECTIONS */
+  section{padding:5rem 2rem;}
+  .container{max-width:1100px;margin:0 auto;}
+  .section-label{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:var(--sky);margin-bottom:.5rem;}
+  .section-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;text-transform:uppercase;color:var(--white);line-height:1;margin-bottom:1.5rem;}
+
+  /* RESOURCES */
+  .resources{background:var(--navy-mid);}
+  .resources-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:3rem;}
+  .resource-card{background:var(--navy-light);border:1px solid rgba(91,159,212,.15);padding:2rem 1.5rem;position:relative;overflow:hidden;transition:all .3s ease;text-decoration:none;display:block;color:inherit;}
+  .resource-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple-accent),var(--sky));transform:scaleX(0);transform-origin:left;transition:transform .3s ease;}
+  .resource-card:hover{border-color:rgba(91,159,212,.4);transform:translateY(-3px);}
+  .resource-card:hover::before{transform:scaleX(1);}
+  .resource-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+  .resource-card-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--white);margin-bottom:.5rem;}
+  .resource-card-desc{font-size:.85rem;color:var(--text-muted);line-height:1.5;}
+  .resource-tag{display:inline-block;margin-top:1rem;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sky);border:1px solid rgba(91,159,212,.3);padding:.2rem .6rem;}
+
+  /* FIGURES */
+  .fem-viewer{background:var(--navy-mid);padding:5rem 2rem;}
+  .fem-container{background:var(--navy-light);border:1px solid rgba(91,159,212,.2);margin-top:3rem;overflow:hidden;}
+  .fem-controls{display:flex;gap:1px;background:rgba(91,159,212,.1);}
+  .fem-tab{flex:1;padding:.75rem 1rem;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:none;color:var(--text-muted);cursor:pointer;transition:all .2s;}
+  .fem-tab.active{background:var(--navy-light);color:var(--sky);border-bottom:2px solid var(--sky);}
+  .fem-tab:hover:not(.active){color:var(--white-dim);background:rgba(91,159,212,.05);}
+  .fem-panel{padding:2rem;display:none;}
+  .fem-panel.active{display:block;}
+  .heatmap-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start;}
+  .heatmap-title{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sky-light);margin-bottom:.5rem;text-align:center;}
+  canvas.heatmap{width:100%;height:auto;display:block;border:1px solid rgba(91,159,212,.15);}
+  .colorbar{display:flex;flex-direction:column;gap:.25rem;margin-top:.5rem;}
+  .colorbar-gradient{width:100%;height:8px;border-radius:2px;}
+  .colorbar-labels{width:100%;display:flex;justify-content:space-between;font-size:.68rem;color:var(--text-muted);}
+  .pareto-info{margin-top:1rem;font-size:.82rem;color:var(--text-muted);line-height:1.6;border-left:2px solid rgba(123,94,167,.5);padding-left:1rem;}
+
+  /* KEY CONCEPTS */
+  .methodology{background:var(--navy);}
+  .concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.25rem;margin-top:3rem;}
+  @media(min-width:760px){.concept-grid{grid-template-columns:repeat(2,1fr);}}
+  .concept-card{background:var(--navy-light);border:1px solid rgba(91,159,212,.18);padding:1.75rem 1.5rem;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;}
+  .concept-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple-accent),var(--sky));opacity:.5;}
+  .concept-card:hover{border-color:rgba(91,159,212,.45);transform:translateY(-2px);}
+  .concept-label{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+  .concept-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:.85rem;line-height:1.1;}
+  .concept-equation{background:rgba(13,27,46,.55);border-left:2px solid var(--sky);padding:.7rem .9rem;margin:.85rem 0;font-family:'Cambria Math','STIX Two Math',Georgia,serif;font-size:1rem;color:var(--sky-light);}
+  .concept-body{font-size:.88rem;color:var(--white-dim);line-height:1.65;}
+  .concept-body strong{color:var(--white);font-weight:500;}
+  .concept-list{list-style:none;margin-top:.6rem;}
+  .concept-list li{font-size:.85rem;color:var(--text-muted);padding:.25rem 0 .25rem 1rem;position:relative;line-height:1.5;}
+  .concept-list li::before{content:'▸';position:absolute;left:0;color:var(--sky);font-size:.7rem;top:.4rem;}
+  .concept-list li strong{color:var(--sky-light);font-weight:500;}
+  .concept-feature{grid-column:1/-1;background:linear-gradient(135deg,var(--navy-light) 0%,rgba(30,51,80,.6) 100%);border:1px solid rgba(123,94,167,.25);padding:2rem;position:relative;}
+  .concept-feature::before{background:linear-gradient(90deg,var(--gold),var(--sky),var(--purple-accent));opacity:.7;}
+  .strategy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1.25rem;}
+  .strategy-item{background:rgba(13,27,46,.45);border:1px solid rgba(91,159,212,.15);padding:1.1rem 1rem;}
+  .strategy-item-title{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sky-light);margin-bottom:.5rem;}
+  .strategy-item-desc{font-size:.8rem;color:var(--text-muted);line-height:1.55;}
+  .strategy-item-tag{display:inline-block;margin-top:.6rem;font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);padding:.15rem .5rem;border:1px solid rgba(232,201,106,.3);}
+  .selected-tag{color:var(--sky);border-color:rgba(91,159,212,.5);background:rgba(91,159,212,.08);}
+  .metrics-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:2.5rem;}
+  .metric-block{background:var(--navy-light);border:1px solid rgba(91,159,212,.18);padding:1.5rem 1.25rem;position:relative;overflow:hidden;}
+  .metric-block::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--sky);}
+  .metric-block.highlight::before{background:var(--gold);}
+  .metric-block.win::before{background:#4ade80;}
+  .metric-label{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.4rem;}
+  .metric-value{font-family:'Barlow Condensed',sans-serif;font-size:1.85rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:.35rem;}
+  .metric-value .unit{font-size:.85rem;color:var(--text-muted);font-weight:400;margin-left:.25rem;}
+  .metric-delta{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;letter-spacing:.08em;color:#4ade80;}
+  .metric-delta.neutral{color:var(--text-muted);}
+  .nsga-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.75rem;margin:1.5rem 0 .5rem;}
+  .nsga-step{background:rgba(13,27,46,.5);border:1px solid rgba(91,159,212,.15);padding:.85rem .9rem;}
+  .nsga-step-num{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.15em;color:var(--purple-light);margin-bottom:.35rem;}
+  .nsga-step-title{font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:600;text-transform:uppercase;color:var(--white);margin-bottom:.3rem;line-height:1.15;}
+  .nsga-step-body{font-size:.78rem;color:var(--text-muted);line-height:1.5;}
+
+  /* TEAM */
+  .team{background:var(--navy-light);padding:4rem 2rem;}
+  .team-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem;}
+  .team-chip{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;letter-spacing:.08em;padding:.4rem 1rem;border:1px solid rgba(91,159,212,.25);color:var(--white-dim);background:rgba(91,159,212,.05);}
+
+  /* FOOTER */
+  footer{background:#080f18;padding:2rem;text-align:center;font-size:.75rem;color:var(--text-muted);letter-spacing:.08em;border-top:1px solid rgba(91,159,212,.1);}
+  footer span{color:var(--sky);}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(1);}50%{opacity:1;transform:scaleY(1.15);}}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+  @media(max-width:600px){.heatmap-wrap{grid-template-columns:1fr;}.fem-tab{font-size:.68rem;}}
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <section class="hero">
   <p class="hero-eyebrow">Imperial College London · Bioengineering · Group 4967</p>
   <h1 class="hero-title">External<br><span>Pacing</span></h1>
@@ -628,387 +135,34 @@
   <p class="hero-meta">LABRATS 2.0 &nbsp;·&nbsp; Supervisor: Dr Nick Linton</p>
   <div class="hero-divider"></div>
   <div class="hero-cta">
+    <a href="#cad-viewer" class="btn btn-primary">3D Model</a>
     <a href="#resources" class="btn btn-primary">Resources</a>
-    <a href="#methodology" class="btn btn-primary">Key Concepts</a>
-    <a href="#figures" class="btn btn-outline">View Figures</a>
-    
+    <a href="#methodology" class="btn btn-outline">Key Concepts</a>
+    <a href="#figures" class="btn btn-outline">Figures</a>
   </div>
-  <div class="scroll-hint">
-    <div class="scroll-hint-line"></div>
-    <span>Scroll</span>
-  </div>
+  <div class="scroll-hint"><div class="scroll-hint-line"></div><span>Scroll</span></div>
 </section>
 
-<!-- RESOURCES -->
-<section class="resources" id="resources">
-  <div class="container">
-    <p class="section-label reveal">Downloads &amp; References</p>
-    <h2 class="section-title reveal">Project<br>Resources</h2>
-    <p class="reveal" style="color: var(--text-muted); max-width: 520px; font-size: 0.95rem;">
-      Full technical documentation, source code, CAD files, and references for the perforated impedance-gradient pacing pad project.
-    </p>
-    <div class="resources-grid">
-      <a href="Final_Report_4967.pdf" class="resource-card reveal" target="_blank">
-        <span class="resource-icon">📄</span>
-        <div class="resource-card-title">Full Report</div>
-        <div class="resource-card-desc">Complete technical report including FEM methodology, NSGA-II optimisation, and results.</div>
-        <span class="resource-tag">PDF · 18 pages</span>
-      </a>
-      <a href="https://github.com/" class="resource-card reveal" target="_blank">
-        <span class="resource-icon">💻</span>
-        <div class="resource-card-title">Source Code</div>
-        <div class="resource-card-desc">MATLAB scripts for NSGA-II optimisation, ring electrode simulation, and back pad sweep.</div>
-        <span class="resource-tag">MATLAB</span>
-      </a>
-      <a href="#cad-viewer" class="resource-card reveal">
-        <span class="resource-icon">🔩</span>
-        <div class="resource-card-title">CAD Model</div>
-        <div class="resource-card-desc">Interactive 3D viewer of the perforated 100 mm anterior electrode and full pad assembly.</div>
-        <span class="resource-tag">3D Viewer + Download</span>
-      </a>
-      <a href="#references" class="resource-card reveal">
-        <span class="resource-icon">📚</span>
-        <div class="resource-card-title">References</div>
-        <div class="resource-card-desc">Full bibliography including Krasteva &amp; Papazov (2002), NSGA-II, and clinical literature.</div>
-        <span class="resource-tag">18 sources</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- METHODOLOGY / KEY CONCEPTS -->
-<section class="methodology" id="methodology">
-  <div class="container">
-    <p class="section-label reveal">Background &amp; Methodology</p>
-    <h2 class="section-title reveal">Key<br>Concepts</h2>
-    <p class="reveal" style="color: var(--text-muted); max-width: 580px; font-size: 0.95rem;">
-      The physical phenomena, governing equations, and computational framework underpinning the perforated impedance‑gradient pad design.
-    </p>
-
-    <div class="concept-grid">
-
-      <!-- EDGE EFFECT -->
-      <div class="concept-card reveal">
-        <p class="concept-label">The Problem</p>
-        <h3 class="concept-title">The Edge Effect</h3>
-        <p class="concept-body">
-          When current passes between two surface electrodes, streamlines converge at the electrode perimeter, producing localised regions of <strong>high current density</strong> — “hotspots” — that drive pain and third‑degree burns during prolonged pacing.
-        </p>
-        <ul class="concept-list">
-          <li>Current density increases as streamlines compress at the pad rim</li>
-          <li>Third‑degree burns reported after as little as 2 hours of pacing</li>
-          <li>Sedated patients cannot report pain, so injury progresses unseen</li>
-        </ul>
-      </div>
-
-      <!-- VOLTAGE BC MODEL (from Jaehoon's individual research) -->
-      <div class="concept-card reveal">
-        <p class="concept-label">Individual Research · Jaehoon</p>
-        <h3 class="concept-title">Voltage BC Model</h3>
-        <p class="concept-body">
-          A Dirichlet boundary‑condition formulation of the electrode–torso problem. Electrodes are modelled as equipotential metal pads on the skin, the torso as a conductive bulk, and air as an insulator.
-        </p>
-        <ul class="concept-list">
-          <li><strong>Top pad:</strong> V = V<sub>applied</sub> (Dirichlet)</li>
-          <li><strong>Bottom pad:</strong> V = 0 (ground)</li>
-          <li><strong>Skin exposed to air:</strong> ∂V/∂n = 0 (Neumann, no flux)</li>
-          <li><strong>Interface layer:</strong> 0.5–1.5 mm thin gel layer with resistivity ρ models the gel/skin contact impedance</li>
-          <li><strong>Perimeter ring (Krasteva 2002):</strong> ρ<sub>centre</sub> = 20 Ωm, ρ<sub>ring</sub> = 100 Ωm — raising edge resistivity redistributes current inward</li>
-        </ul>
-        <p class="concept-body" style="margin-top:0.8rem;">
-          Result: <strong>K dropped from 3.12 → 2.71 (≈13% improvement)</strong> in the initial validation against Krasteva’s reference geometry, confirming the impedance‑gradient principle before being carried forward into the group design.
-        </p>
-      </div>
-
-      <!-- GOVERNING PHYSICS -->
-      <div class="concept-card reveal">
-        <p class="concept-label">Governing Physics</p>
-        <h3 class="concept-title">Laplace &amp; Current Density</h3>
-        <p class="concept-body">
-          At low pacing frequencies the tissue behaves as a quasi‑static resistive medium. Charge conservation under Ohm’s law gives the generalised Laplace equation, solved for the scalar potential V(x, z).
-        </p>
-        <div class="concept-equation">−∇·[σ(x,z) ∇V] = 0</div>
-        <div class="concept-equation">|J| = |−σ ∇V|</div>
-        <p class="concept-body">
-          Solved with the <strong>MATLAB PDE Toolbox</strong> on a 2D sagittal cross‑section (0.50 × 0.25 m) with a 45 mm cardiac inclusion. σ<sub>tissue</sub> = 0.2 S/m, σ<sub>heart</sub> = 0.5 S/m, σ<sub>metal</sub> derived from Ag/AgCl surface resistivity ρ = 5 Ω and d = 1 mm.
-        </p>
-      </div>
-
-      <!-- K COEFFICIENT -->
-      <div class="concept-card reveal">
-        <p class="concept-label">Performance Metric</p>
-        <h3 class="concept-title">Non‑Uniformity Ratio K</h3>
-        <div class="concept-equation" style="font-size:1.1rem;">K = J<sub>max</sub> / J<sub>min</sub></div>
-        <p class="concept-body">
-          Evaluated along a horizontal line <strong>0.5 mm below the electrode–tissue interface</strong>, K quantifies how evenly current is injected into the tissue.
-        </p>
-        <ul class="concept-list">
-          <li><strong>K = 1</strong> → perfectly uniform delivery</li>
-          <li><strong>K ≫ 1</strong> → strong edge concentration, higher burn risk</li>
-          <li>Paired with <strong>peak |J|</strong> in tissue as the second objective: directly linked to localised heating</li>
-        </ul>
-      </div>
-
-      <!-- IMPEDANCE PROFILE STRATEGIES (from IR1 — group research) -->
-      <div class="concept-feature reveal">
-        <p class="concept-label">Design Exploration · Group Research</p>
-        <h3 class="concept-title">Impedance Profile Strategies</h3>
-        <p class="concept-body">
-          Three impedance‑gradient strategies were evaluated for suppressing pad‑edge hotspots while preserving overall current delivery (K). Each balances manufacturability, edge suppression, and the risk of secondary hotspots forming at internal transitions.
-        </p>
-
-        <div class="strategy-grid">
-          <div class="strategy-item">
-            <p class="strategy-item-title">1. Stepped Ring</p>
-            <p class="strategy-item-desc">
-              Discrete high‑resistivity ring at the perimeter. Highly effective at suppressing the classic edge hotspot, but the sharp inner transition can spawn a secondary hotspot, often hurting K.
-            </p>
-            <span class="strategy-item-tag">Simple · Manufacturable</span>
-          </div>
-          <div class="strategy-item">
-            <p class="strategy-item-title">2. Tanh / Logistic Ramp</p>
-            <p class="strategy-item-desc">
-              Smooth sigmoid increase in resistivity near the perimeter. Suppresses edges without a sharp internal boundary; generally yields the best K and is robust to mesh and geometry.
-            </p>
-            <span class="strategy-item-tag selected-tag">Used in back‑pad sweep</span>
-          </div>
-          <div class="strategy-item">
-            <p class="strategy-item-title">3. Power‑Law Gradient</p>
-            <p class="strategy-item-desc">
-              ρ(r) ∝ r<sup>p</sup>, with p between 2 and 4 giving an idealised gradient electrode. Low K and smooth profiles, but requires careful tuning of the exponent.
-            </p>
-            <span class="strategy-item-tag">Research baseline</span>
-          </div>
-          <div class="strategy-item">
-            <p class="strategy-item-title">4. Discrete Perforations</p>
-            <p class="strategy-item-desc">
-              Approximates a smooth gradient with manufacturable laser‑cut holes in the Ag/AgCl layer. Carried forward into NSGA‑II optimisation and the final concentric‑ring design.
-            </p>
-            <span class="strategy-item-tag selected-tag">Final design</span>
-          </div>
-        </div>
-
-        <p class="concept-body" style="margin-top:1.25rem; font-size:0.85rem;">
-          A preliminary <strong>3‑band model</strong> (low‑ρ centre, intermediate band, high‑ρ edge) confirmed that a graded resistivity profile reduces K from 2.18 → 1.91 (≈17% reduction in J<sub>max</sub> at the edge) without compromising deep myocardial field strength. This validated the impedance‑gradient concept that the final perforated design implements physically.
-        </p>
-      </div>
-
-      <!-- NSGA-II OPTIMISATION (from final report) -->
-      <div class="concept-feature reveal">
-        <p class="concept-label">Final Report · Computational Framework</p>
-        <h3 class="concept-title">NSGA‑II Multi‑Objective Optimisation</h3>
-        <p class="concept-body">
-          <strong>NSGA‑II</strong> (Non‑dominated Sorting Genetic Algorithm II, Deb et al. 2002) is an elitist evolutionary algorithm built for problems with two or more competing objectives. Instead of returning one “best” design, it returns a <strong>Pareto front</strong> — the set of designs for which no single objective can be improved without making another worse.
-        </p>
-
-        <div class="nsga-flow">
-          <div class="nsga-step">
-            <p class="nsga-step-num">Step 1</p>
-            <p class="nsga-step-title">Initialise</p>
-            <p class="nsga-step-body">Random population of 60 candidate designs in the 3‑D variable space.</p>
-          </div>
-          <div class="nsga-step">
-            <p class="nsga-step-num">Step 2</p>
-            <p class="nsga-step-title">Evaluate</p>
-            <p class="nsga-step-body">Run the FEM solver to compute (K, peak |J|) for each design.</p>
-          </div>
-          <div class="nsga-step">
-            <p class="nsga-step-num">Step 3</p>
-            <p class="nsga-step-title">Sort &amp; Rank</p>
-            <p class="nsga-step-body">Non‑dominated sort by Pareto dominance; assign crowding distances to preserve diversity.</p>
-          </div>
-          <div class="nsga-step">
-            <p class="nsga-step-num">Step 4</p>
-            <p class="nsga-step-title">Crossover &amp; Mutate</p>
-            <p class="nsga-step-body">Generate offspring with crossover fraction 0.80; integer constraint on hole count.</p>
-          </div>
-          <div class="nsga-step">
-            <p class="nsga-step-num">Step 5</p>
-            <p class="nsga-step-title">Repeat</p>
-            <p class="nsga-step-body">40 generations · ≈ 2,400 FEM evaluations total · Pareto fraction 0.35.</p>
-          </div>
-        </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-top:1.5rem;">
-          <div>
-            <p class="strategy-item-title" style="color:var(--gold); margin-bottom:0.4rem;">Design Variables</p>
-            <ul class="concept-list" style="margin-top:0;">
-              <li><strong>Hole radius</strong>: 0.2 – 2.5 mm</li>
-              <li><strong>Holes per side</strong>: 2 – 30 (integer)</li>
-              <li><strong>r<sub>perf</sub></strong>: 5 – 45 mm — radius at which perforations begin</li>
-            </ul>
-          </div>
-          <div>
-            <p class="strategy-item-title" style="color:var(--gold); margin-bottom:0.4rem;">Objectives (both minimised)</p>
-            <ul class="concept-list" style="margin-top:0;">
-              <li><strong>K</strong>: current non‑uniformity at skin</li>
-              <li><strong>peak |J|</strong> in tissue: localised heating &amp; burn risk</li>
-            </ul>
-          </div>
-        </div>
-
-        <p class="concept-body" style="margin-top:1.25rem; font-size:0.85rem;">
-          The Pareto front spanned <strong>K ≈ 2.33 – 2.60</strong> and <strong>peak |J| ≈ 34.6 – 35.4 A/m²</strong>. Sensitivity analysis showed <strong>r<sub>perf</sub></strong> was the most influential variable (every Pareto‑optimal design had r<sub>perf</sub> &lt; 10 mm), with hole radius exhibiting a nonlinear threshold above ≈ 1.5 mm.
-        </p>
-      </div>
-
-    </div>
-
-    <!-- KEY RESULTS METRICS -->
-    <p class="section-label reveal" style="margin-top:4rem;">Optimisation Outcomes</p>
-    <h3 class="reveal" style="font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--white); margin-bottom:0.5rem;">Pareto‑Optimal Solutions</h3>
-    <p class="reveal" style="color: var(--text-muted); max-width: 580px; font-size: 0.88rem;">
-      Three representative designs from the Pareto front, compared against the solid baseline.
-    </p>
-
-    <div class="metrics-row reveal">
-      <div class="metric-block">
-        <p class="metric-label">Solid Baseline</p>
-        <div class="metric-value">K = 2.56</div>
-        <p class="metric-delta neutral">Peak |J| = 35.14 A/m²</p>
-      </div>
-      <div class="metric-block win">
-        <p class="metric-label">Best Uniformity</p>
-        <div class="metric-value">K = 2.33</div>
-        <p class="metric-delta">−9.0% · r = 2.12 mm, 21 holes/side</p>
-      </div>
-      <div class="metric-block highlight">
-        <p class="metric-label">Knee Point</p>
-        <div class="metric-value">K = 2.40</div>
-        <p class="metric-delta">−6.3% · best balanced trade‑off</p>
-      </div>
-      <div class="metric-block win">
-        <p class="metric-label">Best Peak |J|</p>
-        <div class="metric-value">34.62 <span class="unit">A/m²</span></div>
-        <p class="metric-delta">−1.5% · r = 0.77 mm, r<sub>perf</sub> = 44.2 mm</p>
-      </div>
-    </div>
-
-    <!-- FINAL MANUFACTURABLE DESIGN -->
-    <p class="section-label reveal" style="margin-top:4rem;">Translation to Manufacturable Design</p>
-    <h3 class="reveal" style="font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--white); margin-bottom:0.5rem;">Concentric‑Ring Electrode</h3>
-    <p class="reveal" style="color: var(--text-muted); max-width: 620px; font-size: 0.88rem;">
-      The NSGA‑II findings were translated into an 8‑ring concentric layout matching the laser cutter’s 0.4 mm minimum feature size, with hole density increasing from centre to edge to concentrate impedance where the edge effect is strongest.
-    </p>
-
-    <div class="metrics-row reveal">
-      <div class="metric-block">
-        <p class="metric-label">Rings</p>
-        <div class="metric-value">8</div>
-        <p class="metric-delta neutral">d = 60 → 95 mm · 5 mm spacing</p>
-      </div>
-      <div class="metric-block">
-        <p class="metric-label">Total Perforations</p>
-        <div class="metric-value">1,500</div>
-        <p class="metric-delta neutral">100 inner → 275 outer (+25 / ring)</p>
-      </div>
-      <div class="metric-block">
-        <p class="metric-label">Hole Diameter</p>
-        <div class="metric-value">0.4 <span class="unit">mm</span></div>
-        <p class="metric-delta neutral">CO₂ laser cutter minimum feature</p>
-      </div>
-      <div class="metric-block highlight">
-        <p class="metric-label">Pad Configuration</p>
-        <div class="metric-value">100 / 140 <span class="unit">mm</span></div>
-        <p class="metric-delta neutral">Anterior / Posterior (asymmetric)</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- FIGURES -->
-<section class="fem-viewer" id="figures">
-  <div class="container">
-    <p class="section-label reveal">Computational Modelling</p>
-    <h2 class="section-title reveal">Figures</h2>
-    <p class="reveal" style="color: var(--text-muted); max-width: 560px; font-size: 0.95rem;">
-      Key modelling results from the report. Select a figure to view.
-    </p>
-    <div class="fem-container reveal">
-      <div class="fem-controls">
-        <button class="fem-tab active" onclick="showTab('heatmap')">Current Density Maps</button>
-        <button class="fem-tab" onclick="showTab('pareto')">NSGA-II Pareto Front</button>
-        <button class="fem-tab" onclick="showTab('backpad')">Back Pad Sweep</button>
-      </div>
-
-      <!-- TAB 1 -->
-      <div class="fem-panel active" id="tab-heatmap">
-        <div class="heatmap-wrap">
-          <div>
-            <div class="heatmap-title">Standard Solid Electrode</div>
-            <canvas class="heatmap" id="canvas-solid" width="260" height="130"></canvas>
-            <div class="colorbar">
-              <canvas class="colorbar-gradient" id="cbar-solid" width="260" height="8"></canvas>
-              <div class="colorbar-labels"><span>0</span><span>10</span><span>20 A/m²</span></div>
-            </div>
-          </div>
-          <div>
-            <div class="heatmap-title">Perforated Prototype Design</div>
-            <canvas class="heatmap" id="canvas-perf" width="260" height="130"></canvas>
-            <div class="colorbar">
-              <canvas class="colorbar-gradient" id="cbar-perf" width="260" height="8"></canvas>
-              <div class="colorbar-labels"><span>0</span><span>10</span><span>20 A/m²</span></div>
-            </div>
-          </div>
-        </div>
-        <p style="margin-top:1.5rem; font-size:0.82rem; color:var(--text-muted); border-left:2px solid rgba(91,159,212,0.4); padding-left:1rem;">
-          Current density magnitude |J| (A/m²) beneath the anterior electrode. The solid design shows concentrated hotspots at both edges (edge effect). The perforated design redistributes current more uniformly, with K reduced from 2.82 to 2.76 at the 0.4 mm baseline hole diameter.
-        </p>
-      </div>
-
-      <!-- TAB 2 -->
-      <div class="fem-panel" id="tab-pareto">
-        <canvas id="canvas-pareto" width="700" height="300" style="width:100%; border:1px solid rgba(91,159,212,0.1);"></canvas>
-        <div class="pareto-info">
-          <strong style="color:var(--white-dim);">NSGA-II results</strong> across ~2,400 candidate designs. The Pareto front (highlighted) shows the best achievable trade-off between current non-uniformity K and peak tissue current density |J|. The solid baseline (×) sits at K = 2.56, peak |J| = 35.14 A/m². Best-K solution achieves K = 2.33 (−9.0%).
-        </div>
-      </div>
-
-      <!-- TAB 3 -->
-      <div class="fem-panel" id="tab-backpad">
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:1.5rem;">
-          <div>
-            <div class="heatmap-title" style="margin-bottom:0.75rem;">Non-uniformity K vs Back Pad Length</div>
-            <canvas id="canvas-kplot" width="320" height="200" style="width:100%; border:1px solid rgba(91,159,212,0.1);"></canvas>
-          </div>
-          <div>
-            <div class="heatmap-title" style="margin-bottom:0.75rem;">Heart Wall Mean |J| vs Back Pad Length</div>
-            <canvas id="canvas-jheart" width="320" height="200" style="width:100%; border:1px solid rgba(91,159,212,0.1);"></canvas>
-          </div>
-          <div>
-            <div class="heatmap-title" style="margin-bottom:0.75rem;">Edge Hotspot |J| (p95) vs Back Pad Length</div>
-            <canvas id="canvas-jedge" width="320" height="200" style="width:100%; border:1px solid rgba(91,159,212,0.1);"></canvas>
-          </div>
-        </div>
-        <div class="pareto-info" style="margin-top:1.5rem;">
-          Front pad fixed at 100 mm. K reaches a minimum of 6.13 at 140 mm. Heart wall mean |J| increases monotonically from 7.42 to 9.47 A/m², reflecting the larger current capture area. Edge hotspot decreases steadily from 3.37 to 2.58 A/m² as the back pad widens.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CAD VIEWER -->
-<section id="cad-viewer" style="background: var(--navy-mid); padding: 5rem 2rem;">
+<!-- CAD VIEWER — first section after hero -->
+<section id="cad-viewer" style="background:var(--navy-mid);padding:5rem 2rem;">
   <div class="container">
     <p class="section-label reveal">Design</p>
     <h2 class="section-title reveal">3D CAD<br>Model</h2>
-    <p class="reveal" style="color: var(--text-muted); max-width: 560px; font-size: 0.95rem; margin-bottom: 2rem;">
+    <p class="reveal" style="color:var(--text-muted);max-width:560px;font-size:.95rem;margin-bottom:2rem;">
       Interactive 3D model of the pacing pad. Click and drag to rotate, scroll to zoom.
     </p>
-    <div class="reveal" style="background: var(--navy-light); border: 1px solid rgba(91,159,212,0.2); overflow: hidden;">
-      <div style="display:flex; align-items:center; justify-content:space-between; padding:0.6rem 1rem; background:rgba(91,159,212,0.06); border-bottom:1px solid rgba(91,159,212,0.12);">
-        <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--sky);">Pacing Pad — Fusion 360 · 3MF</span>
-        <a href="Pacing_pad_design.3mf" download="Pacing_pad_design.3mf" style="font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--sky-light); text-decoration:none; border:1px solid rgba(91,159,212,0.3); padding:0.25rem 0.75rem; transition:all 0.2s;" onmouseover="this.style.borderColor='var(--sky)'" onmouseout="this.style.borderColor='rgba(91,159,212,0.3)'">↓ Download 3MF</a>
+    <div class="reveal" style="background:var(--navy-light);border:1px solid rgba(91,159,212,.2);overflow:hidden;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;background:rgba(91,159,212,.06);border-bottom:1px solid rgba(91,159,212,.12);">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sky);">Pacing Pad — Fusion 360 · 3MF</span>
+        <a href="Pacing_pad_design.3mf" download="Pacing_pad_design.3mf" style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sky-light);text-decoration:none;border:1px solid rgba(91,159,212,.3);padding:.25rem .75rem;transition:all .2s;" onmouseover="this.style.borderColor='var(--sky)'" onmouseout="this.style.borderColor='rgba(91,159,212,0.3)'">↓ Download 3MF</a>
       </div>
-      <div id="cad-canvas-wrap" style="position:relative; width:100%; height:520px; background:#0d1b2e;">
-        <canvas id="cad-canvas" style="width:100%; height:100%; display:block; cursor:grab;"></canvas>
-        <div id="cad-loading" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; background:#0d1b2e;">
-          <div id="cad-spinner" style="width:36px; height:36px; border:2px solid rgba(91,159,212,0.15); border-top-color:var(--sky); border-radius:50%; animation:spin 0.9s linear infinite;"></div>
-          <span id="cad-status" style="font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted);">Loading 3MF model…</span>
+      <div id="cad-canvas-wrap" style="position:relative;width:100%;height:520px;background:#0d1b2e;">
+        <canvas id="cad-canvas" style="width:100%;height:100%;display:block;cursor:grab;"></canvas>
+        <div id="cad-loading" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:#0d1b2e;">
+          <div id="cad-spinner" style="width:36px;height:36px;border:2px solid rgba(91,159,212,.15);border-top-color:var(--sky);border-radius:50%;animation:spin .9s linear infinite;"></div>
+          <span id="cad-status" style="font-family:'Barlow Condensed',sans-serif;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);">Loading 3MF model…</span>
         </div>
-        <div id="cad-hint" style="position:absolute; bottom:1rem; right:1rem; font-size:0.7rem; color:rgba(91,159,212,0.4); font-family:'Barlow Condensed',sans-serif; letter-spacing:0.1em; text-transform:uppercase; display:none;">Drag · Scroll · Right-drag to pan</div>
+        <div id="cad-hint" style="position:absolute;bottom:1rem;right:1rem;font-size:.7rem;color:rgba(91,159,212,.4);font-family:'Barlow Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;display:none;">Drag · Scroll · Right-drag to pan</div>
       </div>
     </div>
   </div>
@@ -1018,230 +172,148 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script>
-(function() {
-  function setStatus(msg) {
-    const el = document.getElementById('cad-status');
-    if (el) el.textContent = msg;
-  }
-
-  async function load3MF(url) {
+(function(){
+  function setStatus(msg){const el=document.getElementById('cad-status');if(el)el.textContent=msg;}
+  async function load3MF(url){
     setStatus('Fetching 3MF…');
-    const resp = await fetch(url);
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const raw = new Uint8Array(await resp.arrayBuffer());
-    if (raw.length < 100) throw new Error('File too small — check upload');
-    if (!(raw[0]===0x50 && raw[1]===0x4B)) throw new Error('Not a valid ZIP/3MF file');
-
-    function u16(o){ return raw[o]|raw[o+1]<<8; }
-    function u32(o){ return (raw[o]|raw[o+1]<<8|raw[o+2]<<16|(raw[o+3]<<24))>>>0; }
-    function u64(o){ return u32(o+4)*4294967296+u32(o); }
-
-    let offset = 0;
-    while (offset < raw.length - 4) {
-      if (raw[offset]===0x50&&raw[offset+1]===0x4B&&raw[offset+2]===0x03&&raw[offset+3]===0x04) {
-        const comp  = u16(offset+8);
-        let   csz   = u32(offset+18);
-        let   usz   = u32(offset+22);
-        const fnLen = u16(offset+26);
-        const exLen = u16(offset+28);
-        const fn    = new TextDecoder().decode(raw.slice(offset+30, offset+30+fnLen));
-        const exOff = offset+30+fnLen;
-        const dataOff = exOff+exLen;
-        if (csz===0xFFFFFFFF||usz===0xFFFFFFFF) {
+    const resp=await fetch(url);
+    if(!resp.ok)throw new Error('HTTP '+resp.status);
+    const raw=new Uint8Array(await resp.arrayBuffer());
+    if(raw.length<100)throw new Error('File too small');
+    if(!(raw[0]===0x50&&raw[1]===0x4B))throw new Error('Not a valid ZIP/3MF');
+    function u16(o){return raw[o]|raw[o+1]<<8;}
+    function u32(o){return(raw[o]|raw[o+1]<<8|raw[o+2]<<16|(raw[o+3]<<24))>>>0;}
+    function u64(o){return u32(o+4)*4294967296+u32(o);}
+    let offset=0;
+    while(offset<raw.length-4){
+      if(raw[offset]===0x50&&raw[offset+1]===0x4B&&raw[offset+2]===0x03&&raw[offset+3]===0x04){
+        const comp=u16(offset+8);let csz=u32(offset+18),usz=u32(offset+22);
+        const fnLen=u16(offset+26),exLen=u16(offset+28);
+        const fn=new TextDecoder().decode(raw.slice(offset+30,offset+30+fnLen));
+        const exOff=offset+30+fnLen,dataOff=exOff+exLen;
+        if(csz===0xFFFFFFFF||usz===0xFFFFFFFF){
           let p=exOff;
-          while(p<exOff+exLen-3){
-            const tag=u16(p),esz=u16(p+2);
-            if(tag===0x0001&&esz>=16){usz=u64(p+4);csz=u64(p+12);break;}
-            p+=4+esz;
-          }
+          while(p<exOff+exLen-3){const tag=u16(p),esz=u16(p+2);if(tag===0x0001&&esz>=16){usz=u64(p+4);csz=u64(p+12);break;}p+=4+esz;}
         }
-        if (fn.toLowerCase().endsWith('.model')) {
-          setStatus('Decompressing ' + (usz/1024/1024).toFixed(1) + ' MB…');
-          const compressed = raw.slice(dataOff, dataOff+csz);
-          const ds = new DecompressionStream('deflate-raw');
-          const writer = ds.writable.getWriter();
-          const reader = ds.readable.getReader();
-          writer.write(compressed); writer.close();
-          const chunks = [];
+        if(fn.toLowerCase().endsWith('.model')){
+          setStatus('Decompressing '+(usz/1024/1024).toFixed(1)+' MB…');
+          const compressed=raw.slice(dataOff,dataOff+csz);
+          const ds=new DecompressionStream('deflate-raw');
+          const writer=ds.writable.getWriter(),reader=ds.readable.getReader();
+          writer.write(compressed);writer.close();
+          const chunks=[];
           while(true){const{done,value}=await reader.read();if(done)break;chunks.push(value);}
-          const out = new Uint8Array(chunks.reduce((s,c)=>s+c.length,0));
-          let pos=0; for(const c of chunks){out.set(c,pos);pos+=c.length;}
+          const out=new Uint8Array(chunks.reduce((s,c)=>s+c.length,0));
+          let pos=0;for(const c of chunks){out.set(c,pos);pos+=c.length;}
           return new TextDecoder().decode(out);
         }
-        offset = dataOff+csz;
-      } else { offset++; }
+        offset=dataOff+csz;
+      }else{offset++;}
     }
     throw new Error('No .model found in 3MF');
   }
-
-  function parseModel(xml) {
+  function parseModel(xml){
     setStatus('Parsing geometry…');
-    const objects = {};
-    const objRegex = /<object\s+id="(\d+)"[^>]*>([\s\S]*?)<\/object>/g;
-    const vertRegex = /<vertex\s+x="([-\d.eE]+)"\s+y="([-\d.eE]+)"\s+z="([-\d.eE]+)"/g;
-    const triRegex  = /<triangle\s+v1="(\d+)"\s+v2="(\d+)"\s+v3="(\d+)"/g;
+    const objects={};
+    const objRx=/<object\s+id="(\d+)"[^>]*>([\s\S]*?)<\/object>/g;
+    const vtxRx=/<vertex\s+x="([-\d.eE]+)"\s+y="([-\d.eE]+)"\s+z="([-\d.eE]+)"/g;
+    const triRx=/<triangle\s+v1="(\d+)"\s+v2="(\d+)"\s+v3="(\d+)"/g;
     let m;
-    while((m=objRegex.exec(xml))!==null){
+    while((m=objRx.exec(xml))!==null){
       const id=m[1],body=m[2],verts=[],idxs=[];
-      vertRegex.lastIndex=0;
-      let v;
-      while((v=vertRegex.exec(body))!==null) verts.push(+v[1],+v[2],+v[3]);
-      triRegex.lastIndex=0;
-      while((v=triRegex.exec(body))!==null) idxs.push(+v[1],+v[2],+v[3]);
-      if(verts.length&&idxs.length) objects[id]={verts:new Float32Array(verts),idxs};
+      vtxRx.lastIndex=0;let v;
+      while((v=vtxRx.exec(body))!==null)verts.push(+v[1],+v[2],+v[3]);
+      triRx.lastIndex=0;
+      while((v=triRx.exec(body))!==null)idxs.push(+v[1],+v[2],+v[3]);
+      if(verts.length&&idxs.length)objects[id]={verts:new Float32Array(verts),idxs};
     }
     const items=[];
-    const itemRegex=/<item\s+([^/]*?)\/>/g;
-    while((m=itemRegex.exec(xml))!==null){
+    const itemRx=/<item\s+([^/]*?)\/>/g;
+    while((m=itemRx.exec(xml))!==null){
       const attrs=m[1],idM=attrs.match(/objectid="(\d+)"/),tfM=attrs.match(/transform="([^"]+)"/);
       if(idM){const it={objectid:idM[1]};if(tfM)it.transform=tfM[1].trim().split(/\s+/).map(Number);items.push(it);}
     }
     return{objects,items};
   }
-
-function buildScene({objects,items}){
+  function buildScene({objects,items}){
     setStatus('Building scene…');
-    const canvas=document.getElementById('cad-canvas');
-    const wrap=document.getElementById('cad-canvas-wrap');
-    canvas.width=wrap.clientWidth; canvas.height=wrap.clientHeight;
+    const canvas=document.getElementById('cad-canvas'),wrap=document.getElementById('cad-canvas-wrap');
+    canvas.width=wrap.clientWidth;canvas.height=wrap.clientHeight;
     const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
     renderer.setSize(wrap.clientWidth,wrap.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
     renderer.setClearColor(0x0d1b2e,1);
-    const scene=new THREE.Scene();
-    const camera=new THREE.PerspectiveCamera(45,wrap.clientWidth/wrap.clientHeight,0.01,100000);
-
-    /* Build mesh list with metadata. Each item knows its part identity so we can toggle layers. */
+    const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(45,wrap.clientWidth/wrap.clientHeight,.01,100000);
     const palette=[0x8fc4e8,0xa07fcb,0xe8c96a,0xc2dff0,0x5b9fd4,0xedcec3,0xcbcbcb,0xf6f6f3,0x7b5ea7,0x737373];
     const group=new THREE.Group();
-    const renderList=items.length>0
-      ?items.map(it=>({obj:objects[it.objectid],transform:it.transform,objectid:it.objectid}))
-      :Object.entries(objects).map(([id,o])=>({obj:o,objectid:id}));
-
-    const meshes=[]; /* {mesh, objectid, triCount} */
-    const bbox=new THREE.Box3(); bbox.makeEmpty();
-    let partIdx=0;
-
+    const renderList=items.length>0?items.map(it=>({obj:objects[it.objectid],transform:it.transform,objectid:it.objectid})):Object.entries(objects).map(([id,o])=>({obj:o,objectid:id}));
+    const meshes=[],bbox=new THREE.Box3();bbox.makeEmpty();let partIdx=0;
     renderList.forEach(({obj,transform,objectid})=>{
       if(!obj)return;
       const geo=new THREE.BufferGeometry();
       geo.setAttribute('position',new THREE.BufferAttribute(obj.verts,3));
-      geo.setIndex(obj.idxs); geo.computeVertexNormals();
+      geo.setIndex(obj.idxs);geo.computeVertexNormals();
       const triCount=obj.idxs.length/3;
-      const mat=new THREE.MeshPhongMaterial({
-        color:palette[partIdx%palette.length],
-        specular:0x2a4a6b, shininess:50,
-        side:THREE.DoubleSide,
-        transparent:false, opacity:1
-      });
+      const mat=new THREE.MeshPhongMaterial({color:palette[partIdx%palette.length],specular:0x2a4a6b,shininess:50,side:THREE.DoubleSide,transparent:false,opacity:1});
       const mesh=new THREE.Mesh(geo,mat);
-      if(transform&&transform.length===12){
-        const t=transform;
-        mesh.applyMatrix4(new THREE.Matrix4().set(t[0],t[3],t[6],t[9],t[1],t[4],t[7],t[10],t[2],t[5],t[8],t[11],0,0,0,1));
-      }
-      group.add(mesh); mesh.updateMatrixWorld(true);
-      geo.computeBoundingBox(); bbox.union(geo.boundingBox.clone().applyMatrix4(mesh.matrixWorld));
-      meshes.push({mesh, objectid, triCount});
-      partIdx++;
+      if(transform&&transform.length===12){const t=transform;mesh.applyMatrix4(new THREE.Matrix4().set(t[0],t[3],t[6],t[9],t[1],t[4],t[7],t[10],t[2],t[5],t[8],t[11],0,0,0,1));}
+      group.add(mesh);mesh.updateMatrixWorld(true);
+      geo.computeBoundingBox();bbox.union(geo.boundingBox.clone().applyMatrix4(mesh.matrixWorld));
+      meshes.push({mesh,objectid,triCount});partIdx++;
     });
-
-    /* The perforated layer is the part with by far the most triangles (~150k vs <3k for everything else).
-       Auto-detect it so this works regardless of object id ordering. */
-    let perforatedMesh=null, maxTri=0;
-    meshes.forEach(m=>{ if(m.triCount>maxTri){maxTri=m.triCount; perforatedMesh=m.mesh;} });
-
-    const centre=new THREE.Vector3(); bbox.getCenter(centre);
-    group.position.sub(centre); scene.add(group);
-    const size=new THREE.Vector3(); bbox.getSize(size);
-    const span=Math.max(size.x,size.y,size.z);
-    camera.position.set(span*0.8,span*0.6,span*1.4); camera.lookAt(0,0,0);
-
-    scene.add(new THREE.AmbientLight(0xffffff,0.5));
-    const key=new THREE.DirectionalLight(0xc8e0f4,0.95); key.position.set(1,2,1); scene.add(key);
-    const fill=new THREE.DirectionalLight(0x7b5ea7,0.4); fill.position.set(-1,-0.5,-1); scene.add(fill);
-    const back=new THREE.DirectionalLight(0xffffff,0.3); back.position.set(0,-1,-1); scene.add(back);
-
+    let perforatedMesh=null,maxTri=0;
+    meshes.forEach(m=>{if(m.triCount>maxTri){maxTri=m.triCount;perforatedMesh=m.mesh;}});
+    const centre=new THREE.Vector3();bbox.getCenter(centre);group.position.sub(centre);scene.add(group);
+    const size=new THREE.Vector3();bbox.getSize(size);const span=Math.max(size.x,size.y,size.z);
+    camera.position.set(span*.8,span*.6,span*1.4);camera.lookAt(0,0,0);
+    scene.add(new THREE.AmbientLight(0xffffff,.5));
+    const key=new THREE.DirectionalLight(0xc8e0f4,.95);key.position.set(1,2,1);scene.add(key);
+    const fill=new THREE.DirectionalLight(0x7b5ea7,.4);fill.position.set(-1,-.5,-1);scene.add(fill);
+    const back=new THREE.DirectionalLight(0xffffff,.3);back.position.set(0,-1,-1);scene.add(back);
     const controls=new THREE.OrbitControls(camera,canvas);
-    controls.enableDamping=true; controls.dampingFactor=0.08;
-    controls.autoRotate=true; controls.autoRotateSpeed=0.5;
+    controls.enableDamping=true;controls.dampingFactor=.08;controls.autoRotate=true;controls.autoRotateSpeed=.5;
     canvas.addEventListener('pointerdown',()=>{controls.autoRotate=false;});
-
-    /* Build view-mode toggle UI */
     const ui=document.createElement('div');
-    ui.style.cssText='position:absolute; top:1rem; left:1rem; background:rgba(13,27,46,0.85); backdrop-filter:blur(6px); border:1px solid rgba(91,159,212,0.25); padding:0.5rem; display:flex; flex-direction:column; gap:0.3rem; z-index:5; font-family:\'Barlow Condensed\',sans-serif; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;';
-    const modes=[
-      {id:'perforated', label:'Perforated Layer Only'},
-      {id:'exploded', label:'Exploded View'},
-      {id:'assembly', label:'Full Assembly'}
-    ];
+    ui.style.cssText="position:absolute;top:1rem;left:1rem;background:rgba(13,27,46,.85);backdrop-filter:blur(6px);border:1px solid rgba(91,159,212,.25);padding:.5rem;display:flex;flex-direction:column;gap:.3rem;z-index:5;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;";
+    const modes=[{id:'perforated',label:'Perforated Layer'},{id:'exploded',label:'Exploded View'},{id:'assembly',label:'Full Assembly'}];
     const buttons={};
-    modes.forEach(m=>{
-      const b=document.createElement('button');
-      b.textContent=m.label;
-      b.style.cssText='background:transparent; border:1px solid rgba(91,159,212,0.2); color:#8fc4e8; padding:0.4rem 0.8rem; cursor:pointer; font:inherit; letter-spacing:inherit; text-transform:inherit; transition:all 0.2s;';
-      b.onmouseover=()=>{ if(b.dataset.active!=='true') b.style.borderColor='rgba(91,159,212,0.5)'; };
-      b.onmouseout=()=>{ if(b.dataset.active!=='true') b.style.borderColor='rgba(91,159,212,0.2)'; };
-      b.onclick=()=>setMode(m.id);
-      buttons[m.id]=b;
-      ui.appendChild(b);
-    });
-    wrap.appendChild(ui);
-
-    /* Store original positions so we can return to assembly view from exploded */
-    const originalPositions=meshes.map(m=>({mesh:m.mesh, pos:m.mesh.position.clone()}));
-
+    const originalPositions=meshes.map(m=>({mesh:m.mesh,pos:m.mesh.position.clone()}));
     function setMode(mode){
       Object.keys(buttons).forEach(k=>{
-        buttons[k].dataset.active = (k===mode) ? 'true' : 'false';
-        buttons[k].style.background = (k===mode) ? 'rgba(91,159,212,0.15)' : 'transparent';
-        buttons[k].style.borderColor = (k===mode) ? '#5b9fd4' : 'rgba(91,159,212,0.2)';
-        buttons[k].style.color = (k===mode) ? '#ffffff' : '#8fc4e8';
+        buttons[k].dataset.active=(k===mode)?'true':'false';
+        buttons[k].style.background=(k===mode)?'rgba(91,159,212,.15)':'transparent';
+        buttons[k].style.borderColor=(k===mode)?'#5b9fd4':'rgba(91,159,212,.2)';
+        buttons[k].style.color=(k===mode)?'#ffffff':'#8fc4e8';
       });
-
-      /* Reset positions */
       originalPositions.forEach(({mesh,pos})=>mesh.position.copy(pos));
-
-      if(mode==='assembly'){
-        meshes.forEach(m=>{ m.mesh.visible=true; m.mesh.material.transparent=false; m.mesh.material.opacity=1; m.mesh.material.needsUpdate=true; });
-      } else if(mode==='perforated'){
-        /* Hide everything except the perforated layer */
-        meshes.forEach(m=>{ m.mesh.visible = (m.mesh===perforatedMesh); });
-        if(perforatedMesh){
-          perforatedMesh.material.transparent=false;
-          perforatedMesh.material.opacity=1;
-          perforatedMesh.material.needsUpdate=true;
-        }
-      } else if(mode==='exploded'){
-        /* Spread layers along Z (the thin axis). Object 11 stays at origin; others offset proportional to original z. */
-        const sortedByZ = meshes.slice().sort((a,b)=>{
-          const az=originalPositions.find(p=>p.mesh===a.mesh).pos.z + (a.mesh.geometry.boundingBox?(a.mesh.geometry.boundingBox.min.z+a.mesh.geometry.boundingBox.max.z)/2:0);
-          const bz=originalPositions.find(p=>p.mesh===b.mesh).pos.z + (b.mesh.geometry.boundingBox?(b.mesh.geometry.boundingBox.min.z+b.mesh.geometry.boundingBox.max.z)/2:0);
+      if(mode==='assembly'){meshes.forEach(m=>{m.mesh.visible=true;m.mesh.material.transparent=false;m.mesh.material.opacity=1;m.mesh.material.needsUpdate=true;});}
+      else if(mode==='perforated'){meshes.forEach(m=>{m.mesh.visible=(m.mesh===perforatedMesh);});if(perforatedMesh){perforatedMesh.material.transparent=false;perforatedMesh.material.opacity=1;perforatedMesh.material.needsUpdate=true;}}
+      else if(mode==='exploded'){
+        const sortedByZ=meshes.slice().sort((a,b)=>{
+          const az=originalPositions.find(p=>p.mesh===a.mesh).pos.z;
+          const bz=originalPositions.find(p=>p.mesh===b.mesh).pos.z;
           return az-bz;
         });
-        const explodeSpacing=span*0.08;
+        const sp=span*.08;
         sortedByZ.forEach((m,i)=>{
-          m.mesh.visible=true;
-          m.mesh.material.transparent=true;
-          m.mesh.material.opacity=0.92;
-          m.mesh.material.needsUpdate=true;
-          /* offset along Z axis */
-          const offset = (i - sortedByZ.length/2) * explodeSpacing;
+          m.mesh.visible=true;m.mesh.material.transparent=true;m.mesh.material.opacity=.92;m.mesh.material.needsUpdate=true;
           const orig=originalPositions.find(p=>p.mesh===m.mesh).pos;
-          m.mesh.position.set(orig.x, orig.y, orig.z + offset);
+          m.mesh.position.set(orig.x,orig.y,orig.z+(i-sortedByZ.length/2)*sp);
         });
       }
     }
-
-    setMode('perforated');
-
-    window.addEventListener('resize',()=>{
-      const w=wrap.clientWidth,h=wrap.clientHeight;
-      renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix();
+    modes.forEach(m=>{
+      const b=document.createElement('button');b.textContent=m.label;
+      b.style.cssText="background:transparent;border:1px solid rgba(91,159,212,.2);color:#8fc4e8;padding:.4rem .8rem;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:inherit;transition:all .2s;";
+      b.onmouseover=()=>{if(b.dataset.active!=='true')b.style.borderColor='rgba(91,159,212,.5)';};
+      b.onmouseout=()=>{if(b.dataset.active!=='true')b.style.borderColor='rgba(91,159,212,.2)';};
+      b.onclick=()=>setMode(m.id);buttons[m.id]=b;ui.appendChild(b);
     });
+    wrap.appendChild(ui);setMode('perforated');
+    window.addEventListener('resize',()=>{const w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();});
     function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
     animate();
   }
-
   async function init(){
     try{
       const xml=await load3MF('Pacing_pad_design.3mf');
@@ -1257,46 +329,236 @@ function buildScene({objects,items}){
       document.getElementById('cad-spinner').style.display='none';
     }
   }
-
   const section=document.getElementById('cad-viewer');
-  const io=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){io.disconnect();init();}},{threshold:0.1});
+  const io=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){io.disconnect();init();}},{threshold:.1});
   io.observe(section);
 })();
 </script>
+
+<!-- RESOURCES -->
+<section class="resources" id="resources">
+  <div class="container">
+    <p class="section-label reveal">Downloads &amp; References</p>
+    <h2 class="section-title reveal">Project<br>Resources</h2>
+    <p class="reveal" style="color:var(--text-muted);max-width:520px;font-size:.95rem;">Full technical documentation, source code, and references for the perforated impedance-gradient pacing pad project.</p>
+    <div class="resources-grid">
+      <a href="Final_Report_4967.pdf" class="resource-card reveal" target="_blank">
+        <span class="resource-icon">📄</span>
+        <div class="resource-card-title">Full Report</div>
+        <div class="resource-card-desc">Complete technical report including FEM methodology, NSGA-II optimisation, and results.</div>
+        <span class="resource-tag">PDF · 18 pages</span>
+      </a>
+      <a href="https://github.com/" class="resource-card reveal" target="_blank">
+        <span class="resource-icon">💻</span>
+        <div class="resource-card-title">Source Code</div>
+        <div class="resource-card-desc">MATLAB scripts for NSGA-II optimisation, ring electrode simulation, and back pad sweep.</div>
+        <span class="resource-tag">MATLAB</span>
+      </a>
+      <a href="#references" class="resource-card reveal">
+        <span class="resource-icon">📚</span>
+        <div class="resource-card-title">References</div>
+        <div class="resource-card-desc">Full bibliography including Krasteva &amp; Papazov (2002), NSGA-II, and clinical literature.</div>
+        <span class="resource-tag">18 sources</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- KEY CONCEPTS -->
+<section class="methodology" id="methodology">
+  <div class="container">
+    <p class="section-label reveal">Background &amp; Methodology</p>
+    <h2 class="section-title reveal">Key<br>Concepts</h2>
+    <p class="reveal" style="color:var(--text-muted);max-width:580px;font-size:.95rem;">The physical phenomena, governing equations, and computational framework underpinning the perforated impedance-gradient pad design.</p>
+    <div class="concept-grid">
+
+      <div class="concept-card reveal">
+        <p class="concept-label">The Problem</p>
+        <h3 class="concept-title">The Edge Effect</h3>
+        <p class="concept-body">When current passes between two surface electrodes, streamlines converge at the electrode perimeter, producing localised regions of <strong>high current density</strong> — "hotspots" — that drive pain and third-degree burns during prolonged pacing.</p>
+        <ul class="concept-list">
+          <li>Current density increases as streamlines compress at the pad rim</li>
+          <li>Third-degree burns reported after as little as 2 hours of pacing</li>
+          <li>Sedated patients cannot report pain, so injury progresses unseen</li>
+        </ul>
+      </div>
+
+      <div class="concept-card reveal">
+        <p class="concept-label">Individual Research · Jaehoon</p>
+        <h3 class="concept-title">Voltage BC Model</h3>
+        <p class="concept-body">A Dirichlet boundary-condition formulation of the electrode–torso problem. Electrodes are modelled as equipotential metal pads on the skin, the torso as a conductive bulk, and air as an insulator.</p>
+        <ul class="concept-list">
+          <li><strong>Top pad:</strong> V = V<sub>applied</sub> (Dirichlet)</li>
+          <li><strong>Bottom pad:</strong> V = 0 (ground)</li>
+          <li><strong>Skin exposed to air:</strong> ∂V/∂n = 0 (Neumann, no flux)</li>
+          <li><strong>Perimeter ring (Krasteva 2002):</strong> ρ<sub>centre</sub> = 20 Ωm, ρ<sub>ring</sub> = 100 Ωm</li>
+        </ul>
+        <p class="concept-body" style="margin-top:.8rem;">Result: <strong>K dropped from 3.12 → 2.71 (≈13% improvement)</strong>, confirming the impedance-gradient principle before the group design.</p>
+      </div>
+
+      <div class="concept-card reveal">
+        <p class="concept-label">Governing Physics</p>
+        <h3 class="concept-title">Laplace &amp; Current Density</h3>
+        <p class="concept-body">At low pacing frequencies the tissue behaves as a quasi-static resistive medium. Charge conservation under Ohm's law gives the generalised Laplace equation, solved for the scalar potential V(x, z).</p>
+        <div class="concept-equation">−∇·[σ(x,z) ∇V] = 0</div>
+        <div class="concept-equation">|J| = |−σ ∇V|</div>
+        <p class="concept-body">Solved with the <strong>MATLAB PDE Toolbox</strong> on a 2D sagittal cross-section (0.50 × 0.25 m). σ<sub>tissue</sub> = 0.2 S/m, σ<sub>heart</sub> = 0.5 S/m.</p>
+      </div>
+
+      <div class="concept-card reveal">
+        <p class="concept-label">Performance Metric</p>
+        <h3 class="concept-title">Non-Uniformity Ratio K</h3>
+        <div class="concept-equation" style="font-size:1.1rem;">K = J<sub>max</sub> / J<sub>min</sub></div>
+        <p class="concept-body">Evaluated along a horizontal line <strong>0.5 mm below the electrode–tissue interface</strong>.</p>
+        <ul class="concept-list">
+          <li><strong>K = 1</strong> → perfectly uniform delivery</li>
+          <li><strong>K ≫ 1</strong> → strong edge concentration, higher burn risk</li>
+          <li>Paired with <strong>peak |J|</strong> as the second optimisation objective</li>
+        </ul>
+      </div>
+
+      <div class="concept-feature reveal">
+        <p class="concept-label">Design Exploration · Group Research</p>
+        <h3 class="concept-title">Impedance Profile Strategies</h3>
+        <p class="concept-body">Three impedance-gradient strategies were evaluated for suppressing pad-edge hotspots while preserving overall current delivery.</p>
+        <div class="strategy-grid">
+          <div class="strategy-item">
+            <p class="strategy-item-title">1. Stepped Ring</p>
+            <p class="strategy-item-desc">Discrete high-resistivity ring at the perimeter. Effective at edge suppression but can create secondary hotspots at the inner boundary.</p>
+            <span class="strategy-item-tag">Simple · Manufacturable</span>
+          </div>
+          <div class="strategy-item">
+            <p class="strategy-item-title">2. Tanh / Logistic Ramp</p>
+            <p class="strategy-item-desc">Smooth sigmoid increase in resistivity near the perimeter. Best K improvement, robust to mesh and geometry variations.</p>
+            <span class="strategy-item-tag selected-tag">Used in back-pad sweep</span>
+          </div>
+          <div class="strategy-item">
+            <p class="strategy-item-title">3. Power-Law Gradient</p>
+            <p class="strategy-item-desc">ρ(r) ∝ r<sup>p</sup>, p between 2 and 4. Low K and smooth profiles but requires careful exponent tuning.</p>
+            <span class="strategy-item-tag">Research baseline</span>
+          </div>
+          <div class="strategy-item">
+            <p class="strategy-item-title">4. Discrete Perforations</p>
+            <p class="strategy-item-desc">Approximates a smooth gradient with laser-cut holes. Carried into NSGA-II optimisation and the final concentric-ring design.</p>
+            <span class="strategy-item-tag selected-tag">Final design</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-feature reveal">
+        <p class="concept-label">Final Report · Computational Framework</p>
+        <h3 class="concept-title">NSGA-II Multi-Objective Optimisation</h3>
+        <p class="concept-body"><strong>NSGA-II</strong> (Deb et al. 2002) returns a <strong>Pareto front</strong> — designs for which no objective can be improved without worsening another.</p>
+        <div class="nsga-flow">
+          <div class="nsga-step"><p class="nsga-step-num">Step 1</p><p class="nsga-step-title">Initialise</p><p class="nsga-step-body">Random population of 60 candidate designs.</p></div>
+          <div class="nsga-step"><p class="nsga-step-num">Step 2</p><p class="nsga-step-title">Evaluate</p><p class="nsga-step-body">Run FEM to compute (K, peak |J|) for each design.</p></div>
+          <div class="nsga-step"><p class="nsga-step-num">Step 3</p><p class="nsga-step-title">Sort &amp; Rank</p><p class="nsga-step-body">Non-dominated sort; crowding distance for diversity.</p></div>
+          <div class="nsga-step"><p class="nsga-step-num">Step 4</p><p class="nsga-step-title">Crossover</p><p class="nsga-step-body">Crossover fraction 0.80; integer constraint on hole count.</p></div>
+          <div class="nsga-step"><p class="nsga-step-num">Step 5</p><p class="nsga-step-title">Repeat</p><p class="nsga-step-body">40 generations · ≈2,400 FEM evaluations · Pareto fraction 0.35.</p></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:1.5rem;">
+          <div>
+            <p class="strategy-item-title" style="color:var(--gold);margin-bottom:.4rem;">Design Variables</p>
+            <ul class="concept-list" style="margin-top:0;">
+              <li><strong>Hole radius:</strong> 0.2 – 2.5 mm</li>
+              <li><strong>Holes per side:</strong> 2 – 30 (integer)</li>
+              <li><strong>r<sub>perf</sub>:</strong> 5 – 45 mm</li>
+            </ul>
+          </div>
+          <div>
+            <p class="strategy-item-title" style="color:var(--gold);margin-bottom:.4rem;">Objectives (minimised)</p>
+            <ul class="concept-list" style="margin-top:0;">
+              <li><strong>K:</strong> current non-uniformity at skin</li>
+              <li><strong>peak |J|:</strong> localised heating &amp; burn risk</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="section-label reveal" style="margin-top:4rem;">Optimisation Outcomes</p>
+    <h3 class="reveal" style="font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:.5rem;">Pareto-Optimal Solutions</h3>
+    <div class="metrics-row reveal">
+      <div class="metric-block"><p class="metric-label">Solid Baseline</p><div class="metric-value">K = 2.56</div><p class="metric-delta neutral">Peak |J| = 35.14 A/m²</p></div>
+      <div class="metric-block win"><p class="metric-label">Best Uniformity</p><div class="metric-value">K = 2.33</div><p class="metric-delta">−9.0% · r = 2.12 mm, 21 holes/side</p></div>
+      <div class="metric-block highlight"><p class="metric-label">Knee Point</p><div class="metric-value">K = 2.40</div><p class="metric-delta">−6.3% · best balanced trade-off</p></div>
+      <div class="metric-block win"><p class="metric-label">Best Peak |J|</p><div class="metric-value">34.62 <span class="unit">A/m²</span></div><p class="metric-delta">−1.5% · r = 0.77 mm</p></div>
+    </div>
+
+    <p class="section-label reveal" style="margin-top:4rem;">Manufacturable Design</p>
+    <h3 class="reveal" style="font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:.5rem;">Concentric-Ring Electrode</h3>
+    <div class="metrics-row reveal">
+      <div class="metric-block"><p class="metric-label">Rings</p><div class="metric-value">8</div><p class="metric-delta neutral">d = 60 → 95 mm · 5 mm spacing</p></div>
+      <div class="metric-block"><p class="metric-label">Total Perforations</p><div class="metric-value">1,500</div><p class="metric-delta neutral">100 inner → 275 outer</p></div>
+      <div class="metric-block"><p class="metric-label">Hole Diameter</p><div class="metric-value">0.4 <span class="unit">mm</span></div><p class="metric-delta neutral">CO₂ laser cutter minimum</p></div>
+      <div class="metric-block highlight"><p class="metric-label">Pad Configuration</p><div class="metric-value">100/140 <span class="unit">mm</span></div><p class="metric-delta neutral">Anterior / Posterior</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FIGURES -->
+<section class="fem-viewer" id="figures">
+  <div class="container">
+    <p class="section-label reveal">Computational Modelling</p>
+    <h2 class="section-title reveal">Figures</h2>
+    <p class="reveal" style="color:var(--text-muted);max-width:560px;font-size:.95rem;">Key modelling results from the report. Select a figure to view.</p>
+    <div class="fem-container reveal">
+      <div class="fem-controls">
+        <button class="fem-tab active" onclick="showTab('heatmap')">Current Density Maps</button>
+        <button class="fem-tab" onclick="showTab('pareto')">NSGA-II Pareto Front</button>
+        <button class="fem-tab" onclick="showTab('backpad')">Back Pad Sweep</button>
+      </div>
+      <div class="fem-panel active" id="tab-heatmap">
+        <div class="heatmap-wrap">
+          <div><div class="heatmap-title">Standard Solid Electrode</div><canvas class="heatmap" id="canvas-solid" width="260" height="130"></canvas><div class="colorbar"><canvas class="colorbar-gradient" id="cbar-solid" width="260" height="8"></canvas><div class="colorbar-labels"><span>0</span><span>10</span><span>20 A/m²</span></div></div></div>
+          <div><div class="heatmap-title">Perforated Prototype Design</div><canvas class="heatmap" id="canvas-perf" width="260" height="130"></canvas><div class="colorbar"><canvas class="colorbar-gradient" id="cbar-perf" width="260" height="8"></canvas><div class="colorbar-labels"><span>0</span><span>10</span><span>20 A/m²</span></div></div></div>
+        </div>
+        <p style="margin-top:1.5rem;font-size:.82rem;color:var(--text-muted);border-left:2px solid rgba(91,159,212,.4);padding-left:1rem;">Current density magnitude |J| (A/m²) beneath the anterior electrode. The solid design shows concentrated hotspots at both edges. The perforated design redistributes current more uniformly, with K reduced from 2.82 to 2.76 at the 0.4 mm baseline hole diameter.</p>
+      </div>
+      <div class="fem-panel" id="tab-pareto">
+        <canvas id="canvas-pareto" width="700" height="300" style="width:100%;border:1px solid rgba(91,159,212,.1);"></canvas>
+        <div class="pareto-info"><strong style="color:var(--white-dim);">NSGA-II results</strong> across ~2,400 candidate designs. The Pareto front shows the best achievable trade-off between K and peak |J|. Solid baseline (×) sits at K = 2.56. Best-K solution achieves K = 2.33 (−9.0%).</div>
+      </div>
+      <div class="fem-panel" id="tab-backpad">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;">
+          <div><div class="heatmap-title" style="margin-bottom:.75rem;">Non-uniformity K vs Back Pad Length</div><canvas id="canvas-kplot" width="320" height="200" style="width:100%;border:1px solid rgba(91,159,212,.1);"></canvas></div>
+          <div><div class="heatmap-title" style="margin-bottom:.75rem;">Heart Wall Mean |J| vs Back Pad Length</div><canvas id="canvas-jheart" width="320" height="200" style="width:100%;border:1px solid rgba(91,159,212,.1);"></canvas></div>
+          <div><div class="heatmap-title" style="margin-bottom:.75rem;">Edge Hotspot |J| (p95) vs Back Pad Length</div><canvas id="canvas-jedge" width="320" height="200" style="width:100%;border:1px solid rgba(91,159,212,.1);"></canvas></div>
+        </div>
+        <div class="pareto-info" style="margin-top:1.5rem;">Front pad fixed at 100 mm. K reaches a minimum of 6.13 at 140 mm. Heart wall mean |J| increases monotonically from 7.42 to 9.47 A/m². Edge hotspot decreases from 3.37 to 2.58 A/m² as the back pad widens.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- TEAM -->
 <section class="team">
   <div class="container">
     <p class="section-label reveal">Group 4967 · LABRATS 2.0</p>
-    <h2 class="section-title reveal" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">The Team</h2>
+    <h2 class="section-title reveal" style="font-size:clamp(1.5rem,4vw,2.5rem);">The Team</h2>
     <div class="team-grid reveal">
-      <span class="team-chip">Vinayak Gupta</span>
-      <span class="team-chip">Jaehoon Yi</span>
-      <span class="team-chip">Michelle Liao</span>
-      <span class="team-chip">Sean Obi</span>
-      <span class="team-chip">Vivian Sullyunna</span>
-      <span class="team-chip">Rohan Turner</span>
-      <span class="team-chip">Richard Zhao</span>
+      <span class="team-chip">Vinayak Gupta</span><span class="team-chip">Jaehoon Yi</span><span class="team-chip">Michelle Liao</span><span class="team-chip">Sean Obi</span><span class="team-chip">Vivian Sullyunna</span><span class="team-chip">Rohan Turner</span><span class="team-chip">Richard Zhao</span>
     </div>
-    <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--text-muted);">Supervised by <span style="color:var(--sky-light);">Dr Nick Linton</span> · Department of Bioengineering · Imperial College London</p>
+    <p style="margin-top:1.5rem;font-size:.8rem;color:var(--text-muted);">Supervised by <span style="color:var(--sky-light);">Dr Nick Linton</span> · Department of Bioengineering · Imperial College London</p>
   </div>
 </section>
 
 <!-- REFERENCES -->
-<section id="references" style="background: var(--navy); padding: 5rem 2rem; border-top: 1px solid rgba(91,159,212,0.1);">
+<section id="references" style="background:var(--navy);padding:5rem 2rem;border-top:1px solid rgba(91,159,212,.1);">
   <div class="container">
     <p class="section-label reveal">Bibliography</p>
-    <h2 class="section-title reveal" style="font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 2.5rem;">References</h2>
-    <ol style="list-style: none; counter-reset: ref-counter;">
+    <h2 class="section-title reveal" style="font-size:clamp(1.5rem,4vw,2.5rem);margin-bottom:2.5rem;">References</h2>
+    <ol style="list-style:none;counter-reset:ref-counter;">
       <style>
-        .ref-item { counter-increment: ref-counter; display: grid; grid-template-columns: 32px 1fr; gap: 0.5rem; margin-bottom: 1rem; font-size: 0.83rem; color: var(--text-muted); line-height: 1.6; }
-        .ref-item::before { content: '[' counter(ref-counter) ']'; color: var(--sky); font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; padding-top: 2px; }
-        .ref-item a { color: var(--sky-light); text-decoration: none; }
-        .ref-item a:hover { text-decoration: underline; }
-        .ref-journal { font-style: italic; }
+        .ref-item{counter-increment:ref-counter;display:grid;grid-template-columns:32px 1fr;gap:.5rem;margin-bottom:1rem;font-size:.83rem;color:var(--text-muted);line-height:1.6;}
+        .ref-item::before{content:'[' counter(ref-counter) ']';color:var(--sky);font-family:'Barlow Condensed',sans-serif;font-size:.8rem;padding-top:2px;}
+        .ref-item a{color:var(--sky-light);text-decoration:none;}
+        .ref-item a:hover{text-decoration:underline;}
+        .ref-journal{font-style:italic;}
       </style>
       <li class="ref-item reveal"><span>Sokup B, Sheils E, Ahmed I. Transcutaneous pacing. <span class="ref-journal">StatPearls</span>, 2026. <a href="https://www.ncbi.nlm.nih.gov/sites/books/NBK519567/" target="_blank">↗ Link</a></span></li>
-      <li class="ref-item reveal"><span>Singleton MJ, Schoenfeld MH, Bhave PD, et al. Third-degree burns caused by transcutaneous pacing for third-degree heart block. <span class="ref-journal">HeartRhythm Case Reports</span>, 2020. <a href="https://www.heartrhythmcasereports.com/article/S2214-0271(20)30092-0/fulltext" target="_blank">↗ Link</a></span></li>
+      <li class="ref-item reveal"><span>Singleton MJ, et al. Third-degree burns caused by transcutaneous pacing. <span class="ref-journal">HeartRhythm Case Reports</span>, 2020. <a href="https://www.heartrhythmcasereports.com/article/S2214-0271(20)30092-0/fulltext" target="_blank">↗ Link</a></span></li>
       <li class="ref-item reveal"><span>Non-invasive transcutaneous pacing. <span class="ref-journal">Philips Application Note</span>. <a href="https://www.documents.philips.com/assets/20170523/d18d46f2d0fe4a048995a77c0154d4e8.pdf" target="_blank">↗ Link</a></span></li>
       <li class="ref-item reveal"><span>Krasteva VT, Papazov SP. Estimation of current density distribution under electrodes for external defibrillation. <span class="ref-journal">BioMedical Engineering OnLine</span>, 2002. <a href="https://link.springer.com/article/10.1186/1475-925X-1-7" target="_blank">↗ Link</a></span></li>
       <li class="ref-item reveal"><span>Wang B, Petrossians A, Weiland JD. Reduction of edge effect on disk electrodes by optimized current waveform. <span class="ref-journal">IEEE Trans Biomed Eng</span>, 2014. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4255912/" target="_blank">↗ Link</a></span></li>
@@ -1323,93 +585,74 @@ function buildScene({objects,items}){
 </footer>
 
 <script>
-function showTab(id) {
-  document.querySelectorAll('.fem-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.fem-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
+function showTab(id){
+  document.querySelectorAll('.fem-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.fem-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
   event.target.classList.add('active');
-  if (id === 'pareto') drawPareto();
-  if (id === 'backpad') drawBackPad();
+  if(id==='pareto')drawPareto();
+  if(id==='backpad')drawBackPad();
 }
-
-function jetColor(t) {
-  t = Math.max(0, Math.min(1, t));
-  let r, g, b;
-  if (t < 0.125)      { r=0; g=0; b=0.5+t*4; }
-  else if (t < 0.375) { r=0; g=(t-0.125)*4; b=1; }
-  else if (t < 0.625) { r=(t-0.375)*4; g=1; b=1-(t-0.375)*4; }
-  else if (t < 0.875) { r=1; g=1-(t-0.625)*4; b=0; }
-  else                { r=1-(t-0.875)*4; g=0; b=0; }
-  return [Math.round(r*255), Math.round(g*255), Math.round(b*255)];
+function jetColor(t){
+  t=Math.max(0,Math.min(1,t));let r,g,b;
+  if(t<.125){r=0;g=0;b=.5+t*4;}
+  else if(t<.375){r=0;g=(t-.125)*4;b=1;}
+  else if(t<.625){r=(t-.375)*4;g=1;b=1-(t-.375)*4;}
+  else if(t<.875){r=1;g=1-(t-.625)*4;b=0;}
+  else{r=1-(t-.875)*4;g=0;b=0;}
+  return[Math.round(r*255),Math.round(g*255),Math.round(b*255)];
 }
-
-function drawHeatmap(canvasId, perforated) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  const img = ctx.createImageData(W, H);
-  const padL=0.2*W, padR=0.8*W, elecB=0.05*H;
-  const heartCX=0.5*W, heartCZ=0.38*H, heartR=0.18*H;
-  const ringRadii=[0.03,0.0325,0.035,0.0375,0.04,0.0425,0.045,0.0475];
+function drawHeatmap(canvasId,perforated){
+  const canvas=document.getElementById(canvasId);if(!canvas)return;
+  const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
+  const img=ctx.createImageData(W,H);
+  const padL=.2*W,padR=.8*W,elecB=.05*H,heartCX=.5*W,heartCZ=.38*H,heartR=.18*H;
   const perfCentres=[];
-  ringRadii.forEach(r=>{perfCentres.push(0.5-r/0.05*0.3,0.5+r/0.05*0.3);});
-  for (let row=0;row<H;row++) {
-    for (let col=0;col<W;col++) {
-      const xn=col/W, zn=row/H;
-      let J=0;
-      const dx=col-heartCX, dz=row-heartCZ;
-      const inHeart=dx*dx+dz*dz<heartR*heartR;
-      if (!inHeart) {
-        const edgeDist=Math.min(col-padL,padR-col);
-        const depth=Math.max(0.01,zn);
-        const edgeFactor=Math.exp(-edgeDist/((padR-padL)*0.08));
-        J=(2.5+8.5*edgeFactor)/Math.sqrt(depth*6);
-        if (perforated) {
-          J*=(1-0.35*edgeFactor);
-          if(row<elecB*3){perfCentres.forEach(pc=>{const pd=Math.abs(xn-pc);if(pd<0.012)J*=(0.5+pd/0.012*0.5);});}
-        }
+  [.03,.0325,.035,.0375,.04,.0425,.045,.0475].forEach(r=>{perfCentres.push(.5-r/.05*.3,.5+r/.05*.3);});
+  for(let row=0;row<H;row++){
+    for(let col=0;col<W;col++){
+      const xn=col/W,zn=row/H;let J=0;
+      const dx=col-heartCX,dz=row-heartCZ,inHeart=dx*dx+dz*dz<heartR*heartR;
+      if(!inHeart){
+        const edgeDist=Math.min(col-padL,padR-col),depth=Math.max(.01,zn);
+        const ef=Math.exp(-edgeDist/((padR-padL)*.08));
+        J=(2.5+8.5*ef)/Math.sqrt(depth*6);
+        if(perforated){J*=(1-.35*ef);if(row<elecB*3){perfCentres.forEach(pc=>{const pd=Math.abs(xn-pc);if(pd<.012)J*=(.5+pd/.012*.5);});}}
         J=Math.max(0,Math.min(20,J));
       }
-      const t=J/20;
-      const [r,g,b]=inHeart?[255,255,255]:jetColor(t);
-      const i=(row*W+col)*4;
-      img.data[i]=r;img.data[i+1]=g;img.data[i+2]=b;img.data[i+3]=255;
+      const[r,g,b]=inHeart?[255,255,255]:jetColor(J/20);
+      const i=(row*W+col)*4;img.data[i]=r;img.data[i+1]=g;img.data[i+2]=b;img.data[i+3]=255;
     }
   }
   ctx.putImageData(img,0,0);
-  ctx.beginPath();ctx.ellipse(heartCX,heartCZ,heartR*0.7,heartR,0,0,Math.PI*2);
-  ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1;ctx.stroke();
-  ctx.fillStyle='rgba(255,255,255,0.15)';ctx.fillRect(padL,0,padR-padL,elecB);
+  ctx.beginPath();ctx.ellipse(heartCX,heartCZ,heartR*.7,heartR,0,0,Math.PI*2);
+  ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=1;ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.15)';ctx.fillRect(padL,0,padR-padL,elecB);
 }
-
-function drawColorbar(canvasId) {
-  const canvas=document.getElementById(canvasId);if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  for(let x=0;x<canvas.width;x++){const[r,g,b]=jetColor(x/canvas.width);ctx.fillStyle=`rgb(${r},${g},${b})`;ctx.fillRect(x,0,1,canvas.height);}
+function drawColorbar(id){
+  const c=document.getElementById(id);if(!c)return;
+  const ctx=c.getContext('2d');
+  for(let x=0;x<c.width;x++){const[r,g,b]=jetColor(x/c.width);ctx.fillStyle=`rgb(${r},${g},${b})`;ctx.fillRect(x,0,1,c.height);}
 }
-
-function drawPareto() {
+function drawPareto(){
   const canvas=document.getElementById('canvas-pareto');if(!canvas)return;
-  const ctx=canvas.getContext('2d');const W=canvas.width,H=canvas.height;
+  const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
   ctx.clearRect(0,0,W,H);ctx.fillStyle='#152437';ctx.fillRect(0,0,W,H);
   const ml=60,mr=30,mt=30,mb=40,pw=W-ml-mr,ph=H-mt-mb;
   const Kmin=2.28,Kmax=2.72,Jmin=34.5,Jmax=36.5;
   function tx(K){return ml+(K-Kmin)/(Kmax-Kmin)*pw;}
   function ty(J){return mt+ph-(J-Jmin)/(Jmax-Jmin)*ph;}
-  ctx.strokeStyle='rgba(91,159,212,0.08)';ctx.lineWidth=0.5;
+  ctx.strokeStyle='rgba(91,159,212,.08)';ctx.lineWidth=.5;
   for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(ml+i/4*pw,mt);ctx.lineTo(ml+i/4*pw,mt+ph);ctx.stroke();ctx.beginPath();ctx.moveTo(ml,mt+i/4*ph);ctx.lineTo(ml+pw,mt+i/4*ph);ctx.stroke();}
-  ctx.strokeStyle='rgba(91,159,212,0.3)';ctx.lineWidth=1;
-  ctx.beginPath();ctx.moveTo(ml,mt);ctx.lineTo(ml,mt+ph);ctx.lineTo(ml+pw,mt+ph);ctx.stroke();
-  ctx.fillStyle='#7fa3c0';ctx.font='11px Barlow, sans-serif';ctx.textAlign='center';
+  ctx.strokeStyle='rgba(91,159,212,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ml,mt);ctx.lineTo(ml,mt+ph);ctx.lineTo(ml+pw,mt+ph);ctx.stroke();
+  ctx.fillStyle='#7fa3c0';ctx.font='11px Barlow,sans-serif';ctx.textAlign='center';
   ctx.fillText('K (non-uniformity ratio)',ml+pw/2,H-6);
   ctx.save();ctx.translate(14,mt+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Peak |J| (A/m²)',0,0);ctx.restore();
-  ctx.font='10px Barlow, sans-serif';
+  ctx.font='10px Barlow,sans-serif';
   [2.3,2.4,2.5,2.6,2.7].forEach(K=>ctx.fillText(K.toFixed(1),tx(K),mt+ph+14));
-  ctx.textAlign='right';
-  [34.6,35.0,35.4,35.8,36.2].forEach(J=>ctx.fillText(J.toFixed(1),ml-5,ty(J)+3));
+  ctx.textAlign='right';[34.6,35.0,35.4,35.8,36.2].forEach(J=>ctx.fillText(J.toFixed(1),ml-5,ty(J)+3));
   const rng=s=>{let x=Math.sin(s)*10000;return x-Math.floor(x);};
-  ctx.fillStyle='rgba(176,196,220,0.25)';
+  ctx.fillStyle='rgba(176,196,220,.25)';
   for(let i=0;i<400;i++){ctx.beginPath();ctx.arc(tx(Kmin+rng(i*7.3+1)*(Kmax-Kmin)),ty(Jmin+rng(i*3.1+2)*(Jmax-Jmin)),2,0,Math.PI*2);ctx.fill();}
   const pareto=[[2.33,35.44],[2.36,35.30],[2.38,35.20],[2.40,35.19],[2.44,35.05],[2.48,34.95],[2.52,34.80],[2.56,34.70],[2.60,34.62]];
   ctx.strokeStyle='#f0f4f8';ctx.lineWidth=1.5;ctx.beginPath();
@@ -1420,61 +663,40 @@ function drawPareto() {
     const x=tx(pt.K),y=ty(pt.J);ctx.fillStyle=pt.color;ctx.strokeStyle=pt.color;
     if(pt.shape==='x'){ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x-6,y-6);ctx.lineTo(x+6,y+6);ctx.moveTo(x+6,y-6);ctx.lineTo(x-6,y+6);ctx.stroke();}
     else{ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill();}
-    ctx.font='10px Barlow Condensed, sans-serif';ctx.fillStyle=pt.color;ctx.textAlign='left';ctx.fillText(pt.label,x+9,y+3);
+    ctx.font='10px Barlow Condensed,sans-serif';ctx.fillStyle=pt.color;ctx.textAlign='left';ctx.fillText(pt.label,x+9,y+3);
   });
 }
-
-function drawBackPad() {
+function drawBackPad(){
   const padW=[60,80,100,120,140,160,200,240];
   const Kvals=[6.38,7.82,6.93,6.18,6.13,6.55,6.75,7.02];
   const Jh=[7.42,7.86,8.25,8.55,8.80,9.00,9.28,9.47];
   const Jedge=[3.37,3.24,3.14,2.90,2.88,2.85,2.90,2.58];
-  function drawLineChart(canvasId,xs,ys,accentColor,minY,maxY,highlightMin){
+  function drawLineChart(canvasId,xs,ys,color,minY,maxY,hlMin){
     const canvas=document.getElementById(canvasId);if(!canvas)return;
-    const ctx=canvas.getContext('2d');const W=canvas.width,H=canvas.height;
+    const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
     ctx.clearRect(0,0,W,H);ctx.fillStyle='#152437';ctx.fillRect(0,0,W,H);
-    const ml=48,mr=16,mt=18,mb=36,pw=W-ml-mr,ph=H-mt-mb,range=maxY-minY;
+    const ml=48,mr=16,mt=18,mb=36,pw=W-ml-mr,ph=H-mt-mb,rng=maxY-minY;
     function tx(x){return ml+(x-xs[0])/(xs[xs.length-1]-xs[0])*pw;}
-    function ty(y){return mt+ph-(y-minY)/range*ph;}
-    ctx.strokeStyle='rgba(91,159,212,0.08)';ctx.lineWidth=0.5;
+    function ty(y){return mt+ph-(y-minY)/rng*ph;}
+    ctx.strokeStyle='rgba(91,159,212,.08)';ctx.lineWidth=.5;
     for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(ml,mt+i/4*ph);ctx.lineTo(ml+pw,mt+i/4*ph);ctx.stroke();}
-    ctx.strokeStyle='rgba(91,159,212,0.25)';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(ml,mt);ctx.lineTo(ml,mt+ph);ctx.lineTo(ml+pw,mt+ph);ctx.stroke();
+    ctx.strokeStyle='rgba(91,159,212,.25)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ml,mt);ctx.lineTo(ml,mt+ph);ctx.lineTo(ml+pw,mt+ph);ctx.stroke();
     ctx.beginPath();xs.forEach((x,i)=>i===0?ctx.moveTo(tx(x),ty(ys[i])):ctx.lineTo(tx(x),ty(ys[i])));
-    ctx.lineTo(tx(xs[xs.length-1]),mt+ph);ctx.lineTo(tx(xs[0]),mt+ph);ctx.closePath();
-    ctx.fillStyle=accentColor+'18';ctx.fill();
-    ctx.strokeStyle=accentColor;ctx.lineWidth=2;ctx.beginPath();
-    xs.forEach((x,i)=>i===0?ctx.moveTo(tx(x),ty(ys[i])):ctx.lineTo(tx(x),ty(ys[i])));ctx.stroke();
-    xs.forEach((x,i)=>{
-      const isH=highlightMin&&ys[i]===Math.min(...ys);
-      ctx.beginPath();ctx.arc(tx(x),ty(ys[i]),isH?5:3.5,0,Math.PI*2);
-      ctx.fillStyle=isH?'#ffffff':accentColor;ctx.fill();
-      if(isH){ctx.strokeStyle=accentColor;ctx.lineWidth=1.5;ctx.stroke();}
-    });
-    ctx.fillStyle='#7fa3c0';ctx.font='9px Barlow, sans-serif';ctx.textAlign='center';
-    [60,100,140,200,240].forEach(x=>ctx.fillText(x,tx(x),mt+ph+14));
-    ctx.fillText('Back pad (mm)',ml+pw/2,H-3);
-    ctx.textAlign='right';
-    for(let i=0;i<=4;i++){const v=minY+i*(range/4);ctx.fillText(v.toFixed(1),ml-4,ty(v)+3);}
+    ctx.lineTo(tx(xs[xs.length-1]),mt+ph);ctx.lineTo(tx(xs[0]),mt+ph);ctx.closePath();ctx.fillStyle=color+'18';ctx.fill();
+    ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();xs.forEach((x,i)=>i===0?ctx.moveTo(tx(x),ty(ys[i])):ctx.lineTo(tx(x),ty(ys[i])));ctx.stroke();
+    xs.forEach((x,i)=>{const isH=hlMin&&ys[i]===Math.min(...ys);ctx.beginPath();ctx.arc(tx(x),ty(ys[i]),isH?5:3.5,0,Math.PI*2);ctx.fillStyle=isH?'#ffffff':color;ctx.fill();if(isH){ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();}});
+    ctx.fillStyle='#7fa3c0';ctx.font='9px Barlow,sans-serif';ctx.textAlign='center';
+    [60,100,140,200,240].forEach(x=>ctx.fillText(x,tx(x),mt+ph+14));ctx.fillText('Back pad (mm)',ml+pw/2,H-3);
+    ctx.textAlign='right';for(let i=0;i<=4;i++){const v=minY+i*(rng/4);ctx.fillText(v.toFixed(1),ml-4,ty(v)+3);}
   }
   drawLineChart('canvas-kplot',padW,Kvals,'#8fc4e8',5.8,8.2,true);
   drawLineChart('canvas-jheart',padW,Jh,'#a07fcb',7.0,9.8,false);
   drawLineChart('canvas-jedge',padW,Jedge,'#e8c96a',2.4,3.6,false);
 }
-
-const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.12});
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
-window.addEventListener('load',()=>{
-  drawHeatmap('canvas-solid',false);
-  drawHeatmap('canvas-perf',true);
-  drawColorbar('cbar-solid');
-  drawColorbar('cbar-perf');
-});
-
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});
-});
+window.addEventListener('load',()=>{drawHeatmap('canvas-solid',false);drawHeatmap('canvas-perf',true);drawColorbar('cbar-solid');drawColorbar('cbar-perf');});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});});
 </script>
 </body>
 </html>
