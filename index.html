@@ -628,9 +628,10 @@
   <p class="hero-meta">LABRATS 2.0 &nbsp;·&nbsp; Supervisor: Dr Nick Linton</p>
   <div class="hero-divider"></div>
   <div class="hero-cta">
+    <a href="#resources" class="btn btn-primary">Resources</a>
     <a href="#methodology" class="btn btn-primary">Key Concepts</a>
     <a href="#figures" class="btn btn-outline">View Figures</a>
-    <a href="#resources" class="btn btn-outline">Resources</a>
+    
   </div>
   <div class="scroll-hint">
     <div class="scroll-hint-line"></div>
@@ -1098,7 +1099,7 @@
     return{objects,items};
   }
 
-  function buildScene({objects,items}){
+function buildScene({objects,items}){
     setStatus('Building scene…');
     const canvas=document.getElementById('cad-canvas');
     const wrap=document.getElementById('cad-canvas-wrap');
@@ -1169,9 +1170,9 @@
     const ui=document.createElement('div');
     ui.style.cssText='position:absolute; top:1rem; left:1rem; background:rgba(13,27,46,0.85); backdrop-filter:blur(6px); border:1px solid rgba(91,159,212,0.25); padding:0.5rem; display:flex; flex-direction:column; gap:0.3rem; z-index:5; font-family:\'Barlow Condensed\',sans-serif; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;';
     const modes=[
-      {id:'assembly', label:'Full Assembly'},
       {id:'perforated', label:'Perforated Layer Only'},
-      {id:'exploded', label:'Exploded View'}
+      {id:'exploded', label:'Exploded View'},
+      {id:'assembly', label:'Full Assembly'}
     ];
     const buttons={};
     modes.forEach(m=>{
@@ -1231,7 +1232,7 @@
       }
     }
 
-    setMode('assembly');
+    setMode('perforated');
 
     window.addEventListener('resize',()=>{
       const w=wrap.clientWidth,h=wrap.clientHeight;
@@ -1270,11 +1271,11 @@
     <h2 class="section-title reveal" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">The Team</h2>
     <div class="team-grid reveal">
       <span class="team-chip">Vinayak Gupta</span>
+      <span class="team-chip">Jaehoon Yi</span>
       <span class="team-chip">Michelle Liao</span>
       <span class="team-chip">Sean Obi</span>
       <span class="team-chip">Vivian Sullyunna</span>
       <span class="team-chip">Rohan Turner</span>
-      <span class="team-chip">Jaehoon Yi</span>
       <span class="team-chip">Richard Zhao</span>
     </div>
     <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--text-muted);">Supervised by <span style="color:var(--sky-light);">Dr Nick Linton</span> · Department of Bioengineering · Imperial College London</p>
