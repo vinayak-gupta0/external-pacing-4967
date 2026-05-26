@@ -337,6 +337,263 @@
 
   footer span { color: var(--sky); }
 
+  /* === METHODOLOGY / CONCEPTS === */
+  .methodology { background: var(--navy); }
+
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+
+  @media (min-width: 760px) {
+    .concept-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .concept-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(91,159,212,0.18);
+    padding: 1.75rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .concept-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--purple-accent), var(--sky));
+    opacity: 0.5;
+  }
+
+  .concept-card:hover { border-color: rgba(91,159,212,0.45); transform: translateY(-2px); }
+
+  .concept-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .concept-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 0.85rem;
+    line-height: 1.1;
+  }
+
+  .concept-equation {
+    background: rgba(13,27,46,0.55);
+    border-left: 2px solid var(--sky);
+    padding: 0.7rem 0.9rem;
+    margin: 0.85rem 0;
+    font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
+    font-size: 1rem;
+    color: var(--sky-light);
+    letter-spacing: 0.01em;
+  }
+
+  .concept-body {
+    font-size: 0.88rem;
+    color: var(--white-dim);
+    line-height: 1.65;
+  }
+
+  .concept-body strong { color: var(--white); font-weight: 500; }
+
+  .concept-list {
+    list-style: none;
+    margin-top: 0.6rem;
+  }
+
+  .concept-list li {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding: 0.25rem 0 0.25rem 1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .concept-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--sky);
+    font-size: 0.7rem;
+    top: 0.4rem;
+  }
+
+  .concept-list li strong { color: var(--sky-light); font-weight: 500; }
+
+  /* Wider feature card spanning multiple columns */
+  .concept-feature {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--navy-light) 0%, rgba(30,51,80,0.6) 100%);
+    border: 1px solid rgba(123,94,167,0.25);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .concept-feature::before {
+    background: linear-gradient(90deg, var(--gold), var(--sky), var(--purple-accent));
+    opacity: 0.7;
+  }
+
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .strategy-item {
+    background: rgba(13,27,46,0.45);
+    border: 1px solid rgba(91,159,212,0.15);
+    padding: 1.1rem 1rem;
+    border-radius: 2px;
+  }
+
+  .strategy-item-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sky-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .strategy-item-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .strategy-item-tag {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0.15rem 0.5rem;
+    border: 1px solid rgba(232,201,106,0.3);
+  }
+
+  .selected-tag {
+    color: var(--sky);
+    border-color: rgba(91,159,212,0.5);
+    background: rgba(91,159,212,0.08);
+  }
+
+  /* Results metrics row */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .metric-block {
+    background: var(--navy-light);
+    border: 1px solid rgba(91,159,212,0.18);
+    padding: 1.5rem 1.25rem;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metric-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: var(--sky);
+  }
+
+  .metric-block.highlight::before { background: var(--gold); }
+  .metric-block.win::before { background: #4ade80; }
+
+  .metric-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .metric-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .metric-value .unit {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-left: 0.25rem;
+  }
+
+  .metric-delta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: #4ade80;
+  }
+
+  .metric-delta.neutral { color: var(--text-muted); }
+  .metric-delta.warn { color: #f87171; }
+
+  /* NSGA-II algorithm flow */
+  .nsga-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .nsga-step {
+    background: rgba(13,27,46,0.5);
+    border: 1px solid rgba(91,159,212,0.15);
+    padding: 0.85rem 0.9rem;
+    position: relative;
+  }
+
+  .nsga-step-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--purple-light);
+    margin-bottom: 0.35rem;
+  }
+
+  .nsga-step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+    line-height: 1.15;
+  }
+
+  .nsga-step-body { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -371,8 +628,9 @@
   <p class="hero-meta">LABRATS 2.0 &nbsp;·&nbsp; Supervisor: Dr Nick Linton</p>
   <div class="hero-divider"></div>
   <div class="hero-cta">
-    <a href="#resources" class="btn btn-primary">View Resources</a>
+    <a href="#methodology" class="btn btn-primary">Key Concepts</a>
     <a href="#figures" class="btn btn-outline">View Figures</a>
+    <a href="#resources" class="btn btn-outline">Resources</a>
   </div>
   <div class="scroll-hint">
     <div class="scroll-hint-line"></div>
@@ -389,7 +647,7 @@
       Full technical documentation, source code, CAD files, and references for the perforated impedance-gradient pacing pad project.
     </p>
     <div class="resources-grid">
-      <a href="Final_Report_4697.pdf" class="resource-card reveal" target="_blank">
+      <a href="Final_Report_4967.pdf" class="resource-card reveal" target="_blank">
         <span class="resource-icon">📄</span>
         <div class="resource-card-title">Full Report</div>
         <div class="resource-card-desc">Complete technical report including FEM methodology, NSGA-II optimisation, and results.</div>
@@ -414,6 +672,247 @@
         <span class="resource-tag">18 sources</span>
       </a>
     </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY / KEY CONCEPTS -->
+<section class="methodology" id="methodology">
+  <div class="container">
+    <p class="section-label reveal">Background &amp; Methodology</p>
+    <h2 class="section-title reveal">Key<br>Concepts</h2>
+    <p class="reveal" style="color: var(--text-muted); max-width: 580px; font-size: 0.95rem;">
+      The physical phenomena, governing equations, and computational framework underpinning the perforated impedance‑gradient pad design.
+    </p>
+
+    <div class="concept-grid">
+
+      <!-- EDGE EFFECT -->
+      <div class="concept-card reveal">
+        <p class="concept-label">The Problem</p>
+        <h3 class="concept-title">The Edge Effect</h3>
+        <p class="concept-body">
+          When current passes between two surface electrodes, streamlines converge at the electrode perimeter, producing localised regions of <strong>high current density</strong> — “hotspots” — that drive pain and third‑degree burns during prolonged pacing.
+        </p>
+        <ul class="concept-list">
+          <li>Current density increases as streamlines compress at the pad rim</li>
+          <li>Third‑degree burns reported after as little as 2 hours of pacing</li>
+          <li>Sedated patients cannot report pain, so injury progresses unseen</li>
+        </ul>
+      </div>
+
+      <!-- VOLTAGE BC MODEL (from Jaehoon's individual research) -->
+      <div class="concept-card reveal">
+        <p class="concept-label">Individual Research · Jaehoon</p>
+        <h3 class="concept-title">Voltage BC Model</h3>
+        <p class="concept-body">
+          A Dirichlet boundary‑condition formulation of the electrode–torso problem. Electrodes are modelled as equipotential metal pads on the skin, the torso as a conductive bulk, and air as an insulator.
+        </p>
+        <ul class="concept-list">
+          <li><strong>Top pad:</strong> V = V<sub>applied</sub> (Dirichlet)</li>
+          <li><strong>Bottom pad:</strong> V = 0 (ground)</li>
+          <li><strong>Skin exposed to air:</strong> ∂V/∂n = 0 (Neumann, no flux)</li>
+          <li><strong>Interface layer:</strong> 0.5–1.5 mm thin gel layer with resistivity ρ models the gel/skin contact impedance</li>
+          <li><strong>Perimeter ring (Krasteva 2002):</strong> ρ<sub>centre</sub> = 20 Ωm, ρ<sub>ring</sub> = 100 Ωm — raising edge resistivity redistributes current inward</li>
+        </ul>
+        <p class="concept-body" style="margin-top:0.8rem;">
+          Result: <strong>K dropped from 3.12 → 2.71 (≈13% improvement)</strong> in the initial validation against Krasteva’s reference geometry, confirming the impedance‑gradient principle before being carried forward into the group design.
+        </p>
+      </div>
+
+      <!-- GOVERNING PHYSICS -->
+      <div class="concept-card reveal">
+        <p class="concept-label">Governing Physics</p>
+        <h3 class="concept-title">Laplace &amp; Current Density</h3>
+        <p class="concept-body">
+          At low pacing frequencies the tissue behaves as a quasi‑static resistive medium. Charge conservation under Ohm’s law gives the generalised Laplace equation, solved for the scalar potential V(x, z).
+        </p>
+        <div class="concept-equation">−∇·[σ(x,z) ∇V] = 0</div>
+        <div class="concept-equation">|J| = |−σ ∇V|</div>
+        <p class="concept-body">
+          Solved with the <strong>MATLAB PDE Toolbox</strong> on a 2D sagittal cross‑section (0.50 × 0.25 m) with a 45 mm cardiac inclusion. σ<sub>tissue</sub> = 0.2 S/m, σ<sub>heart</sub> = 0.5 S/m, σ<sub>metal</sub> derived from Ag/AgCl surface resistivity ρ = 5 Ω and d = 1 mm.
+        </p>
+      </div>
+
+      <!-- K COEFFICIENT -->
+      <div class="concept-card reveal">
+        <p class="concept-label">Performance Metric</p>
+        <h3 class="concept-title">Non‑Uniformity Ratio K</h3>
+        <div class="concept-equation" style="font-size:1.1rem;">K = J<sub>max</sub> / J<sub>min</sub></div>
+        <p class="concept-body">
+          Evaluated along a horizontal line <strong>0.5 mm below the electrode–tissue interface</strong>, K quantifies how evenly current is injected into the tissue.
+        </p>
+        <ul class="concept-list">
+          <li><strong>K = 1</strong> → perfectly uniform delivery</li>
+          <li><strong>K ≫ 1</strong> → strong edge concentration, higher burn risk</li>
+          <li>Paired with <strong>peak |J|</strong> in tissue as the second objective: directly linked to localised heating</li>
+        </ul>
+      </div>
+
+      <!-- IMPEDANCE PROFILE STRATEGIES (from IR1 — group research) -->
+      <div class="concept-feature reveal">
+        <p class="concept-label">Design Exploration · Group Research</p>
+        <h3 class="concept-title">Impedance Profile Strategies</h3>
+        <p class="concept-body">
+          Three impedance‑gradient strategies were evaluated for suppressing pad‑edge hotspots while preserving overall current delivery (K). Each balances manufacturability, edge suppression, and the risk of secondary hotspots forming at internal transitions.
+        </p>
+
+        <div class="strategy-grid">
+          <div class="strategy-item">
+            <p class="strategy-item-title">1. Stepped Ring</p>
+            <p class="strategy-item-desc">
+              Discrete high‑resistivity ring at the perimeter. Highly effective at suppressing the classic edge hotspot, but the sharp inner transition can spawn a secondary hotspot, often hurting K.
+            </p>
+            <span class="strategy-item-tag">Simple · Manufacturable</span>
+          </div>
+          <div class="strategy-item">
+            <p class="strategy-item-title">2. Tanh / Logistic Ramp</p>
+            <p class="strategy-item-desc">
+              Smooth sigmoid increase in resistivity near the perimeter. Suppresses edges without a sharp internal boundary; generally yields the best K and is robust to mesh and geometry.
+            </p>
+            <span class="strategy-item-tag selected-tag">Used in back‑pad sweep</span>
+          </div>
+          <div class="strategy-item">
+            <p class="strategy-item-title">3. Power‑Law Gradient</p>
+            <p class="strategy-item-desc">
+              ρ(r) ∝ r<sup>p</sup>, with p between 2 and 4 giving an idealised gradient electrode. Low K and smooth profiles, but requires careful tuning of the exponent.
+            </p>
+            <span class="strategy-item-tag">Research baseline</span>
+          </div>
+          <div class="strategy-item">
+            <p class="strategy-item-title">4. Discrete Perforations</p>
+            <p class="strategy-item-desc">
+              Approximates a smooth gradient with manufacturable laser‑cut holes in the Ag/AgCl layer. Carried forward into NSGA‑II optimisation and the final concentric‑ring design.
+            </p>
+            <span class="strategy-item-tag selected-tag">Final design</span>
+          </div>
+        </div>
+
+        <p class="concept-body" style="margin-top:1.25rem; font-size:0.85rem;">
+          A preliminary <strong>3‑band model</strong> (low‑ρ centre, intermediate band, high‑ρ edge) confirmed that a graded resistivity profile reduces K from 2.18 → 1.91 (≈17% reduction in J<sub>max</sub> at the edge) without compromising deep myocardial field strength. This validated the impedance‑gradient concept that the final perforated design implements physically.
+        </p>
+      </div>
+
+      <!-- NSGA-II OPTIMISATION (from final report) -->
+      <div class="concept-feature reveal">
+        <p class="concept-label">Final Report · Computational Framework</p>
+        <h3 class="concept-title">NSGA‑II Multi‑Objective Optimisation</h3>
+        <p class="concept-body">
+          <strong>NSGA‑II</strong> (Non‑dominated Sorting Genetic Algorithm II, Deb et al. 2002) is an elitist evolutionary algorithm built for problems with two or more competing objectives. Instead of returning one “best” design, it returns a <strong>Pareto front</strong> — the set of designs for which no single objective can be improved without making another worse.
+        </p>
+
+        <div class="nsga-flow">
+          <div class="nsga-step">
+            <p class="nsga-step-num">Step 1</p>
+            <p class="nsga-step-title">Initialise</p>
+            <p class="nsga-step-body">Random population of 60 candidate designs in the 3‑D variable space.</p>
+          </div>
+          <div class="nsga-step">
+            <p class="nsga-step-num">Step 2</p>
+            <p class="nsga-step-title">Evaluate</p>
+            <p class="nsga-step-body">Run the FEM solver to compute (K, peak |J|) for each design.</p>
+          </div>
+          <div class="nsga-step">
+            <p class="nsga-step-num">Step 3</p>
+            <p class="nsga-step-title">Sort &amp; Rank</p>
+            <p class="nsga-step-body">Non‑dominated sort by Pareto dominance; assign crowding distances to preserve diversity.</p>
+          </div>
+          <div class="nsga-step">
+            <p class="nsga-step-num">Step 4</p>
+            <p class="nsga-step-title">Crossover &amp; Mutate</p>
+            <p class="nsga-step-body">Generate offspring with crossover fraction 0.80; integer constraint on hole count.</p>
+          </div>
+          <div class="nsga-step">
+            <p class="nsga-step-num">Step 5</p>
+            <p class="nsga-step-title">Repeat</p>
+            <p class="nsga-step-body">40 generations · ≈ 2,400 FEM evaluations total · Pareto fraction 0.35.</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-top:1.5rem;">
+          <div>
+            <p class="strategy-item-title" style="color:var(--gold); margin-bottom:0.4rem;">Design Variables</p>
+            <ul class="concept-list" style="margin-top:0;">
+              <li><strong>Hole radius</strong>: 0.2 – 2.5 mm</li>
+              <li><strong>Holes per side</strong>: 2 – 30 (integer)</li>
+              <li><strong>r<sub>perf</sub></strong>: 5 – 45 mm — radius at which perforations begin</li>
+            </ul>
+          </div>
+          <div>
+            <p class="strategy-item-title" style="color:var(--gold); margin-bottom:0.4rem;">Objectives (both minimised)</p>
+            <ul class="concept-list" style="margin-top:0;">
+              <li><strong>K</strong>: current non‑uniformity at skin</li>
+              <li><strong>peak |J|</strong> in tissue: localised heating &amp; burn risk</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="concept-body" style="margin-top:1.25rem; font-size:0.85rem;">
+          The Pareto front spanned <strong>K ≈ 2.33 – 2.60</strong> and <strong>peak |J| ≈ 34.6 – 35.4 A/m²</strong>. Sensitivity analysis showed <strong>r<sub>perf</sub></strong> was the most influential variable (every Pareto‑optimal design had r<sub>perf</sub> &lt; 10 mm), with hole radius exhibiting a nonlinear threshold above ≈ 1.5 mm.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- KEY RESULTS METRICS -->
+    <p class="section-label reveal" style="margin-top:4rem;">Optimisation Outcomes</p>
+    <h3 class="reveal" style="font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--white); margin-bottom:0.5rem;">Pareto‑Optimal Solutions</h3>
+    <p class="reveal" style="color: var(--text-muted); max-width: 580px; font-size: 0.88rem;">
+      Three representative designs from the Pareto front, compared against the solid baseline.
+    </p>
+
+    <div class="metrics-row reveal">
+      <div class="metric-block">
+        <p class="metric-label">Solid Baseline</p>
+        <div class="metric-value">K = 2.56</div>
+        <p class="metric-delta neutral">Peak |J| = 35.14 A/m²</p>
+      </div>
+      <div class="metric-block win">
+        <p class="metric-label">Best Uniformity</p>
+        <div class="metric-value">K = 2.33</div>
+        <p class="metric-delta">−9.0% · r = 2.12 mm, 21 holes/side</p>
+      </div>
+      <div class="metric-block highlight">
+        <p class="metric-label">Knee Point</p>
+        <div class="metric-value">K = 2.40</div>
+        <p class="metric-delta">−6.3% · best balanced trade‑off</p>
+      </div>
+      <div class="metric-block win">
+        <p class="metric-label">Best Peak |J|</p>
+        <div class="metric-value">34.62 <span class="unit">A/m²</span></div>
+        <p class="metric-delta">−1.5% · r = 0.77 mm, r<sub>perf</sub> = 44.2 mm</p>
+      </div>
+    </div>
+
+    <!-- FINAL MANUFACTURABLE DESIGN -->
+    <p class="section-label reveal" style="margin-top:4rem;">Translation to Manufacturable Design</p>
+    <h3 class="reveal" style="font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--white); margin-bottom:0.5rem;">Concentric‑Ring Electrode</h3>
+    <p class="reveal" style="color: var(--text-muted); max-width: 620px; font-size: 0.88rem;">
+      The NSGA‑II findings were translated into an 8‑ring concentric layout matching the laser cutter’s 0.4 mm minimum feature size, with hole density increasing from centre to edge to concentrate impedance where the edge effect is strongest.
+    </p>
+
+    <div class="metrics-row reveal">
+      <div class="metric-block">
+        <p class="metric-label">Rings</p>
+        <div class="metric-value">8</div>
+        <p class="metric-delta neutral">d = 60 → 95 mm · 5 mm spacing</p>
+      </div>
+      <div class="metric-block">
+        <p class="metric-label">Total Perforations</p>
+        <div class="metric-value">1,500</div>
+        <p class="metric-delta neutral">100 inner → 275 outer (+25 / ring)</p>
+      </div>
+      <div class="metric-block">
+        <p class="metric-label">Hole Diameter</p>
+        <div class="metric-value">0.4 <span class="unit">mm</span></div>
+        <p class="metric-delta neutral">CO₂ laser cutter minimum feature</p>
+      </div>
+      <div class="metric-block highlight">
+        <p class="metric-label">Pad Configuration</p>
+        <div class="metric-value">100 / 140 <span class="unit">mm</span></div>
+        <p class="metric-delta neutral">Anterior / Posterior (asymmetric)</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
