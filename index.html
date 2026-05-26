@@ -171,169 +171,296 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script>
-(function(){
-  function setStatus(msg){const el=document.getElementById('cad-status');if(el)el.textContent=msg;}
-  async function load3MF(url){
-    setStatus('Fetching 3MF…');
-    const resp=await fetch(url);
-    if(!resp.ok)throw new Error('HTTP '+resp.status);
-    const raw=new Uint8Array(await resp.arrayBuffer());
-    if(raw.length<100)throw new Error('File too small');
-    if(!(raw[0]===0x50&&raw[1]===0x4B))throw new Error('Not a valid ZIP/3MF');
-    function u16(o){return raw[o]|raw[o+1]<<8;}
-    function u32(o){return(raw[o]|raw[o+1]<<8|raw[o+2]<<16|(raw[o+3]<<24))>>>0;}
-    function u64(o){return u32(o+4)*4294967296+u32(o);}
-    let offset=0;
-    while(offset<raw.length-4){
-      if(raw[offset]===0x50&&raw[offset+1]===0x4B&&raw[offset+2]===0x03&&raw[offset+3]===0x04){
-        const comp=u16(offset+8);let csz=u32(offset+18),usz=u32(offset+22);
-        const fnLen=u16(offset+26),exLen=u16(offset+28);
-        const fn=new TextDecoder().decode(raw.slice(offset+30,offset+30+fnLen));
-        const exOff=offset+30+fnLen,dataOff=exOff+exLen;
-        if(csz===0xFFFFFFFF||usz===0xFFFFFFFF){
+(function() {
+  function setStatus(msg) {
+    const el = document.getElementById('cad-status');
+    if (el) el.textContent = msg;
+  }
+
+  /* === 3MF file loader (unchanged from working version) === */
+  async function load3MF(url) {
+    setStatus('Fetching ' + url + '…');
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status + ' for ' + url);
+    const raw = new Uint8Array(await resp.arrayBuffer());
+    if (raw.length < 100) throw new Error('File too small: ' + url);
+    if (!(raw[0]===0x50 && raw[1]===0x4B)) throw new Error('Not a valid ZIP/3MF: ' + url);
+
+    function u16(o){ return raw[o]|raw[o+1]<<8; }
+    function u32(o){ return (raw[o]|raw[o+1]<<8|raw[o+2]<<16|(raw[o+3]<<24))>>>0; }
+    function u64(o){ return u32(o+4)*4294967296+u32(o); }
+
+    let offset = 0;
+    while (offset < raw.length - 4) {
+      if (raw[offset]===0x50&&raw[offset+1]===0x4B&&raw[offset+2]===0x03&&raw[offset+3]===0x04) {
+        const comp  = u16(offset+8);
+        let   csz   = u32(offset+18);
+        let   usz   = u32(offset+22);
+        const fnLen = u16(offset+26);
+        const exLen = u16(offset+28);
+        const fn    = new TextDecoder().decode(raw.slice(offset+30, offset+30+fnLen));
+        const exOff = offset+30+fnLen;
+        const dataOff = exOff+exLen;
+        if (csz===0xFFFFFFFF||usz===0xFFFFFFFF) {
           let p=exOff;
-          while(p<exOff+exLen-3){const tag=u16(p),esz=u16(p+2);if(tag===0x0001&&esz>=16){usz=u64(p+4);csz=u64(p+12);break;}p+=4+esz;}
+          while(p<exOff+exLen-3){
+            const tag=u16(p),esz=u16(p+2);
+            if(tag===0x0001&&esz>=16){usz=u64(p+4);csz=u64(p+12);break;}
+            p+=4+esz;
+          }
         }
-        if(fn.toLowerCase().endsWith('.model')){
-          setStatus('Decompressing '+(usz/1024/1024).toFixed(1)+' MB…');
-          const compressed=raw.slice(dataOff,dataOff+csz);
-          const ds=new DecompressionStream('deflate-raw');
-          const writer=ds.writable.getWriter(),reader=ds.readable.getReader();
-          writer.write(compressed);writer.close();
-          const chunks=[];
+        if (fn.toLowerCase().endsWith('.model')) {
+          setStatus('Decompressing ' + (usz/1024/1024).toFixed(1) + ' MB…');
+          const compressed = raw.slice(dataOff, dataOff+csz);
+          const ds = new DecompressionStream('deflate-raw');
+          const writer = ds.writable.getWriter();
+          const reader = ds.readable.getReader();
+          writer.write(compressed); writer.close();
+          const chunks = [];
           while(true){const{done,value}=await reader.read();if(done)break;chunks.push(value);}
-          const out=new Uint8Array(chunks.reduce((s,c)=>s+c.length,0));
-          let pos=0;for(const c of chunks){out.set(c,pos);pos+=c.length;}
+          const out = new Uint8Array(chunks.reduce((s,c)=>s+c.length,0));
+          let pos=0; for(const c of chunks){out.set(c,pos);pos+=c.length;}
           return new TextDecoder().decode(out);
         }
-        offset=dataOff+csz;
-      }else{offset++;}
+        offset = dataOff+csz;
+      } else { offset++; }
     }
     throw new Error('No .model found in 3MF');
   }
-  function parseModel(xml){
-    setStatus('Parsing geometry…');
-    const objects={};
-    const objRx=/<object\s+id="(\d+)"[^>]*>([\s\S]*?)<\/object>/g;
-    const vtxRx=/<vertex\s+x="([-\d.eE]+)"\s+y="([-\d.eE]+)"\s+z="([-\d.eE]+)"/g;
-    const triRx=/<triangle\s+v1="(\d+)"\s+v2="(\d+)"\s+v3="(\d+)"/g;
+
+  function parseModel(xml) {
+    const objects = {};
+    const objRegex = /<object\s+id="(\d+)"[^>]*>([\s\S]*?)<\/object>/g;
+    const vertRegex = /<vertex\s+x="([-\d.eE]+)"\s+y="([-\d.eE]+)"\s+z="([-\d.eE]+)"/g;
+    const triRegex  = /<triangle\s+v1="(\d+)"\s+v2="(\d+)"\s+v3="(\d+)"/g;
     let m;
-    while((m=objRx.exec(xml))!==null){
+    while((m=objRegex.exec(xml))!==null){
       const id=m[1],body=m[2],verts=[],idxs=[];
-      vtxRx.lastIndex=0;let v;
-      while((v=vtxRx.exec(body))!==null)verts.push(+v[1],+v[2],+v[3]);
-      triRx.lastIndex=0;
-      while((v=triRx.exec(body))!==null)idxs.push(+v[1],+v[2],+v[3]);
-      if(verts.length&&idxs.length)objects[id]={verts:new Float32Array(verts),idxs};
+      vertRegex.lastIndex=0;
+      let v;
+      while((v=vertRegex.exec(body))!==null) verts.push(+v[1],+v[2],+v[3]);
+      triRegex.lastIndex=0;
+      while((v=triRegex.exec(body))!==null) idxs.push(+v[1],+v[2],+v[3]);
+      if(verts.length&&idxs.length) objects[id]={verts:new Float32Array(verts),idxs};
     }
     const items=[];
-    const itemRx=/<item\s+([^/]*?)\/>/g;
-    while((m=itemRx.exec(xml))!==null){
+    const itemRegex=/<item\s+([^/]*?)\/>/g;
+    while((m=itemRegex.exec(xml))!==null){
       const attrs=m[1],idM=attrs.match(/objectid="(\d+)"/),tfM=attrs.match(/transform="([^"]+)"/);
       if(idM){const it={objectid:idM[1]};if(tfM)it.transform=tfM[1].trim().split(/\s+/).map(Number);items.push(it);}
     }
     return{objects,items};
   }
-  function buildScene({objects,items}){
-    setStatus('Building scene…');
-    const canvas=document.getElementById('cad-canvas'),wrap=document.getElementById('cad-canvas-wrap');
-    canvas.width=wrap.clientWidth;canvas.height=wrap.clientHeight;
-    const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
-    renderer.setSize(wrap.clientWidth,wrap.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-    renderer.setClearColor(0x0d1b2e,1);
-    const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(45,wrap.clientWidth/wrap.clientHeight,.01,100000);
-    const palette=[0x8fc4e8,0xa07fcb,0xe8c96a,0xc2dff0,0x5b9fd4,0xedcec3,0xcbcbcb,0xf6f6f3,0x7b5ea7,0x737373];
-    const group=new THREE.Group();
-    const renderList=items.length>0?items.map(it=>({obj:objects[it.objectid],transform:it.transform,objectid:it.objectid})):Object.entries(objects).map(([id,o])=>({obj:o,objectid:id}));
-    const meshes=[],bbox=new THREE.Box3();bbox.makeEmpty();let partIdx=0;
-    renderList.forEach(({obj,transform,objectid})=>{
-      if(!obj)return;
-      const geo=new THREE.BufferGeometry();
-      geo.setAttribute('position',new THREE.BufferAttribute(obj.verts,3));
-      geo.setIndex(obj.idxs);geo.computeVertexNormals();
-      const triCount=obj.idxs.length/3;
-      const mat=new THREE.MeshPhongMaterial({color:palette[partIdx%palette.length],specular:0x2a4a6b,shininess:50,side:THREE.DoubleSide,transparent:false,opacity:1});
-      const mesh=new THREE.Mesh(geo,mat);
-      if(transform&&transform.length===12){const t=transform;mesh.applyMatrix4(new THREE.Matrix4().set(t[0],t[3],t[6],t[9],t[1],t[4],t[7],t[10],t[2],t[5],t[8],t[11],0,0,0,1));}
-      group.add(mesh);mesh.updateMatrixWorld(true);
-      geo.computeBoundingBox();bbox.union(geo.boundingBox.clone().applyMatrix4(mesh.matrixWorld));
-      meshes.push({mesh,objectid,triCount});partIdx++;
-    });
-    let perforatedMesh=null,maxTri=0;
-    meshes.forEach(m=>{if(m.triCount>maxTri){maxTri=m.triCount;perforatedMesh=m.mesh;}});
-    const centre=new THREE.Vector3();bbox.getCenter(centre);group.position.sub(centre);scene.add(group);
-    const size=new THREE.Vector3();bbox.getSize(size);const span=Math.max(size.x,size.y,size.z);
-    camera.position.set(span*.8,span*.6,span*1.4);camera.lookAt(0,0,0);
-    scene.add(new THREE.AmbientLight(0xffffff,.5));
-    const key=new THREE.DirectionalLight(0xc8e0f4,.95);key.position.set(1,2,1);scene.add(key);
-    const fill=new THREE.DirectionalLight(0x7b5ea7,.4);fill.position.set(-1,-.5,-1);scene.add(fill);
-    const back=new THREE.DirectionalLight(0xffffff,.3);back.position.set(0,-1,-1);scene.add(back);
-    const controls=new THREE.OrbitControls(camera,canvas);
-    controls.enableDamping=true;controls.dampingFactor=.08;controls.autoRotate=true;controls.autoRotateSpeed=.5;
-    canvas.addEventListener('pointerdown',()=>{controls.autoRotate=false;});
-    const ui=document.createElement('div');
-    ui.style.cssText="position:absolute;top:1rem;left:1rem;background:rgba(13,27,46,.85);backdrop-filter:blur(6px);border:1px solid rgba(91,159,212,.25);padding:.5rem;display:flex;flex-direction:column;gap:.3rem;z-index:5;font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;";
-    const modes=[{id:'perforated',label:'Perforated Layer'},{id:'exploded',label:'Exploded View'},{id:'assembly',label:'Full Assembly'}];
-    const buttons={};
-    const originalPositions=meshes.map(m=>({mesh:m.mesh,pos:m.mesh.position.clone()}));
-    function setMode(mode){
-      Object.keys(buttons).forEach(k=>{
-        buttons[k].dataset.active=(k===mode)?'true':'false';
-        buttons[k].style.background=(k===mode)?'rgba(91,159,212,.15)':'transparent';
-        buttons[k].style.borderColor=(k===mode)?'#5b9fd4':'rgba(91,159,212,.2)';
-        buttons[k].style.color=(k===mode)?'#ffffff':'#8fc4e8';
+
+  /* === scene state, accessible across modes === */
+  let scene, camera, renderer, controls;
+  let currentGroup = null; /* the THREE.Group currently displayed */
+  let perforatedGroup = null; /* assembled, used for 'perforated' & 'assembly' modes */
+  let explodedGroup = null;   /* from Pacing_pad_design_exploded_view.3mf */
+  let perforatedMesh = null;  /* the high-triangle mesh inside perforatedGroup */
+
+  /* Build a THREE.Group from parsed 3MF data. Returns {group, meshes, bbox, perforatedMesh}. */
+  function buildGroup({objects, items}) {
+    const palette = [0x8fc4e8,0xa07fcb,0xe8c96a,0xc2dff0,0x5b9fd4,0xedcec3,0xcbcbcb,0xf6f6f3,0x7b5ea7,0x737373];
+    const group = new THREE.Group();
+    const renderList = items.length>0
+      ? items.map(it=>({obj:objects[it.objectid], transform:it.transform, objectid:it.objectid}))
+      : Object.entries(objects).map(([id,o])=>({obj:o, objectid:id}));
+
+    const meshes = [];
+    const bbox = new THREE.Box3(); bbox.makeEmpty();
+    let partIdx = 0;
+    let perfMesh = null, maxTri = 0;
+
+    renderList.forEach(({obj, transform, objectid}) => {
+      if (!obj) return;
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(obj.verts, 3));
+      geo.setIndex(obj.idxs);
+      geo.computeVertexNormals();
+      const triCount = obj.idxs.length / 3;
+      const mat = new THREE.MeshPhongMaterial({
+        color: palette[partIdx % palette.length],
+        specular: 0x2a4a6b, shininess: 50,
+        side: THREE.DoubleSide
       });
-      originalPositions.forEach(({mesh,pos})=>mesh.position.copy(pos));
-      if(mode==='assembly'){meshes.forEach(m=>{m.mesh.visible=true;m.mesh.material.transparent=false;m.mesh.material.opacity=1;m.mesh.material.needsUpdate=true;});}
-      else if(mode==='perforated'){meshes.forEach(m=>{m.mesh.visible=(m.mesh===perforatedMesh);});if(perforatedMesh){perforatedMesh.material.transparent=false;perforatedMesh.material.opacity=1;perforatedMesh.material.needsUpdate=true;}}
-      else if(mode==='exploded'){
-        const sortedByZ=meshes.slice().sort((a,b)=>{
-          const az=originalPositions.find(p=>p.mesh===a.mesh).pos.z;
-          const bz=originalPositions.find(p=>p.mesh===b.mesh).pos.z;
-          return az-bz;
-        });
-        const sp=span*.08;
-        sortedByZ.forEach((m,i)=>{
-          m.mesh.visible=true;m.mesh.material.transparent=true;m.mesh.material.opacity=.92;m.mesh.material.needsUpdate=true;
-          const orig=originalPositions.find(p=>p.mesh===m.mesh).pos;
-          m.mesh.position.set(orig.x,orig.y,orig.z+(i-sortedByZ.length/2)*sp);
-        });
+      const mesh = new THREE.Mesh(geo, mat);
+      if (transform && transform.length === 12) {
+        const t = transform;
+        mesh.applyMatrix4(new THREE.Matrix4().set(t[0],t[3],t[6],t[9], t[1],t[4],t[7],t[10], t[2],t[5],t[8],t[11], 0,0,0,1));
       }
-    }
-    modes.forEach(m=>{
-      const b=document.createElement('button');b.textContent=m.label;
-      b.style.cssText="background:transparent;border:1px solid rgba(91,159,212,.2);color:#8fc4e8;padding:.4rem .8rem;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:inherit;transition:all .2s;";
-      b.onmouseover=()=>{if(b.dataset.active!=='true')b.style.borderColor='rgba(91,159,212,.5)';};
-      b.onmouseout=()=>{if(b.dataset.active!=='true')b.style.borderColor='rgba(91,159,212,.2)';};
-      b.onclick=()=>setMode(m.id);buttons[m.id]=b;ui.appendChild(b);
+      group.add(mesh);
+      mesh.updateMatrixWorld(true);
+      geo.computeBoundingBox();
+      bbox.union(geo.boundingBox.clone().applyMatrix4(mesh.matrixWorld));
+      meshes.push({mesh, objectid, triCount});
+      if (triCount > maxTri) { maxTri = triCount; perfMesh = mesh; }
+      partIdx++;
     });
-    wrap.appendChild(ui);setMode('perforated');
-    window.addEventListener('resize',()=>{const w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();});
-    function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
+
+    /* Centre the group on the origin */
+    const centre = new THREE.Vector3();
+    bbox.getCenter(centre);
+    group.position.sub(centre);
+
+    return {group, meshes, bbox, perforatedMesh: perfMesh};
+  }
+
+  function initRenderer() {
+    const canvas = document.getElementById('cad-canvas');
+    const wrap = document.getElementById('cad-canvas-wrap');
+    canvas.width = wrap.clientWidth; canvas.height = wrap.clientHeight;
+
+    renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+    renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x0d1b2e, 1);
+
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(45, wrap.clientWidth / wrap.clientHeight, 0.01, 100000);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const key = new THREE.DirectionalLight(0xc8e0f4, 0.95);
+    key.position.set(1, 2, 1); scene.add(key);
+    const fill = new THREE.DirectionalLight(0x7b5ea7, 0.4);
+    fill.position.set(-1, -0.5, -1); scene.add(fill);
+    const back = new THREE.DirectionalLight(0xffffff, 0.3);
+    back.position.set(0, -1, -1); scene.add(back);
+
+    controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = true; controls.dampingFactor = 0.08;
+    controls.autoRotate = true; controls.autoRotateSpeed = 0.5;
+    canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
+
+    window.addEventListener('resize', () => {
+      const w = wrap.clientWidth, h = wrap.clientHeight;
+      renderer.setSize(w, h); camera.aspect = w/h; camera.updateProjectionMatrix();
+    });
+
+    function animate() { requestAnimationFrame(animate); controls.update(); renderer.render(scene, camera); }
     animate();
   }
-  async function init(){
-    try{
-      const xml=await load3MF('Pacing_pad_design.3mf');
-      await new Promise(r=>setTimeout(r,0));
-      const data=parseModel(xml);
-      if(!Object.keys(data.objects).length)throw new Error('No mesh data found');
-      buildScene(data);
-      document.getElementById('cad-loading').style.display='none';
-      document.getElementById('cad-hint').style.display='block';
-    }catch(e){
-      console.error('CAD viewer error:',e);
-      setStatus('Could not load model: '+e.message);
-      document.getElementById('cad-spinner').style.display='none';
+
+  function frameCamera(group) {
+    /* Compute world-space bbox of the group and frame camera to fit */
+    const bbox = new THREE.Box3().setFromObject(group);
+    const size = new THREE.Vector3(); bbox.getSize(size);
+    const span = Math.max(size.x, size.y, size.z);
+    camera.position.set(span*0.8, span*0.6, span*1.4);
+    camera.lookAt(0, 0, 0);
+    controls.target.set(0, 0, 0);
+    controls.update();
+  }
+
+  function showGroup(group) {
+    if (currentGroup && currentGroup !== group) scene.remove(currentGroup);
+    if (!scene.children.includes(group)) scene.add(group);
+    currentGroup = group;
+  }
+
+  function buildModeUI() {
+    const wrap = document.getElementById('cad-canvas-wrap');
+    const ui = document.createElement('div');
+    ui.style.cssText = 'position:absolute; top:1rem; left:1rem; background:rgba(13,27,46,0.85); backdrop-filter:blur(6px); border:1px solid rgba(91,159,212,0.25); padding:0.5rem; display:flex; flex-direction:column; gap:0.3rem; z-index:5; font-family:\'Barlow Condensed\',sans-serif; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;';
+    const modes = [
+      {id:'perforated', label:'Perforated Layer Only'},
+      {id:'exploded',   label:'Exploded View'},
+      {id:'assembly',   label:'Full Assembly'}
+    ];
+    const buttons = {};
+    modes.forEach(m => {
+      const b = document.createElement('button');
+      b.textContent = m.label;
+      b.style.cssText = 'background:transparent; border:1px solid rgba(91,159,212,0.2); color:#8fc4e8; padding:0.4rem 0.8rem; cursor:pointer; font:inherit; letter-spacing:inherit; text-transform:inherit; transition:all 0.2s;';
+      b.onmouseover = () => { if (b.dataset.active !== 'true') b.style.borderColor = 'rgba(91,159,212,0.5)'; };
+      b.onmouseout  = () => { if (b.dataset.active !== 'true') b.style.borderColor = 'rgba(91,159,212,0.2)'; };
+      b.onclick = () => setMode(m.id);
+      buttons[m.id] = b;
+      ui.appendChild(b);
+    });
+    wrap.appendChild(ui);
+    return buttons;
+  }
+
+  let buttons = {};
+
+  function setMode(mode) {
+    Object.keys(buttons).forEach(k => {
+      const active = (k === mode);
+      buttons[k].dataset.active = active ? 'true' : 'false';
+      buttons[k].style.background = active ? 'rgba(91,159,212,0.15)' : 'transparent';
+      buttons[k].style.borderColor = active ? '#5b9fd4' : 'rgba(91,159,212,0.2)';
+      buttons[k].style.color = active ? '#ffffff' : '#8fc4e8';
+    });
+
+    if (mode === 'perforated') {
+      /* Show only the perforated layer mesh from the assembled group */
+      showGroup(perforatedGroup);
+      perforatedGroup.children.forEach(child => {
+        child.visible = (child === perforatedMesh);
+      });
+      frameCamera(perforatedGroup);
+    } else if (mode === 'assembly') {
+      /* Show the assembled group, all parts visible */
+      showGroup(perforatedGroup);
+      perforatedGroup.children.forEach(child => { child.visible = true; });
+      frameCamera(perforatedGroup);
+    } else if (mode === 'exploded') {
+      /* Swap to the Fusion-authored exploded geometry */
+      showGroup(explodedGroup);
+      explodedGroup.children.forEach(child => { child.visible = true; });
+      frameCamera(explodedGroup);
     }
   }
-  const section=document.getElementById('cad-viewer');
-  const io=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){io.disconnect();init();}},{threshold:.1});
+
+  async function init() {
+    try {
+      initRenderer();
+      buttons = buildModeUI();
+
+      /* Load both files in parallel for speed */
+      setStatus('Loading geometry…');
+      const [xmlAssembly, xmlExploded] = await Promise.all([
+        load3MF('Pacing_pad_design.3mf'),
+        load3MF('Pacing_pad_design_exploded_view.3mf').catch(e => {
+          console.warn('Exploded view file unavailable, falling back:', e.message);
+          return null;
+        })
+      ]);
+
+      await new Promise(r => setTimeout(r, 0));
+      setStatus('Building scene…');
+
+      const a = buildGroup(parseModel(xmlAssembly));
+      perforatedGroup = a.group;
+      perforatedMesh = a.perforatedMesh;
+
+      if (xmlExploded) {
+        const e = buildGroup(parseModel(xmlExploded));
+        explodedGroup = e.group;
+      } else {
+        /* Fallback: if the exploded file failed to load, reuse the assembled group */
+        explodedGroup = perforatedGroup;
+      }
+
+      setMode('perforated');
+
+      document.getElementById('cad-loading').style.display = 'none';
+      document.getElementById('cad-hint').style.display = 'block';
+    } catch (e) {
+      console.error('CAD viewer error:', e);
+      setStatus('Could not load model: ' + e.message);
+      document.getElementById('cad-spinner').style.display = 'none';
+    }
+  }
+
+  const section = document.getElementById('cad-viewer');
+  const io = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) { io.disconnect(); init(); }
+  }, {threshold: 0.1});
   io.observe(section);
 })();
 </script>
-
 <!-- RESOURCES -->
 <section class="resources" id="resources">
   <div class="container">
