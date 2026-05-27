@@ -1,12 +1,3 @@
-\begin{lstlisting}[language=Matlab,
-    breaklines=true,
-    columns=fullflexible,
-    basicstyle=\ttfamily\small,
-    commentstyle=\color{myblue}\ttfamily\small,
-    frame=single,
-    showspaces=false,
-    showstringspaces=false
-]
 function perforatedElectrodeNSGA2()
 % NSGA-II optimisation of perforated Ag/AgCl defibrillation electrode.
 % Decision variables: hole radius [m], holes per side, r_perf [m]
@@ -491,5 +482,3 @@ function plotLineProfiles(distS, JlineS, distP, JlineP, p, xBJ, cfg)
     legend('Solid','Perforated','Location','south','FontSize',8,'Box','off');
     xlim([-6 6]); cfg.setAx(gca); grid on;
 end
-
-\end{lstlisting}
