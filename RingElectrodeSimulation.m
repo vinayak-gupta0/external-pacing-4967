@@ -1,12 +1,3 @@
-\begin{lstlisting}[language=Matlab,
-    breaklines=true,
-    columns=fullflexible,
-    basicstyle=\ttfamily\small,
-    commentstyle=\color{myblue}\ttfamily\small,
-    frame=single,
-    showspaces=false,
-    showstringspaces=false
-]
 function ringElectrodeSimulation()
 % Simulate the concentric-ring perforated electrode and sweep hole diameters.
 % 8 rings x 2 sides = 16 discrete holes in the cross-section.
@@ -370,5 +361,3 @@ function [dl, externalEdges, elec1Edge, elec2Edge] = buildRingGeometry(p)
     end
     fprintf('Geometry: %d edges, elec1=%d, elec2=%d\n\n', numEdges, elec1Edge, elec2Edge);
 end
-
-\end{lstlisting}
