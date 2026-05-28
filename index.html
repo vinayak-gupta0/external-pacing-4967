@@ -631,13 +631,13 @@
     <p class="reveal" style="color:var(--text-muted);max-width:560px;font-size:.95rem;">Key modelling results from the report. Select a figure to view.</p>
       <div class="fem-container reveal">
         <div class="fem-controls">
-          <button class="fem-tab active" onclick="showTab('pareto', this)">NSGA-II Pareto Front</button>
+          <button class="fem-tab active" onclick="showTab('profile', this)">Depth Profile (Solid vs Final)</button>
+          <button class="fem-tab" onclick="showTab('pareto', this)">NSGA-II Pareto Front</button>
           <button class="fem-tab" onclick="showTab('heatmap', this)">Current Density Maps</button>
           <button class="fem-tab" onclick="showTab('backpad', this)">Back Pad Sweep</button>
-          <button class="fem-tab" onclick="showTab('profile', this)">Depth Profile (Solid vs Final)</button>
         </div>
 
-        <div class="fem-panel active" id="tab-pareto">
+        <div class="fem-panel" id="tab-pareto">
           <div style="background:#ffffff;padding:1rem;border:1px solid rgba(91,159,212,.15);display:inline-block;width:100%;box-sizing:border-box;">
             <img src="./NSGA-II.png" alt="NSGA-II Pareto front" style="width:100%;height:auto;display:block;">
           </div>
@@ -676,7 +676,7 @@
           </div>
         </div>
 
-        <div class="fem-panel" id="tab-profile">
+        <div class="fem-panel active" id="tab-profile">
           <div style="display:grid;grid-template-columns:1fr;gap:1rem;">
             <div class="heatmap-title" style="margin-bottom:.25rem;">|J| vs Distance from Centre</div>
             <div style="background:#152437;border:1px solid rgba(91,159,212,.15);padding:1rem;">
@@ -920,7 +920,7 @@ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isInte
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
 window.addEventListener('load',()=>{
-  drawPareto();
+  initProfileUI();
 });
 
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
