@@ -633,7 +633,6 @@
         <div class="fem-controls">
           <button class="fem-tab active" onclick="showTab('profile', this)">Depth Profile (Solid vs Final)</button>
           <button class="fem-tab" onclick="showTab('pareto', this)">NSGA-II Pareto Front</button>
-          <button class="fem-tab" onclick="showTab('heatmap', this)">Current Density Maps</button>
           <button class="fem-tab" onclick="showTab('backpad', this)">Back Pad Sweep</button>
         </div>
 
@@ -645,15 +644,6 @@
             <strong style="color:var(--white-dim);">NSGA-II optimisation results.</strong>
             a) Objective space showing all designs (grey) and Pareto front (black).
           </div>
-        </div>
-
-        <div class="fem-panel" id="tab-heatmap">
-          <div style="background:#ffffff;padding:1rem;border:1px solid rgba(91,159,212,.15);display:inline-block;width:100%;box-sizing:border-box;">
-            <img src="data:image/png;base64,REPLACE_WITH_YOUR_EXISTING_BASE64_IMAGE" alt="Current density maps" style="width:100%;height:auto;display:block;">
-          </div>
-          <p style="margin-top:1rem;font-size:.82rem;color:var(--text-muted);border-left:2px solid rgba(91,159,212,.4);padding-left:1rem;">
-            Current density magnitude |J| (A/m²) in tissue beneath the anterior electrode.
-          </p>
         </div>
 
         <div class="fem-panel" id="tab-backpad">
